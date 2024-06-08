@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json.schemastore.org/web-manifest-combined.json",
+  "name": "Tiny Bee",
+  "short_name": "tb",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#fff",
+  "description": "Tiny Bee",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    }
+  ]
+}
