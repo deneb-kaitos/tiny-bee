@@ -1,5 +1,6 @@
 :root {
   --main-font-family: "InterVariable";
+  --main-font-size: 1rem;
   --main-color: var(--theme-white);
   --main-background-color: var(--theme-dark_gray);
   --main-grid-gap: max(0.25vh, 0.25vw);
@@ -37,6 +38,7 @@
 
 html {
   font-family: var(--main-font-family);
+  font-size: var(--main-font-size);
 }
 
 @supports (font-variation-settings: normal) {
