@@ -8,7 +8,7 @@ importers:
 
   .: {}
 
-  sources/front-end/auth.app:
+  sources/front-end/main.app:
     dependencies:
       inter-ui:
         specifier: ^4.0.2
