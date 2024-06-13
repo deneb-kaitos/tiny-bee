@@ -27,10 +27,11 @@ const config = {
       register: true,
     },
     files: {
-      lib: './src/lib',
+      lib: 'src/lib',
       hooks: {
         server: 'src/files/hooks/hooks.server.js',
       },
+      serviceWorker: 'src/lib/service-worker/index.js'
     },
     // csp: {
     //   directives: {
