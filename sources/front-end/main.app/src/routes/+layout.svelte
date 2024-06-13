@@ -44,4 +44,8 @@
 
 </script>
 
+<svelte:head>
+  <title>tiny bee</title>
+</svelte:head>
+
 {@render children()}
