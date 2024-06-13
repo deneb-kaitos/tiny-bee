@@ -106,7 +106,7 @@ const handle_INIT = (payload = null) => {
     type: LoaderSignalTypes.CREATE_WORKERS,
   });
 
-  console.log(`[${self.name}].handle_INIT:`, payload, workers);
+  console.log(`[${self.name}].handle_INIT:`, payload);
 };
 
 const handle_DISPOSE = (payload = null) => {
