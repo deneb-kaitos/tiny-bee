@@ -75,6 +75,9 @@ const buildMachine = (api = null, context) => setup(api).createMachine({
       },
     },
     [StateName.WORKERS_RUNNING]: {
+      entry: [
+        { type: ApiNames.actions.loaderReady, params: null },
+      ],
     },
   },
 });
