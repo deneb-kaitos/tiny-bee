@@ -64,6 +64,13 @@ const api = {
         payload: null,
       });
     },
+    // eslint-disable-next-line no-unused-vars
+    [ApiNames.actions.loaderReady]: ({ context, event}, params) => {
+      self.postMessage({
+        type: LoaderSignalTypes.LOADER_READY,
+        payload: params, 
+      })
+    },
     // [ApiNames.actions.disposeWorker]: ({ context, event }, params) => {
     //   console.debug(ApiNames.actions.disposeWorker, context, event, params);
     // },
@@ -104,6 +111,13 @@ const handle_INIT = (payload = null) => {
   loaderFSM.start();
   loaderFSM.send({
     type: LoaderSignalTypes.CREATE_WORKERS,
+  });
+
+  self.postMessage({
+    type: ProtocolMessageTypes.INIT,
+    payload: {
+      workerName: self.name,
+    } 
   });
 
   console.log(`[${self.name}].handle_INIT:`, payload);

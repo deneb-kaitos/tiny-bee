@@ -1,26 +1,17 @@
 import {
   ProtocolMessageTypes,
 } from '$lib/workers/ProtocolMessageTypes.js';
+import {
+  ConnectionFactory,
+} from './ConnectionFactory.js';
 
-/**
- * @type {BroadcastChannel} broadcastChannel
- */
-let broadcastChannel = null;
-
-const handle_broadcastChannel_message = (e) => {
-  console.debug(`[${self.name}].handle_broadcastChannel_message`, e);
-};
-const handle_broadcastChannel_messageerror = (e) => {
-  console.debug(`[${self.name}].handle_broadcastChannel_messageerror`, e);
-};
+let connectionFactory = null;
 
 //#region message handlers
 const handle_INIT = (payload = null) => {
   console.log(`[${self.name}].handle_INIT`, payload);
 
-  broadcastChannel = new BroadcastChannel(self.name);
-  broadcastChannel.addEventListener('message',handle_broadcastChannel_message);
-  broadcastChannel.addEventListener('messageerror', handle_broadcastChannel_messageerror);
+  connectionFactory = new ConnectionFactory();
 
   self.postMessage({
     type: ProtocolMessageTypes.INIT,
@@ -31,13 +22,19 @@ const handle_INIT = (payload = null) => {
 };
 
 const handle_DISPOSE = (payload = null) => {
+  connectionFactory?.dispose();
+  connectionFactory = null;
+
   self.removeEventListener('error', handleError);
   self.removeEventListener('message', handleMessage);
   self.removeEventListener('messageerror', handleMessageError);
 
-  broadcastChannel.removeEventListener('message', handle_broadcastChannel_message);
-  broadcastChannel.removeEventListener('messageerror', handle_broadcastChannel_messageerror);
-  broadcastChannel.close();
+  self.postMessage({
+    type: ProtocolMessageTypes.DISPOSE,
+    payload: {
+      workerName: self.name,
+    },
+  });
 
   self.close();
 

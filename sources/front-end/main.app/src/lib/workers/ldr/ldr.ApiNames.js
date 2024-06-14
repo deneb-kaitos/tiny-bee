@@ -3,6 +3,7 @@ export const ApiNames = Object.freeze({
     createWorker: 'createWorker',
     initWorker: 'initWorker',
     disposeWorker: 'disposeWorker',
+    loaderReady: 'loaderReady',
   },
   guards: {
     isAllWorkersCreated: 'isAllWorkersCreated',
