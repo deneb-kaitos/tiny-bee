@@ -91,11 +91,27 @@ const api = {
         payload: params, 
       })
     },
-    // [ApiNames.actions.disposeWorker]: ({ context, event }, params) => {
-    //   console.debug(ApiNames.actions.disposeWorker, context, event, params);
-    // },
   },
   actors: {
+    [ApiNames.actors.runWorker]: fromPromise(async ({ input, system }) => {
+      console.debug(`.actors.${ApiNames.actors.runWorker}`, input, system);
+
+      const {
+        workerName = null,
+      } = input;
+
+      /**
+       * @type {Worker} worker
+       */
+      for(const worker of workers.values()) {
+        worker.postMessage({
+          type: ProtocolMessageTypes.RUN,
+          payload: null,
+        })
+      }
+
+      return Promise.resolve({ workerName });
+    }),
     [ApiNames.actors.initWorker]: fromPromise(async ({ input, system}) => {
       console.debug(`.actors.${ApiNames.actors.initWorker}`, input, system);
 
@@ -148,16 +164,25 @@ const api = {
     // },
   },
   guards: {
-    [ApiNames.guards.isNotAllWorkersCreated]: () => {
-      for (const workerName of workerNames) {
-        if (workers.has(workerName) === false) {
-          console.debug(`${ApiNames.guards.isNotAllWorkersCreated} found not yet created worker: ${workerName}`);
+    [ApiNames.guards.isAllWorkersRunning]: ({ context }) => {
+      let result = false;
 
-          return true;
+      for(const workerName of context.workerNames) {
+        /**
+         * @type {Set} workerInfo
+         */
+        const workerInfo = context.workerInfos.get(workerName);
+
+        if (workerInfo.has(ProtocolMessageTypes.RUN) === false) {
+          result = false;
+
+          break;
         }
+      
+        result = true;
       }
 
-      return false;
+      return result;
     },
     [ApiNames.guards.isAllWorkersCreated]: () => {
       let result = false;
@@ -177,8 +202,7 @@ const api = {
 
       return result;
     },
-    // [ApiNames.guards.isAllWorkersInitialized]: () => isAllHaveProperty(workerNames, workers, workerProperties, ProtocolMessageTypes.INIT),
-    [ApiNames.guards.isAllWorkersInitialized]: ({ context, event }) => {
+    [ApiNames.guards.isAllWorkersInitialized]: ({ context }) => {
       let result = false;
 
       for(const workerName of context.workerNames) {

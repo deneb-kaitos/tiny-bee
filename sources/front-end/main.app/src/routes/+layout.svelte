@@ -43,6 +43,7 @@
 
     switch(type) {
       case LoaderSignalTypes.LOADER_READY: {
+        // this is reached; it means all the Workers are currently running; all good; the [app] worker should take care of the next steps
         console.debug('handleLoaderMessage', type);
 
         let bc = new BroadcastChannel(BroadcastChannelName.CONNECTION_FACTORY);

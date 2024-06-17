@@ -22,6 +22,9 @@ const StateName = Object.freeze({
   INIT_WORKERS: 'INIT_WORKERS',
   CHECK_ALL_WORKERS_INITIALIZED: 'CHECK_ALL_WORKERS_INITIALIZED',
   ERR_INIT_WORKER: 'ERR_INIT_WORKER',
+  RUN_WORKERS: 'RUN_WORKERS',
+  ERR_RUN_WORKER: 'ERR_RUN_WORKER',
+  CHECK_ALL_WORKERS_RUNNING: 'CHECK_ALL_WORKERS_RUNNING',
   WORKERS_RUNNING: 'WORKERS_RUNNING',
   WORKER_DISPOSING: 'WORKER_DISPOSING',
 });
@@ -217,7 +220,7 @@ const buildMachine = (api = null, context) => setup(api).createMachine({
         [EventName.check]: [
           {
             guard: ApiNames.guards.isAllWorkersInitialized,
-            target: StateName.WORKERS_RUNNING,
+            target: StateName.RUN_WORKERS,
           },
           {
             target: StateName.INIT_WORKERS,
@@ -225,9 +228,94 @@ const buildMachine = (api = null, context) => setup(api).createMachine({
         ],
       }
     },
+    [StateName.RUN_WORKERS]: {
+      invoke: {
+        id: ApiNames.actors.runWorker,
+        src: ApiNames.actors.runWorker,
+        input: ({ context }) => {
+          const result = { workerName: null };
+
+          for (const workerName of context.workerNames) {
+            /**
+             * @type {Set<String>} workerInfo
+             */
+            const workerInfo = context.workerInfos.get(workerName);
+
+            if(workerInfo.has(ProtocolMessageTypes.RUN) === false) {
+              result.workerName = workerName;
+              
+              break;
+            }
+          }
+
+          return result;
+        },
+        onError: {
+          target: StateName.ERR_RUN_WORKER,
+        },
+      },
+      on: {
+        [ProtocolMessageTypes.RUN]: {
+          actions: [
+            assign({
+              workerInfos: ({ context, event }) => {
+                  const {
+                    payload: {
+                      workerName = null,
+                    },
+                  } = event;
+
+                  console.debug(`received ${ProtocolMessageTypes.RUN} for ${workerName}`, context, event);
+
+                  if (workerName === null) {
+                    throw new ReferenceError('workerName is undefined');
+                  }
+
+                  /**
+                   * @type {Map<String, Set<String>>} workerInfos
+                   */
+                  const workerInfos = new Map(context.workerInfos);
+                  /**
+                   * @type {Set<String>}
+                   */
+                  const workerInfo = workerInfos.get(workerName);
+                  
+                  workerInfo.add(ProtocolMessageTypes.RUN);
+                  workerInfos.set(workerName, workerInfo);
+
+                  return workerInfos;
+              },
+            }),
+          ],
+          target: StateName.CHECK_ALL_WORKERS_RUNNING,
+        },
+      },
+    },
+    [StateName.ERR_RUN_WORKER]: {
+      type: 'final',
+    },
+    [StateName.CHECK_ALL_WORKERS_RUNNING]: {
+      entry: raise({
+        type: EventName.check,
+        data: null,
+      }),
+      on: {
+        [EventName.check]: [
+          {
+            guard: ApiNames.guards.isAllWorkersRunning,
+            target: StateName.WORKERS_RUNNING,
+          },
+          {
+            target: StateName.RUN_WORKERS,
+          }
+        ],
+      }
+    },
     [StateName.WORKERS_RUNNING]: {
       entry: [
-        { type: ApiNames.actions.loaderReady, params: null },
+        {
+          type: ApiNames.actions.loaderReady,
+        }
       ],
     },
   },
