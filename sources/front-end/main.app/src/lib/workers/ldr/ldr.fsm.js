@@ -2,6 +2,7 @@ import {
   setup,
   createActor,
   assign,
+  raise,
 } from 'xstate';
 import {
   LoaderSignalTypes,
@@ -15,9 +16,17 @@ import {
 
 const StateName = Object.freeze({
   INITIAL: 'INITIAL',
+  CREATE_WORKERS: LoaderSignalTypes.CREATE_WORKERS,
+  ERR_CREATE_WORKER: 'ERR_CREATE_WORKER',
+  CHECK_ALL_WORKERS_CREATED: 'CHECK_ALL_WORKERS_CREATED',
   INIT_WORKERS: 'INIT_WORKERS',
+  CHECK_ALL_WORKERS_INITIALIZED: 'CHECK_ALL_WORKERS_INITIALIZED',
+  ERR_INIT_WORKER: 'ERR_INIT_WORKER',
   WORKERS_RUNNING: 'WORKERS_RUNNING',
   WORKER_DISPOSING: 'WORKER_DISPOSING',
+});
+const EventName = Object.freeze({
+  check: 'check',
 });
 
 const buildMachine = (api = null, context) => setup(api).createMachine({
@@ -30,49 +39,191 @@ const buildMachine = (api = null, context) => setup(api).createMachine({
         [LoaderSignalTypes.CREATE_WORKERS]: {
           actions: [
             assign({
-              workerToCreatePtr:  0,
+              workerInfos: ({ context }) => {
+                const result = new Map();
+
+                for(const workerName of context.workerNames) {
+                  result.set(workerName, new Set());
+                }
+
+                return result;
+              },
             }),
           ],
-          target: LoaderSignalTypes.CREATE_WORKERS,
+          target: StateName.CREATE_WORKERS,
         },
       },
     },
-    [LoaderSignalTypes.CREATE_WORKERS]: {
-      entry: [
-        { type: ApiNames.actions.createWorker, params: ({ context }) => ({ workerName: context.workerNames[context.workerToCreatePtr] }) },
-      ],
+    [StateName.CREATE_WORKERS]: {
+      entry: () => console.debug(`%c${StateName.CREATE_WORKERS}.entry`, 'background-color: white; color: yellowgreen;'),
+      exit: () => console.debug(`%c${StateName.CREATE_WORKERS}.exit`, 'background-color: white; color: yellowgreen;'),
+      invoke: {
+        id: ApiNames.actors.createWorker,
+        src: ApiNames.actors.createWorker,
+        input: ({ context }) => {
+          const result = { workerName: null };
+
+          for (const workerName of context.workerNames) {
+            /**
+             * @type {Set<String>} workerInfo
+             */
+            const workerInfo = context.workerInfos.get(workerName);
+
+            if(workerInfo.has(ProtocolMessageTypes.CTOR) === false) {
+              result.workerName = workerName;
+              
+              break;
+            }
+          }
+
+          return result;
+        },
+        onError: {
+          target: StateName.ERR_CREATE_WORKER,
+        },
+      },
       on: {
         [ProtocolMessageTypes.CTOR]: {
           actions: [
             assign({
-              workerToCreatePtr: ({ context }) => context.workerToCreatePtr >= (context.workerNames.length - 1) ? null : context.workerToCreatePtr += 1,
+              workerInfos: ({ context, event }) => {
+                  console.debug(`received ${ProtocolMessageTypes.CTOR}`, context, event);
+
+                  const {
+                    payload: {
+                      workerName = null,
+                    },
+                  } = event;
+
+                  if (workerName === null) {
+                    throw new ReferenceError('workerName is undefined');
+                  }
+
+                  /**
+                   * @type {Map<String, Set<String>>} workerInfos
+                   */
+                  const workerInfos = new Map(context.workerInfos);
+                  /**
+                   * @type {Set<String>}
+                   */
+                  const workerInfo = workerInfos.get(workerName);
+                  
+                  workerInfo.add(ProtocolMessageTypes.CTOR);
+                  workerInfos.set(workerName, workerInfo);
+
+                  return workerInfos;
+              },
             }),
           ],
-          guard: ApiNames.guards.isAllWorkersCreated,
-          target: StateName.INIT_WORKERS,
+          target: StateName.CHECK_ALL_WORKERS_CREATED,
+          reenter: true,
         },
       },
-      exit: [
-        assign({
-          workerToInitPtr: 0,
-        }),
-      ],
+    },
+    [StateName.ERR_CREATE_WORKER]: {
+      type: 'final',
+    },
+    [StateName.CHECK_ALL_WORKERS_CREATED]: {
+      entry: raise({
+        type: EventName.check,
+        data: null,
+      }),
+      on: {
+        [EventName.check]: [
+          {
+            guard: ApiNames.guards.isAllWorkersCreated,
+            target: StateName.INIT_WORKERS,
+          },
+          {
+            target: StateName.CREATE_WORKERS,
+          }
+        ],
+      }
     },
     [StateName.INIT_WORKERS]: {
-      entry: [
-        { type: ApiNames.actions.initWorker, params: ({ context }) => ({ workerName: context.workerNames[context.workerToInitPtr] })},
-      ],
+      entry: () => console.debug(`%c${StateName.INIT_WORKERS}.entry`, 'background-color: white; color: yellowgreen;'),
+      exit: () => console.debug(`%c${StateName.INIT_WORKERS}.exit`, 'background-color: white; color: yellowgreen;'),
+      invoke: {
+        id: ApiNames.actors.initWorker,
+        src: ApiNames.actors.initWorker,
+        input: ({ context }) => {
+          const result = { workerName: null };
+
+          for (const workerName of context.workerNames) {
+            /**
+             * @type {Set<String>} workerInfo
+             */
+            const workerInfo = context.workerInfos.get(workerName);
+
+            if(workerInfo.has(ProtocolMessageTypes.INIT) === false) {
+              result.workerName = workerName;
+              
+              break;
+            }
+          }
+
+          return result;
+        },
+        onError: {
+          target: StateName.ERR_INIT_WORKER,
+        },
+      },
       on: {
         [ProtocolMessageTypes.INIT]: {
           actions: [
             assign({
-              workerToInitPtr: ({ context }) => context.workerToInitPtr >= (context.workerNames.length - 1) ? null : context.workerToInitPrt += 1,
+              workerInfos: ({ context, event }) => {
+                  const {
+                    payload: {
+                      workerName = null,
+                    },
+                  } = event;
+
+                  console.debug(`received ${ProtocolMessageTypes.INIT} for ${workerName}`, context, event);
+
+                  if (workerName === null) {
+                    throw new ReferenceError('workerName is undefined');
+                  }
+
+                  /**
+                   * @type {Map<String, Set<String>>} workerInfos
+                   */
+                  const workerInfos = new Map(context.workerInfos);
+                  /**
+                   * @type {Set<String>}
+                   */
+                  const workerInfo = workerInfos.get(workerName);
+                  
+                  workerInfo.add(ProtocolMessageTypes.INIT);
+                  workerInfos.set(workerName, workerInfo);
+
+                  return workerInfos;
+              },
             }),
           ],
-          guard: ApiNames.guards.isAllWorkersInitialized,
-          target: StateName.WORKERS_RUNNING,
+          target: StateName.CHECK_ALL_WORKERS_INITIALIZED,
         },
       },
+    },
+    [StateName.ERR_INIT_WORKER]: {
+      type: 'final',
+    },
+    [StateName.CHECK_ALL_WORKERS_INITIALIZED]: {
+      entry: raise({
+        type: EventName.check,
+        data: null,
+      }),
+      on: {
+        [EventName.check]: [
+          {
+            guard: ApiNames.guards.isAllWorkersInitialized,
+            target: StateName.WORKERS_RUNNING,
+          },
+          {
+            target: StateName.INIT_WORKERS,
+          }
+        ],
+      }
     },
     [StateName.WORKERS_RUNNING]: {
       entry: [
@@ -82,4 +233,6 @@ const buildMachine = (api = null, context) => setup(api).createMachine({
   },
 });
 
-export const LoaderFSM = (api = {}, context = {}) => createActor(buildMachine(api, context));
+export const LoaderFSM = (api = {}, context = {}) => createActor(buildMachine(api, context), {
+  inspect: api.inspect,
+});

@@ -13,9 +13,11 @@ import {
 import {
   isAllHaveProperty,
 } from '../helpers/isAllHaveProperty.js';
+import { fromPromise } from 'xstate';
+import { BroadcastChannelName } from '../BroadcastChannelName.js';
 
 let loaderFSM = null;
-const workerNames = Object.freeze(['comm']);
+const workerNames = Object.freeze(['comm', 'app']);
 const workerProperties = new WeakMap();
 
 /**
@@ -25,7 +27,7 @@ const workers = new Map();
 /**
  * @type {Map<string, BroadcastChannel> | null}
  */
-const broadcastChannels = new Map();
+let broadcastChannel = null;
 const handleWorkerProtocolMessage = (e) => {
   const {
     type,
@@ -36,6 +38,8 @@ const handleWorkerProtocolMessage = (e) => {
   properties[type] = true;
   workerProperties.set(workers.get(payload.workerName), properties);
 
+  console.debug('handleWorkerProtocolMessage', type, payload);
+
   loaderFSM.send({
     type,
     payload,
@@ -43,17 +47,33 @@ const handleWorkerProtocolMessage = (e) => {
 };
 
 const api = {
+  inspect: (inspectionEvent) => {
+    switch(inspectionEvent.type) {
+      case '@xstate.event': {
+        console.debug(
+          `%cinspection: %c${inspectionEvent.event.type}`,
+          'background-color:lightgray;color:black;padding:0 0.5rem;',
+          'background-color:orange;color:black;padding:0 0.5rem;',
+          inspectionEvent.event,
+        );
+        break;
+      }
+    }
+    // console.debug('inspect:', inspectionEvent);
+  },
   actions: {
-    // eslint-disable-next-line no-unused-vars
-    [ApiNames.actions.createWorker]: ({ context, event }, { workerName }) => {
-      const url = `../${workerName}/index.js`;
-      const worker = new Worker(new URL(url, import.meta.url), {
-        type: 'module',
-        name: workerName,
-      });
-      workers.set(workerName, worker);
-      worker.addEventListener('message', handleWorkerProtocolMessage);
-    },
+     
+    // [ApiNames.actions.createWorker]: ({ context, event }, { workerName }) => {
+    //   console.debug(`[${ApiNames.actions.createWorker}]: ${workerName}`);
+
+    //   const url = `../${workerName}/index.js`;
+    //   const worker = new Worker(new URL(url, import.meta.url), {
+    //     type: 'module',
+    //     name: workerName,
+    //   });
+    //   workers.set(workerName, worker);
+    //   worker.addEventListener('message', handleWorkerProtocolMessage);
+    // },
     // eslint-disable-next-line no-unused-vars
     [ApiNames.actions.initWorker]: ({ context, event }, { workerName }) => {
       /**
@@ -75,22 +95,109 @@ const api = {
     //   console.debug(ApiNames.actions.disposeWorker, context, event, params);
     // },
   },
-  actors: null,
+  actors: {
+    [ApiNames.actors.initWorker]: fromPromise(async ({ input, system}) => {
+      console.debug(`.actors.${ApiNames.actors.initWorker}`, input, system);
+
+      const {
+        workerName = null,
+      } = input;
+
+      console.debug(`[${ApiNames.actors.initWorker}] for ${workerName}`);
+
+      if (workerName === null) {
+        return Promise.resolve({ workerName });
+      }
+
+      workers.get(workerName)?.postMessage({
+        type: ProtocolMessageTypes.INIT,
+        payload: null,
+      });
+
+      return Promise.resolve({ workerName });
+    }),
+    [ApiNames.actors.createWorker]: fromPromise(async ({ input, system }) => {
+      console.debug(`.actors.${ApiNames.actors.createWorker}`, input, system);
+
+      const {
+        workerName = null,
+      } = input;
+
+      console.debug(`[${ApiNames.actors.createWorker}] for ${workerName}`);
+
+      if (workerName === null) {
+        return Promise.resolve({ workerName });
+      }
+
+      const url = `../${workerName}/index.js`;
+      const worker = new Worker(new URL(url, import.meta.url), {
+        type: 'module',
+        name: workerName,
+      });
+      workers.set(workerName, worker);
+      worker.addEventListener('message', handleWorkerProtocolMessage);
+
+      return Promise.resolve({
+        workerName,
+      });
+    }),
+    // ({ context, event }, params) => {
+    //   console.debug(`[${ApiNames.actors.createWorker}]`, context, params);
+
+    //   return false;
+    // },
+  },
   guards: {
+    [ApiNames.guards.isNotAllWorkersCreated]: () => {
+      for (const workerName of workerNames) {
+        if (workers.has(workerName) === false) {
+          console.debug(`${ApiNames.guards.isNotAllWorkersCreated} found not yet created worker: ${workerName}`);
+
+          return true;
+        }
+      }
+
+      return false;
+    },
     [ApiNames.guards.isAllWorkersCreated]: () => {
       let result = false;
 
       for(const workerName of workerNames) {
-       if (workers.has(workerName) === false) {
-        break;
-       } else {
+        if (workers.has(workerName) === false) {
+          result = false;
+          console.debug(`worker [${workerName}] isn't instantiated yet`);
+
+          break;
+        } else {
+          result = true;
+        }
+      }
+
+      console.debug(`[${ApiNames.guards.isAllWorkersCreated}]: ${result}`, workerNames, workers);
+
+      return result;
+    },
+    // [ApiNames.guards.isAllWorkersInitialized]: () => isAllHaveProperty(workerNames, workers, workerProperties, ProtocolMessageTypes.INIT),
+    [ApiNames.guards.isAllWorkersInitialized]: ({ context, event }) => {
+      let result = false;
+
+      for(const workerName of context.workerNames) {
+        /**
+         * @type {Set} workerInfo
+         */
+        const workerInfo = context.workerInfos.get(workerName);
+
+        if (workerInfo.has(ProtocolMessageTypes.INIT) === false) {
+          result = false;
+
+          break;
+        }
+      
         result = true;
-       }
       }
 
       return result;
     },
-    [ApiNames.guards.isAllWorkersInitialized]: () => isAllHaveProperty(workerNames, workers, workerProperties, ProtocolMessageTypes.INIT),
   },
   delays: null,
 };
@@ -100,11 +207,15 @@ const context = {
 
 //#region message handlers
 const handleLoaderFSM_snapshot = (snapshot = null) => {
-  console.debug('snapshot:', snapshot);
+  console.debug(
+    `%c${self.name}@${snapshot.value}:`,
+    'background-color:orange;color:white;padding:0 0.5rem;',
+    snapshot
+  );
 };
 
 const handle_INIT = (payload = null) => {
-  broadcastChannels.set(self.name, new BroadcastChannel(self.name));
+  broadcastChannel = new BroadcastChannel(BroadcastChannelName.LOADER);
 
   loaderFSM = LoaderFSM(api, context);
   loaderFSM.subscribe(handleLoaderFSM_snapshot);
@@ -124,11 +235,8 @@ const handle_INIT = (payload = null) => {
 };
 
 const handle_DISPOSE = (payload = null) => {
-  for(const broadcastChannel of broadcastChannels.values()) {
-    broadcastChannel.close();
-  }
-
-  broadcastChannels.clear();
+  broadcastChannel.close();
+  broadcastChannel = null;
 
   for(const [workerName, worker] of workers.entries()) {
     console.debug(`disposing [${workerName}]...`);
