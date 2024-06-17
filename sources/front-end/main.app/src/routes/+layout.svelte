@@ -54,11 +54,6 @@
 
         break;
       }
-      default: {
-        console.debug(`ignoring message type: ${type}`);
-
-        break;
-      }
     }
   };
 

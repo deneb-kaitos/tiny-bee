@@ -7,10 +7,36 @@
  * @returns {Boolean}
  */
 export const isAllHaveProperty = (names = null, objects = null, properties = null, property = null) => {
+  if (names === null) {
+    throw new ReferenceError('isAllHaveProperty.names === null');
+  }
+
+  if (objects === null) {
+    throw new ReferenceError('isAllHaveProperty.objects === null');
+  } 
+
+  if (properties === null) {
+    throw new ReferenceError('isAllHaveProperty.properties === null');
+  } 
+
+  if (property === null) {
+    throw new ReferenceError('isAllHaveProperty.property === null');
+  } 
+
   let result = false;
 
   for(const name of names) {
-    const p = properties.get(objects.get(name));
+    const o = objects.get(name) || null;
+
+    if (o === null) {
+      break;
+    }
+
+    const p = properties.get(o) || null;
+    
+    if (p === null) {
+      break;
+    }
 
     if(Object.hasOwn(p, property) === false) {
       break;

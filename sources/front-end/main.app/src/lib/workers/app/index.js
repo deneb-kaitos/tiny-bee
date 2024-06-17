@@ -1,17 +1,12 @@
 import {
   ProtocolMessageTypes,
 } from '$lib/workers/ProtocolMessageTypes.js';
-import {
-  ConnectionFactory,
-} from './ConnectionFactory.js';
 
 let connectionFactory = null;
 
 //#region message handlers
 const handle_INIT = (payload = null) => {
   console.log(`[${self.name}].handle_INIT`, payload);
-
-  connectionFactory = new ConnectionFactory();
 
   self.postMessage({
     type: ProtocolMessageTypes.INIT,
