@@ -42,6 +42,16 @@ const handle_DISPOSE = (payload = null) => {
 
   console.log(`[${self.name}].handle_DISPOSE`, payload);
 };
+
+const handle_RUN = (payload = null) => {
+  self.postMessage({
+    type: ProtocolMessageTypes.RUN,
+    payload: {
+      workerName: self.name,
+    },
+  });
+  console.debug(`%c${self.name}.handle_RUN`, 'background-color: white; color: yellowgreen;', payload);
+};
 //#endregion
 
 /**
@@ -60,6 +70,9 @@ const handleMessage = (messageEvent) => {
     }
     case ProtocolMessageTypes.DISPOSE: {
       return handle_DISPOSE(payload);
+    }
+    case ProtocolMessageTypes.RUN: {
+      return handle_RUN(payload);
     }
     default: {
       throw new Error(`[${self.name}] unknown message type == ${type}`, messageEvent);

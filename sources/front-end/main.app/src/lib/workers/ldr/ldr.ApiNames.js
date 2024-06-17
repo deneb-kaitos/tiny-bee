@@ -8,10 +8,12 @@ export const ApiNames = Object.freeze({
   actors: {
     createWorker: 'createWorker',
     initWorker: 'initWorker',
+    runWorker: 'runWorker',
   },
   guards: {
     isAllWorkersCreated: 'isAllWorkersCreated',
-    isNotAllWorkersCreated: 'isNotAllWorkersCreated',
+    // isNotAllWorkersCreated: 'isNotAllWorkersCreated',
     isAllWorkersInitialized: 'isAllWorkersInitialized',
+    isAllWorkersRunning: 'isAllWorkersRunning',
   },
 });
