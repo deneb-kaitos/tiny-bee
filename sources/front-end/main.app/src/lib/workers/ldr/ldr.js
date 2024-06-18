@@ -11,8 +11,8 @@ import {
   ApiNames,
 } from './ldr.ApiNames.js';
 import {
-  isAllHaveProperty,
-} from '../helpers/isAllHaveProperty.js';
+  isAllWorkersHaveALabel,
+} from '../helpers/isAllWorkersHaveALabel.js';
 import { fromPromise } from 'xstate';
 import { BroadcastChannelName } from '../BroadcastChannelName.js';
 
@@ -59,21 +59,8 @@ const api = {
         break;
       }
     }
-    // console.debug('inspect:', inspectionEvent);
   },
   actions: {
-     
-    // [ApiNames.actions.createWorker]: ({ context, event }, { workerName }) => {
-    //   console.debug(`[${ApiNames.actions.createWorker}]: ${workerName}`);
-
-    //   const url = `../${workerName}/index.js`;
-    //   const worker = new Worker(new URL(url, import.meta.url), {
-    //     type: 'module',
-    //     name: workerName,
-    //   });
-    //   workers.set(workerName, worker);
-    //   worker.addEventListener('message', handleWorkerProtocolMessage);
-    // },
     // eslint-disable-next-line no-unused-vars
     [ApiNames.actions.initWorker]: ({ context, event }, { workerName }) => {
       /**
@@ -157,33 +144,9 @@ const api = {
         workerName,
       });
     }),
-    // ({ context, event }, params) => {
-    //   console.debug(`[${ApiNames.actors.createWorker}]`, context, params);
-
-    //   return false;
-    // },
   },
   guards: {
-    [ApiNames.guards.isAllWorkersRunning]: ({ context }) => {
-      let result = false;
-
-      for(const workerName of context.workerNames) {
-        /**
-         * @type {Set} workerInfo
-         */
-        const workerInfo = context.workerInfos.get(workerName);
-
-        if (workerInfo.has(ProtocolMessageTypes.RUN) === false) {
-          result = false;
-
-          break;
-        }
-      
-        result = true;
-      }
-
-      return result;
-    },
+    [ApiNames.guards.isAllWorkersRunning]: ({ context }) => isAllWorkersHaveALabel(context, ProtocolMessageTypes.RUN),
     [ApiNames.guards.isAllWorkersCreated]: () => {
       let result = false;
 
@@ -202,26 +165,7 @@ const api = {
 
       return result;
     },
-    [ApiNames.guards.isAllWorkersInitialized]: ({ context }) => {
-      let result = false;
-
-      for(const workerName of context.workerNames) {
-        /**
-         * @type {Set} workerInfo
-         */
-        const workerInfo = context.workerInfos.get(workerName);
-
-        if (workerInfo.has(ProtocolMessageTypes.INIT) === false) {
-          result = false;
-
-          break;
-        }
-      
-        result = true;
-      }
-
-      return result;
-    },
+    [ApiNames.guards.isAllWorkersInitialized]: ({ context }) => isAllWorkersHaveALabel(context, ProtocolMessageTypes.INIT),
   },
   delays: null,
 };
