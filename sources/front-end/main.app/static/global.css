@@ -4,7 +4,8 @@
   --main-color: var(--theme-white);
   --main-background-color: var(--theme-dark_gray);
   --main-grid-gap: max(0.25vh, 0.25vw);
-  --main-border-radius: max(0.25vh, 0.25vw);
+  --main-border-radius: max(0.125vh, 0.125vw);
+  --main-padding: 0.5rem;
 
   --main-button-height: 8vh;
 
