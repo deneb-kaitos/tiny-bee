@@ -1,7 +1,10 @@
 <script>
+  import BootInfo from "$lib/controls/BootInfo/BootInfo.svelte";
 </script>
 
 <style>
 </style>
 
-normal app
+<BootInfo
+  maxSteps=100
+/>
