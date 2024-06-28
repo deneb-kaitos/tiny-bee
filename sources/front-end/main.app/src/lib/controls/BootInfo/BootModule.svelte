@@ -2,28 +2,35 @@
   import WifiIcon from './icons/wifi.svelte';
   import CpuIcon from './icons/cpu.svelte';
 
-  const {
+  let {
     /**
-     * @type {String} name
+     * @type {String}
     */
     name = 'N/A',
-    /**
-     * @type {Boolean} ctor
-    */
-    ctor = false,
-    /**
-     * @type {Boolean} init
-    */
-    init = false,
-    /**
-     * @type {Boolean} run
-    */
-    run = false,
+    ModuleStore,
   } = $props();
 
+  let ctor = $state(false);
+  let init = $state(false);
+  let run = $state(false);
+  
   const nameToIcon = Object.freeze({
     comm: WifiIcon,
     app: CpuIcon,
+  });
+
+  $effect(() => {
+    ctor = ModuleStore.ctor;
+    init = ModuleStore.init;
+    run = ModuleStore.run;
+
+    return () => {
+      ctor = false;
+      init = false;
+      run = false;
+
+      console.debug(`[${name}] BootModule.svelte::dispose`);
+    };
   });
 </script>
 
@@ -44,6 +51,7 @@
 
     & > .boot-module-icon {
       grid-area: boot-module-icon;
+      color: var(--main-accent-color);
     }
 
     & > .boot-module-name {
@@ -66,14 +74,28 @@
         aspect-ratio: 1/1;
         width: 1rem;
         border-radius: 50%;
-        filter: opacity(0.5);
 
         background-color: var(--theme-dark_gray);
+
+        box-shadow: inset var(--box-shadow-x) var(--box-shadow-y) var(--box-shadow-blur-radius) var(--box-shadow-spread-radius) var(--theme-black);
       }
 
       & > :is(.ctor, .init, .run) {
-        background-color: var(--theme-blue);
-        filter: opacity(1.0);
+        --t-behavior: allow-discrete;
+        --t-delay: 0s;
+        --t-duration: 1s;
+        --t-timing: var(--transition-timing-function);
+
+        background-color: var(--main-accent-color);
+        /* filter: opacity(1.0); */
+
+        transition-property: background-color;
+        transition-behavior: var(--t-behavior);
+        transition-delay: var(--t-delay);
+        transition-duration: var(--t-duration);
+        transition-timing-function: var(--t-timing);
+
+        box-shadow: none;
       }
     }
 

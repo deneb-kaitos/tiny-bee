@@ -25,7 +25,7 @@ const workerProperties = new WeakMap();
  */
 const workers = new Map();
 /**
- * @type {Map<string, BroadcastChannel> | null}
+ * @type {BroadcastChannel | null}
  */
 let broadcastChannel = null;
 const handleWorkerProtocolMessage = (e) => {
@@ -44,6 +44,8 @@ const handleWorkerProtocolMessage = (e) => {
     type,
     payload,
   });
+
+  broadcastChannel?.postMessage({ type, payload });
 };
 
 const api = {

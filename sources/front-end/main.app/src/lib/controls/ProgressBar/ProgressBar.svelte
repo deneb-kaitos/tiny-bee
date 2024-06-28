@@ -1,24 +1,44 @@
 <script>
+  import {
+    ProgressBarStore,
+  } from './stores/ProgressBarStore.svelte.js';
   const {
-    maxSteps = 0,
+    Store,
   } = $props();
+
+  let max = $state(undefined);
+  let value = $state(undefined);
+
+  $effect(() => {
+    max = Store.max;
+    value = Store.value;
+  });
 </script>
 
 <style>
   .progress-bar {
-    height: 0.5rem;
+    height: 0.125rem;
     width: 100%;
+
+    -webkit-appearance: none;
+    appearance: none;
   }
-  /* .progress-bar:not([value]), */
+  .progress-bar:not([value]) {
+    visibility: hidden;
+  }
+
   .progress-bar[value]::-webkit-progress-bar {
-    background-color: #eee;
-    border-radius: 2px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
+    background-color: var(--theme-light_gray);
   }
 
   .progress-bar[value]::-webkit-progress-value {
-    background-color: var(--theme-red);
+    background-color: var(--main-accent-color);
+  }
+
+  .progress-bar[value]::-webkit-progress-bar,
+  .progress-bar[value]::-webkit-progress-value {
+    border-radius: calc(var(--main-border-radius) / 2);
   }
 </style>
 
-<progress class='progress-bar' value="{maxSteps / 10}" max="{maxSteps}" aria-label='progress'></progress>
+<progress class='progress-bar' {value} {max} aria-label='progress'></progress>
