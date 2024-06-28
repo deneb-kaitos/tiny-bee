@@ -5,6 +5,4 @@
 <style>
 </style>
 
-<BootInfo
-  maxSteps=100
-/>
+<BootInfo />

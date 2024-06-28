@@ -4,8 +4,9 @@
   --main-color: var(--theme-white);
   --main-background-color: var(--theme-dark_gray);
   --main-grid-gap: max(0.25vh, 0.25vw);
-  --main-border-radius: max(0.125vh, 0.125vw);
+  --main-border-radius: 2px;
   --main-padding: 0.5rem;
+  --main-accent-color: var(--theme-glacier);
 
   --main-button-height: 8vh;
 
@@ -22,6 +23,15 @@
 
   --border-radius: 0.25rem;
   --scale-factor: 1.125;
+
+  --filter-drop-shadow-x: 2px;
+  --filter-drop-shadow-y: 4px;
+  --filter-drop-shadow-blur: 6px;
+
+  --box-shadow-x: 0px;
+  --box-shadow-y: 0px;
+  --box-shadow-blur-radius: 2px;
+  --box-shadow-spread-radius: 0px;
 }
 
 * {

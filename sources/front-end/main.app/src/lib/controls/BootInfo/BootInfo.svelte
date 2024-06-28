@@ -1,13 +1,99 @@
 <script>
+  import {
+    BroadcastChannelName,
+  } from '$lib/workers/BroadcastChannelName.js';
+  import {
+    ProtocolMessageTypes,
+  } from '$lib/workers/ProtocolMessageTypes.js';
+  import {
+    BootModuleStore,
+  } from './stores/BootModuleStore.svelte.js';
+  import {
+    ProgressBarStore,
+  } from '$lib/controls/ProgressBar/stores/ProgressBarStore.svelte.js';
   import BootModule from "./BootModule.svelte";
-  import ProgressBar from "../ProgressBar/ProgressBar.svelte";
 
-  const {
-    /**
-     * @type {Number} maxSteps
-    */
-    maxSteps = 0,
-  } = $props();
+  /**
+   * @type {BroadcastChannel | null}
+   */
+  let loaderBroadcastChannel;
+
+  const moduleStores = new Map();
+  moduleStores.set('comm', new BootModuleStore('comm'));
+  moduleStores.set('app', new BootModuleStore('app'));
+
+  /**
+   * 
+   * @param {String | null} moduleName
+   * @param {String | null} moduleState
+   */
+  const setModuleState = (moduleName = null, moduleState = null) => {
+    const moduleStore = moduleStores.get(moduleName);
+
+    switch (moduleState) {
+      case ProtocolMessageTypes.CTOR: {
+        moduleStore.ctor = true;
+
+        break;
+      }
+      case ProtocolMessageTypes.INIT: {
+        moduleStore.init = true;
+
+        break;
+      }
+      case ProtocolMessageTypes.RUN: {
+        moduleStore.run = true;
+
+        break;
+      }
+    }
+  };
+
+  /**
+   * 
+   * @param {MessageEvent} messageEvent
+   */
+  const handleLoaderMessage = (messageEvent) => {
+    const {
+      type,
+      payload,
+    } = messageEvent.data;
+
+    switch(type) {
+      case ProtocolMessageTypes.CTOR: {
+        setModuleState(payload.workerName, type);
+
+        break;
+      }
+      case ProtocolMessageTypes.INIT: {
+        setModuleState(payload.workerName, type);
+
+        break;
+      }
+      case ProtocolMessageTypes.RUN: {
+        setModuleState(payload.workerName, type);
+
+        break;
+      }
+      default: {
+        console.debug('handleLoaderMessage', type, payload);
+
+        break;
+      }
+    }
+  };
+
+  $effect(() => {
+    loaderBroadcastChannel = new BroadcastChannel(BroadcastChannelName.LOADER);
+    loaderBroadcastChannel.addEventListener('message', handleLoaderMessage);
+
+    return () =>{
+      moduleStores.clear();
+
+      loaderBroadcastChannel?.removeEventListener('message', handleLoaderMessage);
+      loaderBroadcastChannel?.close();
+    };
+  });
 </script>
 <style>
   #boot-info-container {
@@ -21,11 +107,12 @@
     & > #boot-info-panel {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      grid-template-rows: 1fr 1fr 0.5fr;
+      /* grid-template-rows: 1fr 1fr 0.5fr; */
+      grid-template-rows: repeat(2, 0.75fr) 0.25fr;
       grid-template-areas:
         'header header header'
         '. modules .'
-        'progressbar progressbar progressbar'
+        '. . .'
       ;
       gap: var(--main-grid-gap);
       padding: calc(var(--main-padding) * 2);
@@ -34,12 +121,15 @@
       border-radius: var(--main-border-radius);
 
       background-color: var(--theme-black);
+      filter: drop-shadow(var(--filter-drop-shadow-x) var(--filter-drop-shadow-y) var(--filter-drop-shadow-blur) var(--theme-black));
 
       & > #boot-caption {
         grid-area: header;
         display: flex;
         justify-content: center;
         align-items: center;
+
+        color: var(--main-accent-color);
       }
 
       & > #boot-modules {
@@ -56,21 +146,6 @@
           display: contents;
         }
       }
-
-      & > #progress-bar {
-        grid-area: progressbar;
-        display: flex;
-        justify-content: stretch;
-        align-items: center;
-      
-        & > progress[value] {
-          height: 0.5rem;
-          width: 100%;
-
-          -webkit-appearance: none;
-          appearance: none;
-        }
-      }
     }
   }
 </style>
@@ -84,25 +159,15 @@
       <li>
         <BootModule 
           name="comm"
-          ctor={true}
-          init={false}
-          run={false}
+          ModuleStore={moduleStores.get('comm')}
         />
       </li>
       <li>
         <BootModule
           name="app"
-          ctor={true}
-          init={false}
-          run={false}
+          ModuleStore={moduleStores.get('app')}
         />
       </li>
     </ul>
-    <div id='progress-bar'>
-      <!-- <progress value="{maxSteps / 10}" max="{maxSteps}" aria-label='progress'></progress> -->
-      <ProgressBar
-        maxSteps
-      />
-    </div>
   </div>
 </article>
