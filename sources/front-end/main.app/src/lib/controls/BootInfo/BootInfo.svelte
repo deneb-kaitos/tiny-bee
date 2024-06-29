@@ -8,9 +8,6 @@
   import {
     BootModuleStore,
   } from './stores/BootModuleStore.svelte.js';
-  import {
-    ProgressBarStore,
-  } from '$lib/controls/ProgressBar/stores/ProgressBarStore.svelte.js';
   import BootModule from "./BootModule.svelte";
 
   /**
