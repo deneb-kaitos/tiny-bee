@@ -77,9 +77,8 @@
       container-type: inline-size;
 
       & > .boot-module-state {
-        aspect-ratio: 1/1;
-        width: 1rem;
-        border-radius: 50%;
+        aspect-ratio: 1 / 1;
+        width: clamp(0.5rem, 0.5rem + min(0.5svw, 0.5svh), 1.25rem);
 
         background-color: var(--theme-dark_gray);
 
@@ -89,11 +88,10 @@
       & > :is(.ctor, .init, .run) {
         --t-behavior: allow-discrete;
         --t-delay: 0s;
-        --t-duration: 1s;
+        --t-duration: 0.5s;
         --t-timing: var(--transition-timing-function);
 
         background-color: var(--main-accent-color);
-        /* filter: opacity(1.0); */
 
         transition-property: background-color;
         transition-behavior: var(--t-behavior);
