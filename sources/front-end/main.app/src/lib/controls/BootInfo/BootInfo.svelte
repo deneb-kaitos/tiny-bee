@@ -9,6 +9,7 @@
     BootModuleStore,
   } from './stores/BootModuleStore.svelte.js';
   import BootModule from "./BootModule.svelte";
+  import H1 from '$lib/controls/H1/h1.svelte';
 
   /**
    * @type {BroadcastChannel | null}
@@ -98,33 +99,36 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-
     height: 100svh;
-  
+
     & > #boot-info-panel {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      /* grid-template-rows: 1fr 1fr 0.5fr; */
-      grid-template-rows: repeat(2, 0.75fr) 0.25fr;
+      grid-template-columns: 1fr 2fr 1fr;
+      grid-template-rows: 1fr 3fr;
       grid-template-areas:
         'header header header'
         '. modules .'
-        '. . .'
       ;
       gap: var(--main-grid-gap);
-      padding: calc(var(--main-padding) * 2);
-      aspect-ratio: 9/6;
-      min-width: 20svw;
+      padding: var(--main-padding);
+      aspect-ratio: 16 / 9;
+      max-width: 95svw;
       border-radius: var(--main-border-radius);
 
       background-color: var(--theme-black);
       filter: drop-shadow(var(--filter-drop-shadow-x) var(--filter-drop-shadow-y) var(--filter-drop-shadow-blur) var(--theme-black));
 
+      container-name: boot-info-panel;
+      container-type: inline-size;
+
       & > #boot-caption {
         grid-area: header;
         display: flex;
-        justify-content: center;
-        align-items: center;
+        justify-content: stretch;
+        align-items: stretch;
+
+        container-name: boot-caption;
+        container-type: inline-size;
 
         color: var(--main-accent-color);
       }
@@ -140,18 +144,29 @@
         padding: 0;
 
         & > li {
-          display: contents;
+          /* display: contents; */
+          container-type: inline-size;
         }
       }
     }
+
+    /* @container boot-info-panel(width <= 356px) {
+      #boot-info-container {
+        & > #boot-info-panel {
+          & > #boot-caption {
+            color: red;
+          }
+        }
+      }
+    } */
   }
 </style>
 
 <article id='boot-info-container'>
   <div id='boot-info-panel'>
-    <h1 id='boot-caption'>
-      loading
-    </h1>
+    <div id='boot-caption'>
+      <H1>loading</H1>
+    </div>
     <ul id='boot-modules'>
       <li>
         <BootModule 
