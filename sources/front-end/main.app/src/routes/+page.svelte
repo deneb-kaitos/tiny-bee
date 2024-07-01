@@ -6,6 +6,7 @@
     LoaderSignalTypes,
   } from '$lib/workers/ldr/LoaderSignalTypes.js';
   import BootInfo from "$lib/controls/BootInfo/BootInfo.svelte";
+  import AuthZ from '$lib/controls/AuthZ/AuthZ.svelte';
 
   /**
    * @type {BroadcastChannel | null}
@@ -49,5 +50,5 @@
 {#if isBooting === true}
   <BootInfo />
 {:else}
-  <div>auth component</div>
+  <AuthZ />
 {/if}

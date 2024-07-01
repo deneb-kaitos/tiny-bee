@@ -112,7 +112,7 @@
       ;
       gap: var(--main-grid-gap);
       padding: var(--main-padding);
-      aspect-ratio: 16 / 9;
+      aspect-ratio: var(--main-aspect-ratio);
       max-width: 95svw;
       border-radius: var(--main-border-radius);
 

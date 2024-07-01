@@ -7,6 +7,7 @@
   --main-border-radius: min(0.25svh, 0.25svw);
   --main-padding: min(1svw, 1svh);
   --main-accent-color: var(--theme-glacier);
+  --main-aspect-ratio: 16 / 9;
 
   --main-button-height: 8vh;
 
@@ -113,7 +114,7 @@ svg {
   user-select: none !important;
 }
 
-button {
+/* button {
   max-width: 6rem;
   width: 6rem;
   max-height: 3.5rem;
@@ -124,4 +125,4 @@ button {
   border-radius: var(--border-radius);
   color: var(--main-background-color);
   font-size: medium;
-}
+} */
