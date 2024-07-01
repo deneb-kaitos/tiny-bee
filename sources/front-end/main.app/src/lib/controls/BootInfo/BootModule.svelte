@@ -45,12 +45,9 @@
       'boot-module-states'
     ;
     gap: var(--main-grid-gap);
-    padding: calc(var(--main-padding) * 1);
+    padding: calc(var(--main-padding) * 2.5);
     background-color: var(--theme-light_gray);
     border-radius: var(--main-border-radius);
-
-    /* width: 100%;
-    height: 100%; */
 
     & > .boot-module-icon {
       grid-area: boot-module-icon;
@@ -60,7 +57,7 @@
 
     & > .boot-module-name {
       grid-area: boot-module-name;
-      font-size: calc(var(--main-font-size) * 0.5);
+      /* font-size: calc(var(--main-font-size) * 0.5); */
     }
 
     & > .boot-module-states {

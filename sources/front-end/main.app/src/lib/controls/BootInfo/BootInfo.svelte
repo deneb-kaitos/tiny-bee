@@ -104,10 +104,11 @@
     & > #boot-info-panel {
       display: grid;
       grid-template-columns: 1fr 2fr 1fr;
-      grid-template-rows: 1fr 3fr;
+      grid-template-rows: 1fr 3fr 0.125fr;
       grid-template-areas:
         'header header header'
         '. modules .'
+        '. . .'
       ;
       gap: var(--main-grid-gap);
       padding: var(--main-padding);
@@ -118,17 +119,11 @@
       background-color: var(--theme-black);
       filter: drop-shadow(var(--filter-drop-shadow-x) var(--filter-drop-shadow-y) var(--filter-drop-shadow-blur) var(--theme-black));
 
-      /* container-name: boot-info-panel;
-      container-type: inline-size; */
-
       & > #boot-caption {
         grid-area: header;
         display: flex;
         justify-content: stretch;
         align-items: stretch;
-
-        /* container-name: boot-caption;
-        container-type: inline-size; */
 
         color: var(--main-accent-color);
       }
@@ -145,20 +140,10 @@
 
         & > li {
           display: contents;
-          container-type: inline-size;
+          /* container-type: inline-size; */
         }
       }
     }
-
-    /* @container boot-info-panel(width <= 356px) {
-      #boot-info-container {
-        & > #boot-info-panel {
-          & > #boot-caption {
-            color: red;
-          }
-        }
-      }
-    } */
   }
 </style>
 
