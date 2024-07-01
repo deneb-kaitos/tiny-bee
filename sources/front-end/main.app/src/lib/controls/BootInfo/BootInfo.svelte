@@ -118,8 +118,8 @@
       background-color: var(--theme-black);
       filter: drop-shadow(var(--filter-drop-shadow-x) var(--filter-drop-shadow-y) var(--filter-drop-shadow-blur) var(--theme-black));
 
-      container-name: boot-info-panel;
-      container-type: inline-size;
+      /* container-name: boot-info-panel;
+      container-type: inline-size; */
 
       & > #boot-caption {
         grid-area: header;
@@ -127,8 +127,8 @@
         justify-content: stretch;
         align-items: stretch;
 
-        container-name: boot-caption;
-        container-type: inline-size;
+        /* container-name: boot-caption;
+        container-type: inline-size; */
 
         color: var(--main-accent-color);
       }
@@ -144,7 +144,7 @@
         padding: 0;
 
         & > li {
-          /* display: contents; */
+          display: contents;
           container-type: inline-size;
         }
       }
