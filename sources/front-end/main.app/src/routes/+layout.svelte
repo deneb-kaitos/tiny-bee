@@ -53,6 +53,13 @@
         });
         bc.close();
 
+        bc = new BroadcastChannel(BroadcastChannelName.UI);
+        bc.postMessage({
+          type,
+          payload: null,
+        });
+        bc.close();
+
         break;
       }
     }

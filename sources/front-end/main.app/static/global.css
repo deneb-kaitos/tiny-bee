@@ -1,6 +1,6 @@
 :root {
   --main-font-family: "InterVariable";
-  --main-font-size: clamp(1rem, 0.8rem + max(1svw, 1svh), 5rem);
+  --main-font-size: clamp(0.5rem, 0.5rem + min(1svw, 1svh), 2rem);
   --main-color: var(--theme-white);
   --main-background-color: var(--theme-dark_gray);
   --main-grid-gap: max(0.25svh, 0.25svw);
@@ -64,7 +64,8 @@ body {
   background-color: var(--main-background-color);
 
   text-decoration: none;
-  font-size: 1.5rem;
+  /* font-size: 1.5rem; */
+  font-size: var(--main-font-size);
   font-weight: 400;
   font-variation-settings: "wght" 400, "slnt" 0;
   -webkit-font-smoothing: antialiased;
@@ -88,23 +89,23 @@ h1, h2, h3, h4, h5 {
 }
 
 h1 {
-  --h-coeff: 1.25;
+  --h-coeff: 5;
 }
 
 h2 {
-  --h-coeff: 1.24;
+  --h-coeff: 4;
 }
 
 h3 {
-  --h-coeff: 1.23;
+  --h-coeff: 3;
 }
 
 h4 {
-  --h-coeff: 1.22;
+  --h-coeff: 2.5;
 }
 
 h5 {
-  --h-coeff: 1.21;
+  --h-coeff: 2.25;
 }
 
 svg {
