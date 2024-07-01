@@ -55,6 +55,7 @@
     & > .boot-module-icon {
       grid-area: boot-module-icon;
       color: var(--main-accent-color);
+      padding: var(--main-padding);
     }
 
     & > .boot-module-name {
