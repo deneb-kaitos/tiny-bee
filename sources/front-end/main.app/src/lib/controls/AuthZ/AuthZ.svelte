@@ -25,7 +25,7 @@
   .tab-panel {
       padding: var(--main-padding);
       aspect-ratio: var(--main-aspect-ratio);
-      max-width: 95svw;
+      /* max-width: 95svw; */
       border-radius: var(--main-border-radius);
       background-color: var(--theme-black);
       filter: drop-shadow(var(--filter-drop-shadow-x) var(--filter-drop-shadow-y) var(--filter-drop-shadow-blur) var(--theme-black));
