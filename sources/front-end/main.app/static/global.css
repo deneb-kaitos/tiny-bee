@@ -33,18 +33,21 @@
   --box-shadow-y: 0px;
   --box-shadow-blur-radius: 2px;
   --box-shadow-spread-radius: 0px;
+
+  box-sizing: border-box;
 }
 
-* {
-  box-sizing: border-box;
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
+  box-sizing: inherit;
 
   /* pointer-events: none;
   user-select: none; */
 
   user-select: none;
-
   position: relative;
 }
 
