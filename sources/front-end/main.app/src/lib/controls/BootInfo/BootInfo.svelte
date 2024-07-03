@@ -5,47 +5,16 @@
   import {
     ProtocolMessageTypes,
   } from '$lib/workers/ProtocolMessageTypes.js';
+	import ProgressBar from '../ProgressBar/ProgressBar.svelte';
   import {
-    BootModuleStore,
-  } from './stores/BootModuleStore.svelte.js';
-  import BootModule from "./BootModule.svelte";
-  import H1 from '$lib/controls/H1/h1.svelte';
+    ProgressBarStore,
+  } from '$lib/controls/ProgressBar/stores/ProgressBarStore.svelte.js';
 
   /**
    * @type {BroadcastChannel | null}
    */
   let loaderBroadcastChannel;
-
-  const moduleStores = new Map();
-  moduleStores.set('comm', new BootModuleStore('comm'));
-  moduleStores.set('app', new BootModuleStore('app'));
-
-  /**
-   * 
-   * @param {String | null} moduleName
-   * @param {String | null} moduleState
-   */
-  const setModuleState = (moduleName = null, moduleState = null) => {
-    const moduleStore = moduleStores.get(moduleName);
-
-    switch (moduleState) {
-      case ProtocolMessageTypes.CTOR: {
-        moduleStore.ctor = true;
-
-        break;
-      }
-      case ProtocolMessageTypes.INIT: {
-        moduleStore.init = true;
-
-        break;
-      }
-      case ProtocolMessageTypes.RUN: {
-        moduleStore.run = true;
-
-        break;
-      }
-    }
-  };
+  let progressBarStore = new ProgressBarStore();
 
   /**
    * 
@@ -59,17 +28,17 @@
 
     switch(type) {
       case ProtocolMessageTypes.CTOR: {
-        setModuleState(payload.workerName, type);
+        progressBarStore.incMax(3);
 
         break;
       }
       case ProtocolMessageTypes.INIT: {
-        setModuleState(payload.workerName, type);
+        progressBarStore.incValue();
 
         break;
       }
       case ProtocolMessageTypes.RUN: {
-        setModuleState(payload.workerName, type);
+        progressBarStore.incValue();
 
         break;
       }
@@ -86,8 +55,6 @@
     loaderBroadcastChannel.addEventListener('message', handleLoaderMessage);
 
     return () =>{
-      moduleStores.clear();
-
       loaderBroadcastChannel?.removeEventListener('message', handleLoaderMessage);
       loaderBroadcastChannel?.close();
     };
@@ -103,12 +70,11 @@
 
     & > #boot-info-panel {
       display: grid;
-      grid-template-columns: 1fr 2fr 1fr;
-      grid-template-rows: 1fr 3fr 0.125fr;
+      grid-template-columns: 1fr;
+      grid-template-rows: 1fr 3fr;
       grid-template-areas:
-        'header header header'
-        '. modules .'
-        '. . .'
+        'header'
+        'progress'
       ;
       gap: var(--main-grid-gap);
       padding: var(--main-padding);
@@ -116,32 +82,21 @@
       max-width: 95svw;
       border-radius: var(--main-border-radius);
 
-      background-color: var(--theme-black);
-      filter: drop-shadow(var(--filter-drop-shadow-x) var(--filter-drop-shadow-y) var(--filter-drop-shadow-blur) var(--theme-black));
-
       & > #boot-caption {
         grid-area: header;
         display: flex;
-        justify-content: stretch;
-        align-items: stretch;
+        justify-content: center;
+        align-items: center;
 
         color: var(--main-accent-color);
       }
 
-      & > #boot-modules {
-        grid-area: modules;
-        list-style-type: none;
-        display: grid;
-        grid-auto-flow: column;
-        grid-auto-columns: 1fr;
-        gap: var(--main-grid-gap);
-        margin: 0;
-        padding: 0;
-
-        & > li {
-          display: contents;
-          /* container-type: inline-size; */
-        }
+      & > #progress-container {
+        grid-area: progress;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
       }
     }
   }
@@ -150,21 +105,10 @@
 <article id='boot-info-container'>
   <div id='boot-info-panel'>
     <div id='boot-caption'>
-      <H1>loading</H1>
+      starting
     </div>
-    <ul id='boot-modules'>
-      <li>
-        <BootModule 
-          name="comm"
-          ModuleStore={moduleStores.get('comm')}
-        />
-      </li>
-      <li>
-        <BootModule
-          name="app"
-          ModuleStore={moduleStores.get('app')}
-        />
-      </li>
-    </ul>
+    <div id='progress-container'>
+      <ProgressBar Store={progressBarStore} />
+    </div>
   </div>
 </article>

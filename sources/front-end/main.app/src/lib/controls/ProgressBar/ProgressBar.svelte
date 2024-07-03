@@ -6,8 +6,8 @@
     Store,
   } = $props();
 
-  let max = $state(undefined);
-  let value = $state(undefined);
+  let max = $state(0);
+  let value = $state(0);
 
   $effect(() => {
     max = Store.max;
