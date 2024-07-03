@@ -87,6 +87,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        font-family: system-ui !important;
 
         color: var(--main-accent-color);
       }

@@ -1,7 +1,6 @@
 <script>
-  let isSignUp = $state(true);
-  const signUp = 'sign-up';
-  const signIn = 'sign-in';
+  const signUp = 'register';
+  const signIn = 'login';
   const tabs = Object.freeze({
     signUp,
     signIn,
@@ -24,8 +23,7 @@
 
   .tab-panel {
       padding: var(--main-padding);
-      aspect-ratio: var(--main-aspect-ratio);
-      /* max-width: 95svw; */
+      max-width: max(20svw, 20svh);
       border-radius: var(--main-border-radius);
       background-color: var(--theme-black);
       filter: drop-shadow(var(--filter-drop-shadow-x) var(--filter-drop-shadow-y) var(--filter-drop-shadow-blur) var(--theme-black));
@@ -146,7 +144,13 @@
           <input id='input-pin' type="text" placeholder='pin' autocomplete='one-time-code' disabled={activeTab === signIn} />
         </div>
         <div class='tab-panel-content-row'>
-          <button type='submit'>send</button>
+          <button type='submit'>
+            {#if activeTab === signIn}
+              enter
+            {:else}
+              register
+            {/if}
+          </button>
         </div>
       </form>
     </div>
