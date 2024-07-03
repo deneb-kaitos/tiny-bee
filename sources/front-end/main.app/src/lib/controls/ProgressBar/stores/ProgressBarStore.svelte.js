@@ -25,4 +25,12 @@ export class ProgressBarStore {
       this.#value = value;
     }
   }
+
+  incMax(step = 1) {
+    this.#max += step;
+  }
+
+  incValue(step = 1) {
+    this.#value += step;
+  }
 }
