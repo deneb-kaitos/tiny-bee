@@ -7,7 +7,9 @@
   --main-border-radius: min(0.25svh, 0.25svw);
   --main-padding: min(1svw, 1svh);
   --main-accent-color: var(--theme-glacier);
-  --main-aspect-ratio: 16 / 9;
+  --main-aspect-ratio-x: 16;
+  --main-aspect-ratio-y: 9;
+  --main-aspect-ratio: var(--main-aspect-ratio-x) / var(--main-aspect-ratio-y);
 
   --main-button-height: 8vh;
 
@@ -129,3 +131,7 @@ svg {
   color: var(--main-background-color);
   font-size: medium;
 } */
+
+button {
+  min-width: 4.5svw;
+}
