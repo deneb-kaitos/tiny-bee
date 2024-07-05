@@ -71,26 +71,19 @@
     & > #boot-info-panel {
       display: grid;
       grid-template-columns: 1fr;
-      grid-template-rows: 1fr 3fr;
+      grid-template-rows: 1fr;
       grid-template-areas:
-        'header'
         'progress'
       ;
+
+      width: 20svw;
+      height: 5svh;
+
       gap: var(--main-grid-gap);
       padding: var(--main-padding);
       aspect-ratio: var(--main-aspect-ratio);
       max-width: 95svw;
       border-radius: var(--main-border-radius);
-
-      & > #boot-caption {
-        grid-area: header;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-family: system-ui !important;
-
-        color: var(--main-accent-color);
-      }
 
       & > #progress-container {
         grid-area: progress;
@@ -105,9 +98,6 @@
 
 <article id='boot-info-container'>
   <div id='boot-info-panel'>
-    <div id='boot-caption'>
-      starting
-    </div>
     <div id='progress-container'>
       <ProgressBar Store={progressBarStore} />
     </div>

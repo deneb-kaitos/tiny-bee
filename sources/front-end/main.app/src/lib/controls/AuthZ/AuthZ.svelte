@@ -9,6 +9,7 @@
   import {
     AuthZModes,
   } from './fsm/AuthZModes.js';
+  import * as m from '$lib/paraglide/messages.js';
 
   /**
 	 * @type {import("xstate").Actor<import("xstate").StateMachine<import("xstate").MachineContext, import("xstate").AnyEventObject, {}, never, never, never, never, {}, string, import("xstate").NonReducibleUnknown, import("xstate").NonReducibleUnknown, import("xstate").EventObject, import("xstate").MetaObject, import("xstate").ResolveTypegenMeta<import("xstate").TypegenDisabled, import("xstate").AnyEventObject, never, never, never, never, string, import("xstate").EventObject>>> | null}
@@ -18,8 +19,8 @@
   // const signUp = AuthZModes.REGISTRATION;
   // const signIn = AuthZModes.AUTHENTICATION;
   const modeLocalization = Object.freeze({
-    [AuthZModes.REGISTRATION]: 'register',
-    [AuthZModes.AUTHENTICATION]: 'login',
+    [AuthZModes.REGISTRATION]: m.authModeRegister(),
+    [AuthZModes.AUTHENTICATION]: m.authModeAuthenticate(),
   });
   const tabs = Object.freeze({
     [AuthZModes.REGISTRATION]: AuthZModes.REGISTRATION,
@@ -226,29 +227,29 @@
       </ul>
       <form class='tab-panel-content' onsubmit={handleFormSubmit}>
         <div class='tab-panel-content-row'>
-          <label for='input-login'>login</label>
+          <label for='input-login'>{m.inputLoginLabel()}</label>
           <input
             id='input-login'
             type='text'
-            placeholder={ activeTab === AuthZModes.REGISTRATION ? 'new login': 'your login' }
+            placeholder={ activeTab === AuthZModes.REGISTRATION ? m.inputLoginNewLogin(): m.inputLoginYourLogin() }
             autocomplete='username'
             required
             bind:value={login}
           />
         </div>
         <div class='tab-panel-content-row'>
-          <label for='input-password'>password</label>
+          <label for='input-password'>{m.inputPasswordLabel()}</label>
           <input
             id='input-password'
             type='password'
-            placeholder={ activeTab === AuthZModes.REGISTRATION ? 'new password' : 'your password' }
+            placeholder={ activeTab === AuthZModes.REGISTRATION ? m.inputPasswordNewPassword() : m.inputPasswordYourPassword() }
             autocomplete={ activeTab === AuthZModes.REGISTRATION ? 'new-password' : 'current-password' }
             required
             bind:value={password}
           />
         </div>
         <div class='tab-panel-content-row'>
-          <label for='input-pin'>pin</label>
+          <label for='input-pin'>{m.inputPinLabel()}</label>
           <input
             id='input-pin'
             type='text'
@@ -261,11 +262,6 @@
         <div class='tab-panel-content-row'>
           <button type='submit'>
             {modeLocalization[activeTab]}
-            <!-- {#if activeTab === AuthZModes.AUTHENTICATION}
-              {signIn}  
-            {:else}
-              {signUp} 
-            {/if} -->
           </button>
         </div>
       </form>
