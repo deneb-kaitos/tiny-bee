@@ -1,4 +1,6 @@
 <script>
+	import { ParaglideJS } from '@inlang/paraglide-sveltekit';
+	import { i18n } from '$lib/i18n';
 	import 'inter-ui/inter-variable.css';
   import {
     ProtocolMessageTypes,
@@ -9,6 +11,7 @@
   import {
     BroadcastChannelName,
   } from '../lib/workers/BroadcastChannelName.js';
+  import * as m from '$lib/paraglide/messages.js';
 
   /**
 	 * @type {Worker | null}
@@ -89,7 +92,11 @@
 </script>
 
 <svelte:head>
-  <title>tiny bee</title>
+  <title>
+    {m.mainTitle()}
+  </title>
 </svelte:head>
 
-{@render children()}
+<ParaglideJS {i18n}>
+  {@render children()}
+</ParaglideJS>

@@ -21,7 +21,8 @@
     "test:unit": "vitest"
   },
   "dependencies": {
-    "inter-ui": "^4.0.2"
+    "inter-ui": "^4.0.2",
+    "@inlang/paraglide-sveltekit": "0.10.10"
   },
   "devDependencies": {
     "@playwright/test": "^1.45.1",
@@ -41,7 +42,8 @@
     "typescript": "^5.5.3",
     "vite": "^5.3.3",
     "vitest": "^1.6.0",
-    "xstate": "^5.14.0"
+    "xstate": "^5.14.0",
+    "@inlang/paraglide-js": "1.11.1"
   },
   "dependenciesMeta": {
     "inter-ui": {

@@ -17,7 +17,8 @@ import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 const config = {
   preprocess: [vitePreprocess()],
   compilerOptions: {
-    runes: true,
+    // TODO: when runes are default and paraglide supports runes, se this to `true`
+    runes: undefined,
   },
 	kit: {
 		adapter: adapter({
