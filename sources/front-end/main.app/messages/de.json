@@ -1,4 +1,13 @@
 {
     "$schema": "https://inlang.com/schema/inlang-message-format",
-    "mainTitle": "kleine Biene"
+    "mainTitle": "kleine Biene",
+    "authModeRegister": "registr.",
+    "authModeAuthenticate": "anmelden",
+    "inputLoginLabel": "Login",
+    "inputLoginNewLogin": "neues Login",
+    "inputLoginYourLogin": "ihr Login",
+    "inputPasswordLabel": "Passwort",
+    "inputPasswordNewPassword": "neues Passwort",
+    "inputPasswordYourPassword": "ihr Passwort",
+    "inputPinLabel": "pin"
 }
