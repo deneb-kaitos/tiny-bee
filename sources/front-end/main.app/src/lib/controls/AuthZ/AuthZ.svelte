@@ -1,34 +1,87 @@
 <script>
-  const signUp = 'register';
-  const signIn = 'login';
-  const tabs = Object.freeze({
-    signUp,
-    signIn,
+  import {
+    AuthZFSM,
+    AuthZSignals,
+  } from './fsm/AuthZ.fsm.js';
+  import {
+    AuthZCtx,
+  } from './fsm/AuthZCtx.svelte.js';
+  import {
+    AuthZModes,
+  } from './fsm/AuthZModes.js';
+
+  /**
+	 * @type {import("xstate").Actor<import("xstate").StateMachine<import("xstate").MachineContext, import("xstate").AnyEventObject, {}, never, never, never, never, {}, string, import("xstate").NonReducibleUnknown, import("xstate").NonReducibleUnknown, import("xstate").EventObject, import("xstate").MetaObject, import("xstate").ResolveTypegenMeta<import("xstate").TypegenDisabled, import("xstate").AnyEventObject, never, never, never, never, string, import("xstate").EventObject>>> | null}
+	 */
+  let authzFSM;
+
+  // const signUp = AuthZModes.REGISTRATION;
+  // const signIn = AuthZModes.AUTHENTICATION;
+  const modeLocalization = Object.freeze({
+    [AuthZModes.REGISTRATION]: 'register',
+    [AuthZModes.AUTHENTICATION]: 'login',
   });
-  let activeTab = $state(signUp);
+  const tabs = Object.freeze({
+    [AuthZModes.REGISTRATION]: AuthZModes.REGISTRATION,
+    [AuthZModes.AUTHENTICATION]: AuthZModes.AUTHENTICATION,
+  });
+  let activeTab = $state(AuthZModes.REGISTRATION);
   let login = $state(null);
   let password = $state(null);
   let pin = $state(null);
 
-  const credentials = {
-    login: null,
-    password: null,
-    pin: null,
+  $effect(() => {
+    authzFSM?.send({
+      type: AuthZSignals.LOGIN_CHANGED,
+      payload: {
+        value: login,
+      },
+    });
+  });
+
+  //#region FSM
+  const handleSnapshot = (snapshot = null) => {
+    console.debug(
+      `%c${self.name}@${snapshot.value}:`,
+      'background-color:orange;color:white;padding:0 0.5rem;',
+      snapshot
+    );
   };
+  const fsmAPI = {
+    inspect: (/** @type {{ type: any; event: { type: any; }; }} */ inspectionEvent) => {
+      switch(inspectionEvent.type) {
+        case '@xstate.event': {
+          console.debug(
+            `%cinspection: %c${inspectionEvent.event.type}`,
+            'background-color:lightgray;color:black;padding:0 0.5rem;',
+            'background-color:orange;color:black;padding:0 0.5rem;',
+            inspectionEvent.event,
+          );
+          break;
+        }
+      }
+    },
+  };
+  //#endregion
 
   $effect(() => {
-    login;
-    password;
-    pin;
+    authzFSM = AuthZFSM(fsmAPI, new AuthZCtx());
+    authzFSM.subscribe(handleSnapshot);
+    authzFSM.start();
 
-    credentials.login = login;
-    credentials.password = password;
-    credentials.pin = pin;
-
-    console.debug({ credentials });
+    return () => {
+      authzFSM?.stop();
+      authzFSM = null;
+    };
   });
 
   $effect(() => {
+    authzFSM?.send({
+      type: AuthZSignals.CHANGE_AUTH_MODE,
+      payload: {
+        value: activeTab,
+      }
+    });
     console.debug(`activeTab: ${activeTab}`);
   });
   
@@ -167,7 +220,7 @@
         {#each Object.entries(tabs) as [id, tab]}
           <li>
             <input type='radio' {id} value={tab} name='tab-panel-tab' bind:group={activeTab} />
-            <label for={id}>{tab}</label>
+            <label for={id}>{modeLocalization[tab]}</label>
           </li>
         {/each}
       </ul>
@@ -177,7 +230,7 @@
           <input
             id='input-login'
             type='text'
-            placeholder={ activeTab === signUp ? 'new login': 'your login' }
+            placeholder={ activeTab === AuthZModes.REGISTRATION ? 'new login': 'your login' }
             autocomplete='username'
             required
             bind:value={login}
@@ -188,8 +241,8 @@
           <input
             id='input-password'
             type='password'
-            placeholder={ activeTab === signUp ? 'new password' : 'your password' }
-            autocomplete={ activeTab === signUp ? 'new-password' : 'current-password' }
+            placeholder={ activeTab === AuthZModes.REGISTRATION ? 'new password' : 'your password' }
+            autocomplete={ activeTab === AuthZModes.REGISTRATION ? 'new-password' : 'current-password' }
             required
             bind:value={password}
           />
@@ -201,17 +254,18 @@
             type='text'
             placeholder='pin'
             autocomplete='one-time-code'
-            disabled={activeTab === signIn}
+            disabled={activeTab === AuthZModes.AUTHENTICATION}
             bind:value={pin}
           />
         </div>
         <div class='tab-panel-content-row'>
           <button type='submit'>
-            {#if activeTab === signIn}
-              enter
+            {modeLocalization[activeTab]}
+            <!-- {#if activeTab === AuthZModes.AUTHENTICATION}
+              {signIn}  
             {:else}
-              register
-            {/if}
+              {signUp} 
+            {/if} -->
           </button>
         </div>
       </form>
