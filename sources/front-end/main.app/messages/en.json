@@ -1,13 +1,15 @@
 {
     "$schema": "https://inlang.com/schema/inlang-message-format",
     "mainTitle": "tiny bee",
-    "authModeRegister": "register",
-    "authModeAuthenticate": "login",
-    "inputLoginLabel": "login",
-    "inputLoginNewLogin": "new login",
-    "inputLoginYourLogin": "your login",
-    "inputPasswordLabel": "password",
-    "inputPasswordNewPassword": "new password",
-    "inputPasswordYourPassword": "your password",
-    "inputPinLabel": "pin"
+    "authzModeRegister": "register",
+    "authzModeAuthenticate": "login",
+    "authzInputLoginLabel": "login",
+    "authzInputLoginNewLoginPlaceholder": "new login",
+    "authzInputLoginYourLoginPlaceholder": "your login",
+    "authzInputPasswordLabel": "password",
+    "authzInputPasswordNewPasswordPlaceholder": "new password",
+    "authzInputPasswordYourPasswordPlaceholder": "your password",
+    "authzInputPinLabel": "pin",
+    "authzInputPinPlaceholder": "pin",
+    "authzSubmitButtonText": "submit"
 }

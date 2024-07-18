@@ -1,12 +1,9 @@
 :root {
   --main-font-family: "InterVariable";
   --main-font-size: clamp(0.5rem, 0.5rem + min(1svw, 1svh), 2rem);
-  --main-color: var(--theme-white);
-  --main-background-color: var(--theme-dark_gray);
   --main-grid-gap: max(0.25svh, 0.25svw);
   --main-border-radius: min(0.25svh, 0.25svw);
   --main-padding: min(1svw, 1svh);
-  --main-accent-color: var(--theme-glacier);
   --main-aspect-ratio-x: 16;
   --main-aspect-ratio-y: 9;
   --main-aspect-ratio: var(--main-aspect-ratio-x) / var(--main-aspect-ratio-y);
@@ -16,11 +13,8 @@
   --header-hight: 8svh;
   --main-height: 1fr;
   --footer-height: 8svh;
-  --footer-background-color: transparent;
-
   --group-height: 20svh;
 
-  --theme-icon-svg-color: var(--main-color);
   --transition-timing-function: cubic-bezier(.03,.97,.93,.95);
   --transition-duration: 0.125s;
 
@@ -37,6 +31,31 @@
   --box-shadow-spread-radius: 0px;
 
   box-sizing: border-box;
+  text-overflow: ellipsis;
+}
+
+@media(prefers-color-scheme: dark) {
+  :root {
+    --main-color: var(--theme-white);
+    --main-background-color: var(--theme-dark_gray);
+
+    --main-accent-background-color: var(--theme-blue);
+    --main-accent-color: var(--theme-white);
+
+    --ctrl-background-color: var(--theme-black);
+  }
+}
+
+@media(prefers-color-scheme: light) {
+  :root {
+    --main-color: var(--theme-dark_gray);
+    --main-background-color: var(--theme-white);
+
+    --main-accent-background-color: var(--theme-blue);
+    --main-accent-color: var(--theme-white);
+
+    --ctrl-background-color: var(--theme-darkest_white);
+  }
 }
 
 *,
@@ -45,6 +64,10 @@
   margin: 0;
   padding: 0;
   box-sizing: inherit;
+  font-family: inherit;
+  font-feature-settings: inherit;
+  font-variation-settings: inherit;
+  font-size: inherit;
 
   /* pointer-events: none;
   user-select: none; */
@@ -133,5 +156,56 @@ svg {
 } */
 
 button {
+  aspect-ratio: var(--main-aspect-ratio);
   min-width: 4.5svw;
+  font-size: inherit;
+}
+
+input,
+label,
+button {
+  border-radius: var(--main-border-radius);
+}
+
+input,
+input:autofill,
+input:-webkit-autofill {
+  color: var(--main-color);
+  background-color: var(--main-background-color);
+}
+
+input[type='email'],
+input[type='number'],
+input[type='password'],
+input[type='search'],
+input[type='tel'],
+input[type='text'] {
+  padding: var(--main-padding);
+}
+
+::-webkit-input-placeholder,
+::placeholder {
+  font-family: var(--main-font-family);
+  font-size: calc(var(--main-font-size) * 0.75);
+}
+
+input[type='radio']:not(:checked) ~ label[for] {
+ color: var(--main-color);
+ background-color: var(--main-background-color);
+}
+
+input[type='radio']:checked ~ label[for] {
+ color: var(--main-accent-color);
+ background-color: var(--main-accent-background-color);
+}
+
+label {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+label[for],
+button {
+  cursor: pointer;
 }

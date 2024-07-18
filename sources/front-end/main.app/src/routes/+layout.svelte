@@ -12,11 +12,23 @@
     BroadcastChannelName,
   } from '../lib/workers/BroadcastChannelName.js';
   import * as m from '$lib/paraglide/messages.js';
+  import BootInfo from "$lib/controls/BootInfo/BootInfo.svelte";
+  import {
+    goto,
+  } from '$app/navigation';
+  import {
+    isAuthenticated,
+  } from '$lib/workers/sec/helpers/isAuthenticated.js';
+  import {
+    SecEvents,
+  } from '$lib/workers/sec/SecAPI.js';
 
   /**
 	 * @type {Worker | null}
 	 */
   let ldr = $state(null);
+  let isLoaderReady = $state(false);
+  const secChannel = new BroadcastChannel(BroadcastChannelName.SEC);
 
   /**
    * 
@@ -24,6 +36,8 @@
    */
   const handle_beforeunload = (e) => {
     window.removeEventListener('beforeunload', handle_beforeunload);
+    secChannel.removeEventListener('message', handleSecMessage);
+    secChannel.close();
 
     ldr?.postMessage({
       type: ProtocolMessageTypes.DISPOSE,
@@ -56,12 +70,53 @@
         });
         bc.close();
 
-        bc = new BroadcastChannel(BroadcastChannelName.UI);
-        bc.postMessage({
-          type,
-          payload: null,
+        // bc = new BroadcastChannel(BroadcastChannelName.UI);
+        // bc.postMessage({
+        //   type,
+        //   payload: null,
+        // });
+        // bc.close();
+
+        isLoaderReady = true;
+
+        break;
+      }
+    }
+  };
+
+  /**
+   * 
+   * @param {MessageEvent} messageEvent
+   */
+  const handleSecMessage = (messageEvent) => {
+    console.debug('+layout.svelte::handleSecMessage', messageEvent);
+
+    const {
+      data: {
+        type,
+        payload,
+      },
+    } = messageEvent;
+
+    switch(type) {
+      case SecEvents.TokenIsNull: {
+        goto('/auth', {
+          replaceState: true,
         });
-        bc.close();
+
+        break;
+      } 
+      case SecEvents.TokenIsNotNull: {
+        // FIXME: this is NOT correct behavior
+        // it should navigate to the "previous" page and restore its state
+        goto('/', {
+          replaceState: true,
+        });
+
+        break;
+      }
+      default: {
+        console.debug(`ignoring "${type}" with`, payload);
 
         break;
       }
@@ -69,7 +124,24 @@
   };
 
   $effect(() => {
+    if (isLoaderReady === true) {
+      isAuthenticated()
+        .then((isAuthed = false) => {
+          if (isAuthed === false) {
+            goto('/auth', {
+              replaceState: true,
+            });
+          }
+        })
+        .catch((authErr) => {
+          console.error(authErr);
+        });
+    }
+  });
+
+  $effect(() => {
     window.addEventListener('beforeunload', handle_beforeunload);
+    secChannel.addEventListener('message', handleSecMessage);
 
     if (ldr === null) {
       ldr = new Worker(new URL('$lib/workers/ldr/ldr.js', import.meta.url), {
@@ -84,11 +156,9 @@
         payload: null,
       });
     }
-
   });
 
   const { children } = $props();
-
 </script>
 
 <svelte:head>
@@ -98,5 +168,9 @@
 </svelte:head>
 
 <ParaglideJS {i18n}>
-  {@render children()}
+  {#if isLoaderReady === true}
+    {@render children()}
+  {:else}
+    <BootInfo /> 
+  {/if}
 </ParaglideJS>
