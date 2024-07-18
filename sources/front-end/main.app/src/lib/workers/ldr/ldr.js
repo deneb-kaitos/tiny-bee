@@ -17,7 +17,7 @@ import { fromPromise } from 'xstate';
 import { BroadcastChannelName } from '../BroadcastChannelName.js';
 
 let loaderFSM = null;
-const workerNames = Object.freeze(['comm', 'app']);
+const workerNames = Object.freeze(['sec', 'comm', 'app']);
 const workerProperties = new WeakMap();
 
 /**
@@ -37,8 +37,6 @@ const handleWorkerProtocolMessage = (e) => {
   const properties = workerProperties.get(workers.get(payload.workerName)) || {};
   properties[type] = true;
   workerProperties.set(workers.get(payload.workerName), properties);
-
-  console.debug('handleWorkerProtocolMessage', type, payload);
 
   loaderFSM.send({
     type,
@@ -134,7 +132,7 @@ const api = {
         return Promise.resolve({ workerName });
       }
 
-      const url = `../${workerName}/index.js`;
+      const url = `../${workerName}/index.svelte.js`;
       const worker = new Worker(new URL(url, import.meta.url), {
         type: 'module',
         name: workerName,

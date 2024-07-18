@@ -3,10 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
-  "packageManager": "pnpm@9.4.0",
+  "packageManager": "pnpm@9.5.0",
   "engines": {
-    "node": "22.4.0",
-    "pnpm": "9.4.0"
+    "node": "22.4.1",
+    "pnpm": "9.5.0"
   },
   "scripts": {
     "dev": "vite dev",
@@ -21,29 +21,29 @@
     "test:unit": "vitest"
   },
   "dependencies": {
-    "inter-ui": "^4.0.2",
-    "@inlang/paraglide-sveltekit": "0.10.10"
+    "inter-ui": "catalog:web",
+    "@inlang/paraglide-sveltekit": "catalog:web"
   },
   "devDependencies": {
-    "@playwright/test": "^1.45.1",
-    "@sveltejs/adapter-auto": "^3.2.2",
-    "@sveltejs/adapter-node": "^5.2.0",
-    "@sveltejs/adapter-static": "^3.0.2",
-    "@sveltejs/kit": "^2.5.18",
-    "@sveltejs/vite-plugin-svelte": "^3.1.1",
-    "@types/eslint": "^8.56.10",
-    "eslint": "^9.6.0",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-svelte": "2.41.0",
-    "globals": "^15.8.0",
-    "prettier": "^3.3.2",
-    "svelte": "5.0.0-next.155",
-    "svelte-check": "^3.8.4",
-    "typescript": "^5.5.3",
-    "vite": "^5.3.3",
-    "vitest": "^1.6.0",
-    "xstate": "^5.14.0",
-    "@inlang/paraglide-js": "1.11.1"
+    "@playwright/test": "catalog:web",
+    "@sveltejs/adapter-auto": "catalog:web",
+    "@sveltejs/adapter-node": "catalog:web",
+    "@sveltejs/adapter-static": "catalog:web",
+    "@sveltejs/kit": "catalog:web",
+    "@sveltejs/vite-plugin-svelte": "catalog:web",
+    "@types/eslint": "catalog:web",
+    "eslint": "catalog:web",
+    "eslint-config-prettier": "catalog:web",
+    "eslint-plugin-svelte": "catalog:web",
+    "globals": "catalog:web",
+    "prettier": "catalog:web",
+    "svelte": "catalog:web",
+    "svelte-check": "catalog:web",
+    "typescript": "catalog:web",
+    "vite": "catalog:web",
+    "vitest": "catalog:web",
+    "xstate": "catalog:web",
+    "@inlang/paraglide-js": "catalog:web"
   },
   "dependenciesMeta": {
     "inter-ui": {
