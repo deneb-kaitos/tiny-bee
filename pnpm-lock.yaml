@@ -74,7 +74,7 @@ importers:
 
   .: {}
 
-  sources/common/net/SerDe:
+  sources/common/net/fbs:
     devDependencies:
       '@eslint/js':
         specifier: ^9.7.0
