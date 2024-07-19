@@ -5,9 +5,19 @@
   import {
     store,
   } from './CredentialsFormStore.svelte.js';
+  import {
+    CredentialsFormStoreEvents as Events,
+  } from './CredentialsFormStoreEvents.js';
   import * as m from '$lib/paraglide/messages.js';
 
   const AUTOCOMPLETE_DISABLED = 'off';
+
+  const {
+    /**
+     * @type {function<Map<string, string>>}
+    */
+    OnSubmitAuthRequest,
+  } = $props();
 
   let activeMode = $state(store.Mode);
   let login = $state(null);
@@ -30,10 +40,10 @@
   };
 
   $effect(() => {
-    store.addEventListener('OnDataReady', handleOnDataReady);
+    store.addEventListener(Events.OnDataReady, handleOnDataReady);
 
     return () => {
-      store.removeEventListener('OnDataReady', handleOnDataReady);
+      store.removeEventListener(Events.OnDataReady, handleOnDataReady);
     };
   });
 
@@ -76,7 +86,26 @@
     submitEvent.stopPropagation();
     submitEvent.preventDefault();
 
-    console.debug({ submitEvent });
+    let formData = new Map();
+
+    formData.set('mode', store.Mode);
+    formData.set('login', store.Login);
+    formData.set('password', store.Password);
+
+    switch(store.Mode) {
+      // @ts-ignore
+      case AuthZModes.AUTHENTICATION: {
+        break;
+      }
+      case AuthZModes.REGISTRATION: {
+        formData.set('pin', store.Pin);
+
+        break;
+      }
+    }
+
+    // @ts-ignore
+    OnSubmitAuthRequest(formData);
   };
 
   const tabs = Object.freeze({

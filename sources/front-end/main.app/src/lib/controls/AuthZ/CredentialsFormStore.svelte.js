@@ -1,6 +1,9 @@
 import {
   AuthZModes,
 } from '$lib/controls/AuthZ/fsm/AuthZModes.js';
+import {
+  CredentialsFormStoreEvents as Events,
+} from './CredentialsFormStoreEvents.js';
 
 class CredentialsFormStore extends EventTarget {
   #mode = $state(AuthZModes.REGISTRATION);
@@ -26,7 +29,7 @@ class CredentialsFormStore extends EventTarget {
       }
     }
 
-    this.dispatchEvent(new CustomEvent('OnDataReady', {
+    this.dispatchEvent(new CustomEvent(Events.OnDataReady, {
       detail: {
         isReady: result,
       },
@@ -76,6 +79,12 @@ class CredentialsFormStore extends EventTarget {
   set Mode(value = null) {
     if (this.#mode !== value) {
       this.#mode = value;
+
+      this.dispatchEvent(new CustomEvent(Events.OnModeChanged, {
+        detail: {
+          mode: this.#mode,
+        },
+      }));
 
       this.#isAllDataAvailable();
     }

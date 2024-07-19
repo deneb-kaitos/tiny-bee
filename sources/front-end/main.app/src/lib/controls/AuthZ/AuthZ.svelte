@@ -1,36 +1,23 @@
 <script>
-  import {
-    AuthZModes,
-  } from './fsm/AuthZModes.js';
   import CredentialsForm from './CredentialsForm.svelte';
-  import {
-    store,
-  } from './CredentialsFormStore.svelte.js';
-
-  const handleOnModeChanged = (e) => {
-    console.debug('handleOnModeChanged', e);
-  };
+  // import {
+  //   CredentialsFormStoreEvents as Events,
+  // } from './CredentialsFormStoreEvents.js';
 
   /**
    * 
-   * @param {CustomEvent} e
+   * @param {Map<string, string>} e
    */
-  const handleOnDataReady = (e) => {
-    const {
-      detail: {
-        isReady,
-      },
-    } = e;
-
-    console.debug('handleOnDataReady', isReady);
+  const handleOnSubmitAuthRequest = (e) => {
+    console.debug('handleOnSubmitAuthRequest', e);
   };
 
+
   $effect(() => {
-    store?.addEventListener('OnDataReady', handleOnDataReady);
 
     return () => {
-      store?.removeEventListener('OnDataReady', handleOnDataReady);
-    }
+
+    };
   });
 </script>
 
@@ -45,5 +32,5 @@
 </style>
 
 <div id='authz-container'>
-  <CredentialsForm />
+  <CredentialsForm OnSubmitAuthRequest={handleOnSubmitAuthRequest} />
 </div>
