@@ -1,5 +1,5 @@
 {
-  "name": "@deneb-kaitos/tiny-bee-serde",
+  "name": "@deneb-kaitos/tiny-bee-fbs",
   "private": true,
   "version": "0.0.0",
   "description": "SerDe",
@@ -12,7 +12,7 @@
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "rename:js:mjs": "./node_modules/.bin/renamer --force --silent --find .js --replace .mjs **/generated/mjs/**",
-    "lint:mjs": "ESLINT_USE_FLAT_CONFIG=true ./node_modules/.bin/eslint --config=eslint.config.js ./generated/mjs/**/*.js --fix",
+    "lint:mjs": "ESLINT_USE_FLAT_CONFIG=true ./node_modules/.bin/eslint ./generated/mjs/**/*.js --fix",
     "build:schema": "node ./.bin/compile.mjs && pnpm run lint:mjs"
   },
   "author": "Dmitry N. Medvedev <dmitry.medvedev@gmail.com>",
