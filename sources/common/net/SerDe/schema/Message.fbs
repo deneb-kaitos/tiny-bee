@@ -1,0 +1,7 @@
+namespace Tinybee;
+
+table Message {
+  payload: string;
+}
+
+root_type Message;
