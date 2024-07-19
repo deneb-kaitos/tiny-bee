@@ -1,7 +1,13 @@
+include "authz/AccountRegistrationMessage.fbs";
+
 namespace Tinybee;
 
+union MessagePayload {
+  AccountRegistrationMessage,
+}
+
 table Message {
-  payload: string;
+  payload: MessagePayload;
 }
 
 root_type Message;

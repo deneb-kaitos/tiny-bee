@@ -1,0 +1,61 @@
+{
+  "name": "@deneb-kaitos/tiny-bee-serde-create_accountregistrationmessage",
+  "private": true,
+  "version": "0.0.0",
+  "description": "serializers: AccountRegistrationMessage",
+  "type": "module",
+  "packageManager": "pnpm@9.5.0",
+  "engines": {
+    "node": "22.4.1",
+    "pnpm": "9.5.0"
+  },
+  "engineStrict": true,
+  "scripts": {
+    "preinstall": "npx only-allow pnpm",
+    "lint": "ESLINT_USE_FLAT_CONFIG=true ./node_modules/.bin/eslint ./*.js",
+    "test": "pnpm run lint && NODE_ENV=test NODE_DEBUG=serializers* ./node_modules/.bin/c8 ./node_modules/.bin/mocha"
+  },
+  "author": "Dmitry N. Medvedev <dmitry.medvedev@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@deneb-kaitos/tiny-bee-fbs": "workspace:^0.0.0",
+    "flatbuffers": "^24.3.25"
+  },
+  "devDependencies": {
+    "c8": "^7.12.0",
+    "chai": "^4.3.7",
+    "dotenv": "^16.0.3",
+    "eslint": "^8.31.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-chai-friendly": "^0.7.2",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-node": "^11.1.0",
+    "mocha": "^10.2.0"
+  },
+  "mocha": {
+    "allowUncaught": true,
+    "failZero": true,
+    "async-only": false,
+    "bail": true,
+    "checkLeaks": true,
+    "forbidOnly": true,
+    "exit": true,
+    "forbidPending": true,
+    "slow": 50,
+    "timeout": 1000,
+    "color": true,
+    "diff": true,
+    "fullTrace": true,
+    "growl": false,
+    "inline-diffs": true,
+    "reporter": "spec",
+    "noConfig": true,
+    "noOpts": true,
+    "exclude": [
+      "**/node_modules/**/*"
+    ],
+    "spec": [
+      "**/specs/*.js"
+    ]
+  }
+}

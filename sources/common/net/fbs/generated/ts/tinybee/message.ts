@@ -4,6 +4,7 @@
 
 import * as flatbuffers from 'flatbuffers';
 
+import { MessagePayload, unionToMessagePayload, unionListToMessagePayload } from '../tinybee/message-payload.js';
 
 
 export class Message {
@@ -24,19 +25,26 @@ static getSizePrefixedRootAsMessage(bb:flatbuffers.ByteBuffer, obj?:Message):Mes
   return (obj || new Message()).__init(bb.readInt32(bb.position()) + bb.position(), bb);
 }
 
-payload():string|null
-payload(optionalEncoding:flatbuffers.Encoding):string|Uint8Array|null
-payload(optionalEncoding?:any):string|Uint8Array|null {
+payloadType():MessagePayload {
   const offset = this.bb!.__offset(this.bb_pos, 4);
-  return offset ? this.bb!.__string(this.bb_pos + offset, optionalEncoding) : null;
+  return offset ? this.bb!.readUint8(this.bb_pos + offset) : MessagePayload.NONE;
+}
+
+payload<T extends flatbuffers.Table>(obj:any):any|null {
+  const offset = this.bb!.__offset(this.bb_pos, 6);
+  return offset ? this.bb!.__union(obj, this.bb_pos + offset) : null;
 }
 
 static startMessage(builder:flatbuffers.Builder) {
-  builder.startObject(1);
+  builder.startObject(2);
+}
+
+static addPayloadType(builder:flatbuffers.Builder, payloadType:MessagePayload) {
+  builder.addFieldInt8(0, payloadType, MessagePayload.NONE);
 }
 
 static addPayload(builder:flatbuffers.Builder, payloadOffset:flatbuffers.Offset) {
-  builder.addFieldOffset(0, payloadOffset, 0);
+  builder.addFieldOffset(1, payloadOffset, 0);
 }
 
 static endMessage(builder:flatbuffers.Builder):flatbuffers.Offset {
@@ -52,8 +60,9 @@ static finishSizePrefixedMessageBuffer(builder:flatbuffers.Builder, offset:flatb
   builder.finish(offset, undefined, true);
 }
 
-static createMessage(builder:flatbuffers.Builder, payloadOffset:flatbuffers.Offset):flatbuffers.Offset {
+static createMessage(builder:flatbuffers.Builder, payloadType:MessagePayload, payloadOffset:flatbuffers.Offset):flatbuffers.Offset {
   Message.startMessage(builder);
+  Message.addPayloadType(builder, payloadType);
   Message.addPayload(builder, payloadOffset);
   return Message.endMessage(builder);
 }

@@ -2,4 +2,6 @@
 
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-non-null-assertion */
 
+export { AccountRegistrationMessage } from './tinybee/account-registration-message.js';
 export { Message } from './tinybee/message.js';
+export { MessagePayload } from './tinybee/message-payload.js';
