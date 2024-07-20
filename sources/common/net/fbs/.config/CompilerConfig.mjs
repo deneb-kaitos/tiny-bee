@@ -7,7 +7,6 @@ export const CompilerConfig = Object.freeze({
       generatorOptions: [
         '--natural-utf8',
         '--gen-all',
-        '--gen-mutable',
         '--warnings-as-errors',
       ],
       preProcess: null,
