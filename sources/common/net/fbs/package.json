@@ -9,6 +9,7 @@
     "node": "22.4.1",
     "pnpm": "9.5.0"
   },
+  "types": "./generated/ts/tinybee.ts",
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "rename:js:mjs": "./node_modules/.bin/renamer --force --silent --find .js --replace .mjs **/generated/mjs/**",
