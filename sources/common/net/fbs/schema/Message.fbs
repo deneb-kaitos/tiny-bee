@@ -1,9 +1,9 @@
-include "authz/AccountRegistrationMessage.fbs";
+include "authz/AccountRegistrationRequest.fbs";
 
 namespace Tinybee;
 
 union MessagePayload {
-  AccountRegistrationMessage,
+  AccountRegistrationRequest,
 }
 
 table Message {

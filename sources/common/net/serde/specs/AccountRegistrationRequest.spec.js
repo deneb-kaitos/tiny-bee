@@ -13,13 +13,14 @@ import {
 } from 'chai';
 import flatbuffers from 'flatbuffers';
 import {
-  createAccountRegistrationMessage,
-} from '../serializers/AccountRegistrationMessage/createAccountRegistrationMessage.js';
+  createAccountRegistrationRequest,
+} from '../serializers/AccountRegistrationRequest/createAccountRegistrationRequest.js';
 import {
-  deserializeAccountRegistrationMessage,
-} from '../deserializers/AccountRegistrationMessage/deserializeAccountRegistrationMessage.js';
+  deserializeAccountRegistrationRequest,
+} from '../deserializers/AccountRegistrationRequest/deserializeAccountRegistrationRequest.js';
 
 describe('serializers', () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const debuglog = util.debuglog('serde:specs');
   /** @type {flatbuffers.Builder} */
   let builder = null;
@@ -38,12 +39,8 @@ describe('serializers', () => {
       password: randomUUID(),
       pin: randomUUID(),
     };
-
-    const serializedBytes = createAccountRegistrationMessage(builder, expectedMessage.login, expectedMessage.password, expectedMessage.pin);
-    const deserializedMessage = deserializeAccountRegistrationMessage(serializedBytes);
-
-    debuglog({ serializedBytes });
-    debuglog({ deserializedMessage });
+    const serializedBytes = createAccountRegistrationRequest(builder, expectedMessage.login, expectedMessage.password, expectedMessage.pin);
+    const deserializedMessage = deserializeAccountRegistrationRequest(serializedBytes);
 
     expect(deserializedMessage).to.deep.equal(expectedMessage);
   });

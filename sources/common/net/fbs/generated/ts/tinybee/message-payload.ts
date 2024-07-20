@@ -2,33 +2,33 @@
 
 /* eslint-disable @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/no-non-null-assertion */
 
-import { AccountRegistrationMessage } from '../tinybee/account-registration-message.js';
+import { AccountRegistrationRequest } from '../tinybee/account-registration-request.js';
 
 
 export enum MessagePayload {
   NONE = 0,
-  AccountRegistrationMessage = 1
+  AccountRegistrationRequest = 1
 }
 
 export function unionToMessagePayload(
   type: MessagePayload,
-  accessor: (obj:AccountRegistrationMessage) => AccountRegistrationMessage|null
-): AccountRegistrationMessage|null {
+  accessor: (obj:AccountRegistrationRequest) => AccountRegistrationRequest|null
+): AccountRegistrationRequest|null {
   switch(MessagePayload[type]) {
     case 'NONE': return null; 
-    case 'AccountRegistrationMessage': return accessor(new AccountRegistrationMessage())! as AccountRegistrationMessage;
+    case 'AccountRegistrationRequest': return accessor(new AccountRegistrationRequest())! as AccountRegistrationRequest;
     default: return null;
   }
 }
 
 export function unionListToMessagePayload(
   type: MessagePayload, 
-  accessor: (index: number, obj:AccountRegistrationMessage) => AccountRegistrationMessage|null, 
+  accessor: (index: number, obj:AccountRegistrationRequest) => AccountRegistrationRequest|null, 
   index: number
-): AccountRegistrationMessage|null {
+): AccountRegistrationRequest|null {
   switch(MessagePayload[type]) {
     case 'NONE': return null; 
-    case 'AccountRegistrationMessage': return accessor(index, new AccountRegistrationMessage())! as AccountRegistrationMessage;
+    case 'AccountRegistrationRequest': return accessor(index, new AccountRegistrationRequest())! as AccountRegistrationRequest;
     default: return null;
   }
 }

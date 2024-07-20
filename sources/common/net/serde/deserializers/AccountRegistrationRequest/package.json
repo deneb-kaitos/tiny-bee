@@ -1,8 +1,8 @@
 {
-  "name": "@deneb-kaitos/tiny-bee-serde-create_accountregistrationmessage",
+  "name": "@deneb-kaitos/tiny-bee-serde-deserialize_accountregistrationrequest",
   "private": true,
   "version": "0.0.0",
-  "description": "serializers: AccountRegistrationMessage",
+  "description": "deserializers: AccountRegistrationRequest",
   "type": "module",
   "packageManager": "pnpm@9.5.0",
   "engines": {
@@ -13,7 +13,7 @@
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "lint": "ESLINT_USE_FLAT_CONFIG=true ./node_modules/.bin/eslint ./*.js",
-    "test": "pnpm run lint && NODE_ENV=test NODE_DEBUG=serializers* ./node_modules/.bin/c8 ./node_modules/.bin/mocha"
+    "test": "pnpm run lint && NODE_ENV=test NODE_DEBUG=serde* ./node_modules/.bin/c8 ./node_modules/.bin/mocha"
   },
   "author": "Dmitry N. Medvedev <dmitry.medvedev@gmail.com>",
   "license": "MIT",

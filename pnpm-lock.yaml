@@ -172,6 +172,43 @@ importers:
         specifier: ^10.2.0
         version: 10.6.0
 
+  sources/common/net/serde/deserializers/AccountRegistrationRequest:
+    dependencies:
+      '@deneb-kaitos/tiny-bee-fbs':
+        specifier: workspace:^0.0.0
+        version: link:../../../fbs
+      flatbuffers:
+        specifier: ^24.3.25
+        version: 24.3.25
+    devDependencies:
+      c8:
+        specifier: ^7.12.0
+        version: 7.14.0
+      chai:
+        specifier: ^4.3.7
+        version: 4.4.1
+      dotenv:
+        specifier: ^16.0.3
+        version: 16.4.5
+      eslint:
+        specifier: ^8.31.0
+        version: 8.57.0
+      eslint-config-airbnb-base:
+        specifier: ^15.0.0
+        version: 15.0.0(eslint-plugin-import@2.29.1(eslint@8.57.0))(eslint@8.57.0)
+      eslint-plugin-chai-friendly:
+        specifier: ^0.7.2
+        version: 0.7.4(eslint@8.57.0)
+      eslint-plugin-import:
+        specifier: ^2.26.0
+        version: 2.29.1(eslint@8.57.0)
+      eslint-plugin-node:
+        specifier: ^11.1.0
+        version: 11.1.0(eslint@8.57.0)
+      mocha:
+        specifier: ^10.2.0
+        version: 10.6.0
+
   sources/common/net/serde/serializers/AccountRegistrationMessage:
     dependencies:
       '@deneb-kaitos/tiny-bee-fbs':

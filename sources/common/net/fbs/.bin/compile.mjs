@@ -1,6 +1,4 @@
 #!/usr/bin/env -S NODE_ENV=production node
- 
- 
 
 import {
   join,
