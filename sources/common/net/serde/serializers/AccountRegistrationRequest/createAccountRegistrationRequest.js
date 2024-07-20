@@ -5,10 +5,10 @@ import {
   MessagePayload,
 } from '@deneb-kaitos/tiny-bee-fbs/generated/mjs/generated/ts/tinybee/message-payload.js';
 import {
-  AccountRegistrationMessage,
-} from '@deneb-kaitos/tiny-bee-fbs/generated/mjs/generated/ts/tinybee/account-registration-message.js';
+  AccountRegistrationRequest,
+} from '@deneb-kaitos/tiny-bee-fbs/generated/mjs/generated/ts/tinybee/account-registration-request.js';
 
-export const createAccountRegistrationMessage = (
+export const createAccountRegistrationRequest = (
   /**
    * @type {flatbuffers.Builder}
    */
@@ -30,8 +30,8 @@ export const createAccountRegistrationMessage = (
   const passwordOffset = builder.createString(password);
   const pinOffset = builder.createString(pin);
 
-  const accountRegistrationMessageOffset = AccountRegistrationMessage.createAccountRegistrationMessage(builder, loginOffset, passwordOffset, pinOffset);
-  const messageOffset = Message.createMessage(builder, MessagePayload.AccountRegistrationMessage, accountRegistrationMessageOffset);
+  const accountRegistrationRequestOffset = AccountRegistrationRequest.createAccountRegistrationRequest(builder, loginOffset, passwordOffset, pinOffset);
+  const messageOffset = Message.createMessage(builder, MessagePayload.AccountRegistrationRequest, accountRegistrationRequestOffset);
 
   Message.finishMessageBuffer(builder, messageOffset);
 

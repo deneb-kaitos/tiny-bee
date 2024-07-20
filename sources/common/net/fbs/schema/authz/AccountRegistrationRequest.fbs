@@ -1,9 +1,9 @@
 namespace Tinybee;
 
-table AccountRegistrationMessage {
+table AccountRegistrationRequest {
   login: string;
   password: string;
   pin: string;
 }
 
-root_type AccountRegistrationMessage;
+root_type AccountRegistrationRequest;

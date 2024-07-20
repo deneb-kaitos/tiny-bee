@@ -4,22 +4,22 @@
 
 import * as flatbuffers from 'flatbuffers';
 
-export class AccountRegistrationMessage {
+export class AccountRegistrationRequest {
   bb: flatbuffers.ByteBuffer|null = null;
   bb_pos = 0;
-  __init(i:number, bb:flatbuffers.ByteBuffer):AccountRegistrationMessage {
+  __init(i:number, bb:flatbuffers.ByteBuffer):AccountRegistrationRequest {
   this.bb_pos = i;
   this.bb = bb;
   return this;
 }
 
-static getRootAsAccountRegistrationMessage(bb:flatbuffers.ByteBuffer, obj?:AccountRegistrationMessage):AccountRegistrationMessage {
-  return (obj || new AccountRegistrationMessage()).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+static getRootAsAccountRegistrationRequest(bb:flatbuffers.ByteBuffer, obj?:AccountRegistrationRequest):AccountRegistrationRequest {
+  return (obj || new AccountRegistrationRequest()).__init(bb.readInt32(bb.position()) + bb.position(), bb);
 }
 
-static getSizePrefixedRootAsAccountRegistrationMessage(bb:flatbuffers.ByteBuffer, obj?:AccountRegistrationMessage):AccountRegistrationMessage {
+static getSizePrefixedRootAsAccountRegistrationRequest(bb:flatbuffers.ByteBuffer, obj?:AccountRegistrationRequest):AccountRegistrationRequest {
   bb.setPosition(bb.position() + flatbuffers.SIZE_PREFIX_LENGTH);
-  return (obj || new AccountRegistrationMessage()).__init(bb.readInt32(bb.position()) + bb.position(), bb);
+  return (obj || new AccountRegistrationRequest()).__init(bb.readInt32(bb.position()) + bb.position(), bb);
 }
 
 login():string|null
@@ -43,7 +43,7 @@ pin(optionalEncoding?:any):string|Uint8Array|null {
   return offset ? this.bb!.__string(this.bb_pos + offset, optionalEncoding) : null;
 }
 
-static startAccountRegistrationMessage(builder:flatbuffers.Builder) {
+static startAccountRegistrationRequest(builder:flatbuffers.Builder) {
   builder.startObject(3);
 }
 
@@ -59,16 +59,16 @@ static addPin(builder:flatbuffers.Builder, pinOffset:flatbuffers.Offset) {
   builder.addFieldOffset(2, pinOffset, 0);
 }
 
-static endAccountRegistrationMessage(builder:flatbuffers.Builder):flatbuffers.Offset {
+static endAccountRegistrationRequest(builder:flatbuffers.Builder):flatbuffers.Offset {
   const offset = builder.endObject();
   return offset;
 }
 
-static createAccountRegistrationMessage(builder:flatbuffers.Builder, loginOffset:flatbuffers.Offset, passwordOffset:flatbuffers.Offset, pinOffset:flatbuffers.Offset):flatbuffers.Offset {
-  AccountRegistrationMessage.startAccountRegistrationMessage(builder);
-  AccountRegistrationMessage.addLogin(builder, loginOffset);
-  AccountRegistrationMessage.addPassword(builder, passwordOffset);
-  AccountRegistrationMessage.addPin(builder, pinOffset);
-  return AccountRegistrationMessage.endAccountRegistrationMessage(builder);
+static createAccountRegistrationRequest(builder:flatbuffers.Builder, loginOffset:flatbuffers.Offset, passwordOffset:flatbuffers.Offset, pinOffset:flatbuffers.Offset):flatbuffers.Offset {
+  AccountRegistrationRequest.startAccountRegistrationRequest(builder);
+  AccountRegistrationRequest.addLogin(builder, loginOffset);
+  AccountRegistrationRequest.addPassword(builder, passwordOffset);
+  AccountRegistrationRequest.addPin(builder, pinOffset);
+  return AccountRegistrationRequest.endAccountRegistrationRequest(builder);
 }
 }
