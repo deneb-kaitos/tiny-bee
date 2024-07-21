@@ -1,0 +1,62 @@
+{
+  "name": "@deneb-kaitos/tiny-bee-libwebsocketserver",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@9.5.0",
+  "engines": {
+    "node": "22.4.1",
+    "pnpm": "9.5.0"
+  },
+  "version": "0.0.0",
+  "description": "[lib] WebsocketServer",
+  "scripts": {
+    "preinstall": "npx only-allow pnpm",
+    "lint": "ESLINT_USE_FLAT_CONFIG=true ./node_modules/.bin/eslint **/*.js --debug",
+    "test": "pnpm run lint && NODE_ENV=test NODE_DEBUG=LibWebsocketServer* ./node_modules/.bin/c8 ./node_modules/.bin/mocha"
+  },
+  "keywords": [],
+  "author": "Dmitry N. Medvedev <dmitry.medvedev@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "nanoid": "^5.0.7",
+    "uWebSockets.js": "github:uNetworking/uWebSockets.js#v20.44.0"
+  },
+  "devDependencies": {
+    "c8": "^7.12.0",
+    "eslint": "^9.7.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-node": "^11.1.0",
+    "ws": "^8.18.0"
+  },
+  "mocha": {
+    "allowUncaught": true,
+    "failZero": true,
+    "async-only": false,
+    "bail": true,
+    "checkLeaks": true,
+    "forbidOnly": true,
+    "exit": true,
+    "forbidPending": true,
+    "slow": 50,
+    "timeout": 1000,
+    "color": true,
+    "diff": true,
+    "fullTrace": true,
+    "growl": false,
+    "inline-diffs": true,
+    "reporter": "spec",
+    "noConfig": true,
+    "noOpts": true,
+    "require": [
+      "specs/mocha/mocha.mochaGlobalSetup.js",
+      "specs/mocha/mocha.mochaGlobalTeardown.js"
+    ],
+    "exclude": [
+      "**/node_modules/**/*"
+    ],
+    "spec": [
+      "**/specs/*.js"
+    ]
+  }
+}
