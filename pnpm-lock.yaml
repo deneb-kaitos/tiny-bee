@@ -42,6 +42,9 @@ catalogs:
     eslint-plugin-svelte:
       specifier: 2.41.0
       version: 2.41.0
+    flatbuffers:
+      specifier: ^24.3.25
+      version: 24.3.25
     globals:
       specifier: ^15.8.0
       version: 15.8.0
@@ -276,9 +279,18 @@ importers:
 
   sources/front-end/main.app:
     dependencies:
+      '@deneb-kaitos/tiny-bee-fbs':
+        specifier: 'workspace:'
+        version: link:../../common/net/fbs
+      '@deneb-kaitos/tiny-bee-serializers-serde':
+        specifier: 'workspace:'
+        version: link:../../common/net/serde
       '@inlang/paraglide-sveltekit':
         specifier: catalog:web
         version: 0.10.10(@sveltejs/kit@2.5.18(@sveltejs/vite-plugin-svelte@3.1.1(svelte@5.0.0-next.190)(vite@5.3.3(@types/node@20.14.9)))(svelte@5.0.0-next.190)(vite@5.3.3(@types/node@20.14.9)))
+      flatbuffers:
+        specifier: catalog:web
+        version: 24.3.25
       inter-ui:
         specifier: catalog:web
         version: 4.0.2

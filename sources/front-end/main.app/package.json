@@ -21,10 +21,14 @@
     "test:unit": "vitest"
   },
   "dependencies": {
-    "inter-ui": "catalog:web",
-    "@inlang/paraglide-sveltekit": "catalog:web"
+    "@deneb-kaitos/tiny-bee-fbs": "workspace:",
+    "@deneb-kaitos/tiny-bee-serializers-serde": "workspace:",
+    "@inlang/paraglide-sveltekit": "catalog:web",
+    "flatbuffers": "catalog:web",
+    "inter-ui": "catalog:web"
   },
   "devDependencies": {
+    "@inlang/paraglide-js": "catalog:web",
     "@playwright/test": "catalog:web",
     "@sveltejs/adapter-auto": "catalog:web",
     "@sveltejs/adapter-node": "catalog:web",
@@ -42,8 +46,7 @@
     "typescript": "catalog:web",
     "vite": "catalog:web",
     "vitest": "catalog:web",
-    "xstate": "catalog:web",
-    "@inlang/paraglide-js": "catalog:web"
+    "xstate": "catalog:web"
   },
   "dependenciesMeta": {
     "inter-ui": {
