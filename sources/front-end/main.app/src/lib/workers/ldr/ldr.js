@@ -17,7 +17,7 @@ import { fromPromise } from 'xstate';
 import { BroadcastChannelName } from '../BroadcastChannelName.js';
 
 let loaderFSM = null;
-const workerNames = Object.freeze(['sec', 'comm', 'app']);
+const workerNames = Object.freeze(['sec', 'serde', 'comm', 'app']);
 const workerProperties = new WeakMap();
 
 /**
@@ -119,7 +119,7 @@ const api = {
 
       return Promise.resolve({ workerName });
     }),
-    [ApiNames.actors.createWorker]: fromPromise(async ({ input, system }) => {
+    [ApiNames.actors.createWorker]: fromPromise(({ input, system }) => {
       console.debug(`.actors.${ApiNames.actors.createWorker}`, input, system);
 
       const {
@@ -129,20 +129,26 @@ const api = {
       console.debug(`[${ApiNames.actors.createWorker}] for ${workerName}`);
 
       if (workerName === null) {
-        return Promise.resolve({ workerName });
+        return Promise.reject({ workerName });
       }
 
-      const url = `../${workerName}/index.svelte.js`;
-      const worker = new Worker(new URL(url, import.meta.url), {
-        type: 'module',
-        name: workerName,
-      });
-      workers.set(workerName, worker);
-      worker.addEventListener('message', handleWorkerProtocolMessage);
+      try {
+        const url = `../${workerName}/index.svelte.js`;
+        const worker = new Worker(new URL(url, import.meta.url), {
+          type: 'module',
+          name: workerName,
+        });
+        workers.set(workerName, worker);
+        worker.addEventListener('message', handleWorkerProtocolMessage);
 
-      return Promise.resolve({
-        workerName,
-      });
+        return Promise.resolve({
+          workerName,
+        });
+      } catch(error) {
+        console.error(error);
+        
+        return Promise.reject(error);
+      }
     }),
   },
   guards: {
