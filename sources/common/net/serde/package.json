@@ -6,7 +6,7 @@
   "type": "module",
   "packageManager": "pnpm@9.5.0",
   "engines": {
-    "node": "22.4.1",
+    "node": "22.5.1",
     "pnpm": "9.5.0"
   },
   "engineStrict": true,
@@ -19,19 +19,19 @@
   "author": "Dmitry N. Medvedev <dmitry.medvedev@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "@deneb-kaitos/tiny-bee-fbs": "workspace:^0.0.0",
-    "flatbuffers": "^24.3.25"
+    "@deneb-kaitos/tiny-bee-fbs": "workspace:^",
+    "flatbuffers": "catalog:web"
   },
   "devDependencies": {
-    "c8": "^7.12.0",
-    "chai": "^4.3.7",
-    "dotenv": "^16.0.3",
-    "eslint": "^8.31.0",
-    "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-chai-friendly": "^0.7.2",
-    "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-node": "^11.1.0",
-    "mocha": "^10.2.0"
+    "c8": "catalog:web",
+    "chai": "catalog:web",
+    "dotenv": "catalog:web",
+    "eslint": "catalog:web",
+    "eslint-config-airbnb-base": "catalog:web",
+    "eslint-plugin-chai-friendly": "catalog:web",
+    "eslint-plugin-import": "catalog:web",
+    "eslint-plugin-node": "catalog:web",
+    "mocha": "catalog:web"
   },
   "mocha": {
     "allowUncaught": true,
