@@ -5,7 +5,7 @@
   "type": "module",
   "packageManager": "pnpm@9.5.0",
   "engines": {
-    "node": "22.4.1",
+    "node": "22.5.1",
     "pnpm": "9.5.0"
   },
   "scripts": {
@@ -21,8 +21,8 @@
     "test:unit": "vitest"
   },
   "dependencies": {
-    "@deneb-kaitos/tiny-bee-fbs": "workspace:",
-    "@deneb-kaitos/tiny-bee-serializers-serde": "workspace:",
+    "@deneb-kaitos/tiny-bee-fbs": "workspace:^",
+    "@deneb-kaitos/tiny-bee-serializers-serde": "workspace:^",
     "@inlang/paraglide-sveltekit": "catalog:web",
     "flatbuffers": "catalog:web",
     "inter-ui": "catalog:web"
