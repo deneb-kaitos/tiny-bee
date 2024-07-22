@@ -15,6 +15,9 @@ import {
 } from '../helpers/isAllWorkersHaveALabel.js';
 import { fromPromise } from 'xstate';
 import { BroadcastChannelName } from '../BroadcastChannelName.js';
+import {
+  createBroadcastMessage,
+} from '$lib/workers/helpers/createBroadcastMessage.js';
 
 let loaderFSM = null;
 const workerNames = Object.freeze(['sec', 'serde', 'comm', 'app']);
@@ -43,7 +46,13 @@ const handleWorkerProtocolMessage = (e) => {
     payload,
   });
 
-  broadcastChannel?.postMessage({ type, payload });
+  const message = createBroadcastMessage({
+    type,
+    meta: null,
+    payload,
+  })
+
+  broadcastChannel?.postMessage(message);
 };
 
 const api = {
@@ -63,20 +72,24 @@ const api = {
   actions: {
     // eslint-disable-next-line no-unused-vars
     [ApiNames.actions.initWorker]: ({ context, event }, { workerName }) => {
+      const message = createBroadcastMessage({
+        type: ProtocolMessageTypes.INIT,
+        meta: null,
+        payload: null,
+      })
       /**
        * @type {Worker} worker
        */
-      workers.get(workerName)?.postMessage({
-        type: ProtocolMessageTypes.INIT,
-        payload: null,
-      });
+      workers.get(workerName)?.postMessage(message);
     },
     // eslint-disable-next-line no-unused-vars
     [ApiNames.actions.loaderReady]: ({ context, event}, params) => {
-      self.postMessage({
+      const message = createBroadcastMessage({
         type: LoaderSignalTypes.LOADER_READY,
-        payload: params, 
-      })
+        meta: null,
+        payload: params || null, 
+      });
+      self.postMessage(message);
     },
   },
   actors: {
@@ -91,10 +104,12 @@ const api = {
        * @type {Worker} worker
        */
       for(const worker of workers.values()) {
-        worker.postMessage({
+        const message = createBroadcastMessage({
           type: ProtocolMessageTypes.RUN,
+          meta: null,
           payload: null,
-        })
+        });
+        worker.postMessage(message);
       }
 
       return Promise.resolve({ workerName });
@@ -112,10 +127,13 @@ const api = {
         return Promise.resolve({ workerName });
       }
 
-      workers.get(workerName)?.postMessage({
+      const message = createBroadcastMessage({
         type: ProtocolMessageTypes.INIT,
+        meta: null,
         payload: null,
       });
+
+      workers.get(workerName)?.postMessage(message);
 
       return Promise.resolve({ workerName });
     }),
@@ -198,12 +216,15 @@ const handle_INIT = (payload = null) => {
     type: LoaderSignalTypes.CREATE_WORKERS,
   });
 
-  self.postMessage({
+  const message = createBroadcastMessage({
     type: ProtocolMessageTypes.INIT,
+    meta: null,
     payload: {
       workerName: self.name,
-    } 
+    },
   });
+
+  self.postMessage(message);
 
   console.log(`[${self.name}].handle_INIT:`, payload);
 };
@@ -215,10 +236,12 @@ const handle_DISPOSE = (payload = null) => {
   for(const [workerName, worker] of workers.entries()) {
     console.debug(`disposing [${workerName}]...`);
 
-    worker.postMessage({
+    const message = createBroadcastMessage({
       type: ProtocolMessageTypes.DISPOSE,
+      meta: null,
       payload: null,
     });
+    worker.postMessage(message);
     worker.removeEventListener('message', handleWorkerProtocolMessage);
     workers.delete(workerName);
     worker.terminate();

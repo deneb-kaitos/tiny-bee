@@ -10,6 +10,7 @@ import {
 import {
   OperationType,
 } from './SerDeManager/OperationType.js';
+import { createBroadcastMessage } from '../helpers/createBroadcastMessage.js';
 
 /**
  * @type {BroadcastChannel}
@@ -61,12 +62,14 @@ const handle_INIT = (payload = null) => {
 
   serdeManager = new SerDeManager();
 
-  self.postMessage({
+  const message = createBroadcastMessage({
     type: ProtocolMessageTypes.INIT,
+    meta: null,
     payload: {
       workerName: self.name,
     },
   });
+  self.postMessage(message);
 
   console.debug(`%c${self.name}.handle_INIT`, 'background-color: white; color: yellowgreen;');
 };
@@ -83,12 +86,14 @@ const handle_DISPOSE = (payload = null) => {
 
   serdeManager = null;
 
-  self.postMessage({
+  const message = createBroadcastMessage({
     type: ProtocolMessageTypes.DISPOSE,
+    meta: null,
     payload: {
       workerName: self.name,
     },
   });
+  self.postMessage(message);
 
   self.close();
 
@@ -96,12 +101,14 @@ const handle_DISPOSE = (payload = null) => {
 };
 
 const handle_RUN = (payload = null) => {
-  self.postMessage({
+  const message = createBroadcastMessage({
     type: ProtocolMessageTypes.RUN,
+    meta: null,
     payload: {
       workerName: self.name,
     }
   });
+  self.postMessage(message);
 
   console.log(`[${self.name}].handle_RUN`, payload);
 };
@@ -147,9 +154,11 @@ self.addEventListener('messageerror', handleMessageError);
 
 console.debug(`%c${self.name}.ctor`, 'background-color:yellowgreen;color:white;padding:0 .5rem;');
 
-self.postMessage({
+const message = createBroadcastMessage({
   type: ProtocolMessageTypes.CTOR,
+  meta: null,
   payload: {
     workerName: self.name,
   }
 });
+self.postMessage(message);

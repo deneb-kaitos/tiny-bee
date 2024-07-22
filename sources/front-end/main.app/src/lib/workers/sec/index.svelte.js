@@ -11,6 +11,9 @@ import {
 import {
   store as SecStore,
 } from './SecStore.svelte.js';
+import {
+  createBroadcastMessage,
+} from '$lib/workers/helpers/createBroadcastMessage.js';
 
 /**
  * @type {BroadcastChannel}
@@ -43,10 +46,13 @@ const handleChannelMessage = (messageEvent) => {
   const result = (API[type])();
 
   if (typeof returnTo !== 'undefined' || returnTo !== null) {
-    (new BroadcastChannel(returnTo)).postMessage({
+    const message = createBroadcastMessage({
       type,
+      meta: null,
       payload: result,
     });
+
+    (new BroadcastChannel(returnTo)).postMessage(message);
   }
 };
 
@@ -61,10 +67,13 @@ const handleChannelMessageError = (messageEvent) => {
 const handleTokenEvent = (messageEvent) => {
   console.debug(`${self.name}.handleTokenEvent`, messageEvent);
 
-  broadcastChannel.postMessage({
+  const message = createBroadcastMessage({
     type: messageEvent.type,
+    meta: null,
     payload: null,
-  });
+  })
+
+  broadcastChannel.postMessage(message);
 };
 
 //#region message handlers
@@ -78,12 +87,14 @@ const handle_INIT = (payload = null) => {
   SecStore.addEventListener(SecEvents.TokenIsNull, handleTokenEvent);
   SecStore.addEventListener(SecEvents.TokenIsNotNull, handleTokenEvent)
 
-  self.postMessage({
+  const message = createBroadcastMessage({
     type: ProtocolMessageTypes.INIT,
+    meta: null,
     payload: {
       workerName: self.name,
     },
   });
+  self.postMessage(message);
 
   console.debug(`%c${self.name}.handle_INIT`, 'background-color: white; color: yellowgreen;');
 };
@@ -101,12 +112,14 @@ const handle_DISPOSE = (payload = null) => {
   broadcastChannel.close();
   broadcastChannel = null;
 
-  self.postMessage({
+  const message = createBroadcastMessage({
     type: ProtocolMessageTypes.DISPOSE,
+    meta: null,
     payload: {
       workerName: self.name,
     },
   });
+  self.postMessage(message);
 
   self.close();
 
@@ -114,12 +127,14 @@ const handle_DISPOSE = (payload = null) => {
 };
 
 const handle_RUN = (payload = null) => {
-  self.postMessage({
+  const message = createBroadcastMessage({
     type: ProtocolMessageTypes.RUN,
+    meta: null,
     payload: {
       workerName: self.name,
     }
   });
+  self.postMessage(message);
 
   console.log(`[${self.name}].handle_RUN`, payload);
 };
@@ -165,9 +180,11 @@ self.addEventListener('messageerror', handleMessageError);
 
 console.debug(`%c${self.name}.ctor`, 'background-color:yellowgreen;color:white;padding:0 .5rem;');
 
-self.postMessage({
+const message = createBroadcastMessage({
   type: ProtocolMessageTypes.CTOR,
+  meta: null,
   payload: {
     workerName: self.name,
   }
 });
+self.postMessage(message);

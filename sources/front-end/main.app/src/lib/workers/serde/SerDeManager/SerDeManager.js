@@ -1,3 +1,4 @@
+import { createBroadcastMessage } from '$lib/workers/helpers/createBroadcastMessage.js';
 import {
   Serialize,
 } from './serialize/Serialize.js';
@@ -19,13 +20,13 @@ export class SerDeManager {
     } = message;
     const result = this.#serializer.serialize(message);
 
-    console.debug(`${this.constructor.name}.serialize:`, message, result);
-
     if (returnTo !== null) {
-      (new BroadcastChannel(returnTo)).postMessage({
+      const m = createBroadcastMessage({
         type: message.payload.type,
+        meta: null,
         payload: result,
       });
+      (new BroadcastChannel(returnTo)).postMessage(m);
     } 
   }
 }
