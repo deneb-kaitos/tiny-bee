@@ -4,4 +4,5 @@ export const BroadcastChannelName = Object.freeze({
   UI: 'UI',
   SEC: 'SEC',
   SERDE: 'SERDE',
+  COMM: 'COMM',
 });

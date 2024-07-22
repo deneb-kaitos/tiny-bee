@@ -12,11 +12,18 @@
   import {
     OperationType,
   } from '$lib/workers/serde/SerDeManager/OperationType.js';
+  import {
+    createBroadcastMessage,
+  } from '$lib/workers/helpers/createBroadcastMessage.js';
 
   /**
    * @type {BroadcastChannel | null}
    */
   let serdeBroadcastChannel = null;
+  /**
+   * @type {BroadcastChannel | null}
+   */
+  let commBroadcastChannel = null;
   /**
    * @type {BroadcastChannel | null}
    */
@@ -55,7 +62,7 @@
       }
     }
 
-    serdeBroadcastChannel?.postMessage({
+    const message = createBroadcastMessage({
       type: OperationType.serialize,
       meta: {
         returnTo: ownBroadcastChannel?.name,
@@ -65,6 +72,8 @@
         value: credentials,
       }
     });
+
+    serdeBroadcastChannel?.postMessage(message);
   };
 
   /**
@@ -88,12 +97,31 @@
     } = e;
 
     console.debug('handleOwnBroadcastChannelMessage', type, payload);
+
+    switch(type) {
+      case MessageType.AccountRegistrationRequest: {
+        console.debug(`now send the ${type} bytes to the COMM worker`);
+        const message = createBroadcastMessage({
+          type,
+          meta: null,
+          payload,
+        });
+        commBroadcastChannel?.postMessage(message);
+
+        break;
+      }
+      default: {
+        throw new TypeError(`message type (${type}) is unexpected`);
+      }
+    }
   };
 
 
   $effect(() => {
     serdeBroadcastChannel = new BroadcastChannel(BroadcastChannelName.SERDE);
     serdeBroadcastChannel.addEventListener('message', handleSerdeBroadcastChannelMessage);
+
+    commBroadcastChannel = new BroadcastChannel(BroadcastChannelName.COMM);
 
     ownBroadcastChannel = new BroadcastChannel(crypto.randomUUID());
     ownBroadcastChannel.addEventListener('message', handleOwnBroadcastChannelMessage);
@@ -102,6 +130,9 @@
       serdeBroadcastChannel?.removeEventListener('message', handleSerdeBroadcastChannelMessage);
       serdeBroadcastChannel?.close();
       serdeBroadcastChannel = null;
+
+      commBroadcastChannel?.close();
+      commBroadcastChannel = null;
 
       ownBroadcastChannel?.removeEventListener('message', handleOwnBroadcastChannelMessage);
       ownBroadcastChannel?.close();

@@ -4,12 +4,43 @@ import {
 import {
   ConnectionFactory,
 } from './ConnectionFactory.js';
+import {
+  BroadcastChannelName,
+} from '../BroadcastChannelName.js';
 
 let connectionFactory = null;
+/**
+ * @type {BroadcastChannel | null}
+ */
+let broadCastChannel = null;
+
+/**
+ * 
+ * @param {MessageEvent} e 
+ */
+const handleBroadcastChannelMessage = (e) => {
+  const {
+    data: {
+      type,
+      meta,
+      payload,
+    },
+  } = e;
+
+  console.debug(`${self.name}.handleBroadcastChannelMessage`, type, meta, payload);
+}
+
+const handleBroadcastChannelMessageError = (e) => {
+  console.error(`${self.name}.handleBroadcastChannelMessageError`, e);
+}
 
 //#region message handlers
 const handle_INIT = (payload = null) => {
   console.log(`[${self.name}].handle_INIT`, payload);
+
+  broadCastChannel = new BroadcastChannel(BroadcastChannelName.COMM);
+  broadCastChannel.addEventListener('message', handleBroadcastChannelMessage);
+  broadCastChannel.addEventListener('messageerror', handleBroadcastChannelMessageError);
 
   connectionFactory = new ConnectionFactory();
 
@@ -24,6 +55,11 @@ const handle_INIT = (payload = null) => {
 };
 
 const handle_DISPOSE = (payload = null) => {
+  broadCastChannel?.removeEventListener('message', handleBroadcastChannelMessage);
+  broadCastChannel?.removeEventListener('messageerror', handleBroadcastChannelMessageError);
+  broadCastChannel?.close();
+  broadCastChannel = null;
+
   connectionFactory?.dispose();
   connectionFactory = null;
 

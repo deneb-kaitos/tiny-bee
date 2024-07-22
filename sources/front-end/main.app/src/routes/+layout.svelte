@@ -22,6 +22,7 @@
   import {
     SecEvents,
   } from '$lib/workers/sec/SecAPI.js';
+	import { createBroadcastMessage } from '$lib/workers/helpers/createBroadcastMessage.js';
 
   /**
 	 * @type {Worker | null}
@@ -39,10 +40,12 @@
     secChannel.removeEventListener('message', handleSecMessage);
     secChannel.close();
 
-    ldr?.postMessage({
+    const message = createBroadcastMessage({
       type: ProtocolMessageTypes.DISPOSE,
+      meta: null,
       payload: null,
     });
+    ldr?.postMessage(message);
 
     ldr?.removeEventListener('message', handleLoaderMessage);
 
@@ -63,12 +66,14 @@
         // this is reached; it means all the Workers are currently running; all good; the [app] worker should take care of the next steps
         console.debug('handleLoaderMessage', type);
 
-        let bc = new BroadcastChannel(BroadcastChannelName.CONNECTION_FACTORY);
-        bc.postMessage({
-          type: 'test',
-          payload,
-        });
-        bc.close();
+        // let bc = new BroadcastChannel(BroadcastChannelName.CONNECTION_FACTORY);
+        // const message = createBroadcastMessage({
+        //   type: 'test',
+        //   meta: null,
+        //   payload,
+        // });
+        // bc.postMessage(message);
+        // bc.close();
 
         // bc = new BroadcastChannel(BroadcastChannelName.UI);
         // bc.postMessage({

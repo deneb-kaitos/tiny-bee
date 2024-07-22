@@ -4,6 +4,9 @@ import {
 import {
   SecAPI,
 } from '../SecAPI.js';
+import {
+  createBroadcastMessage,
+} from '$lib/workers/helpers/createBroadcastMessage.js';
 
 const secChannel = new BroadcastChannel(BroadcastChannelName.SEC);
 
@@ -27,10 +30,13 @@ export const isAuthenticated = () => new Promise((resolve, reject) => {
     }
   }, { once: true });
 
-  secChannel.postMessage({
+  const message = createBroadcastMessage({
     type: SecAPI.isTokenDefined,
+    meta: null,
     payload: {
       returnTo: callBackChannel.name,
     },
   });
+
+  secChannel.postMessage(message);
 });
