@@ -25,7 +25,6 @@
   "devDependencies": {
     "c8": "catalog:web",
     "chai": "catalog:web",
-    "dotenv": "catalog:web",
     "eslint": "catalog:web",
     "eslint-config-airbnb-base": "catalog:web",
     "eslint-plugin-chai-friendly": "catalog:web",
