@@ -5,11 +5,13 @@ import {
 
 export class SerDeManager {
   #serializer = null;
+  #name = null;
 
-  constructor() {
+  constructor(name = null) {
+    this.#name = `${name}::SerDeManager`
     this.#serializer = new Serialize();
 
-    console.debug(`${this.constructor.name}.ctor`);
+    console.debug(`${this.#name}.ctor`);
   }
 
   serialize(message = null) {

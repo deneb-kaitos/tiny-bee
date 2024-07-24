@@ -187,4 +187,6 @@ const message = createBroadcastMessage({
     workerName: self.name,
   }
 });
+console.debug(`[${self.name}].${ProtocolMessageTypes.CTOR}`, message);
+
 self.postMessage(message);

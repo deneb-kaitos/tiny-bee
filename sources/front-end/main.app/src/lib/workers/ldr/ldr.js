@@ -18,6 +18,10 @@ import { BroadcastChannelName } from '../BroadcastChannelName.js';
 import {
   createBroadcastMessage,
 } from '$lib/workers/helpers/createBroadcastMessage.js';
+// const secModule = await import('../sec/sec.svelte.js?worker');
+// const serdeModule = await import ('../serde/serde.svelte.js?worker');
+// const commModule = await import('../comm/comm.svelte.js?worker');
+// const appModule = await import('../app/app.svelte.js?worker');
 
 let loaderFSM = null;
 const workerNames = Object.freeze(['sec', 'serde', 'comm', 'app']);
@@ -41,10 +45,12 @@ const handleWorkerProtocolMessage = (e) => {
   properties[type] = true;
   workerProperties.set(workers.get(payload.workerName), properties);
 
-  loaderFSM.send({
+  const loaderMessage = createBroadcastMessage({
     type,
+    meta: null,
     payload,
   });
+  loaderFSM.send(loaderMessage);
 
   const message = createBroadcastMessage({
     type,
@@ -138,24 +144,57 @@ const api = {
       return Promise.resolve({ workerName });
     }),
     [ApiNames.actors.createWorker]: fromPromise(({ input, system }) => {
-      console.debug(`.actors.${ApiNames.actors.createWorker}`, input, system);
-
       const {
         workerName = null,
       } = input;
 
-      console.debug(`[${ApiNames.actors.createWorker}] for ${workerName}`);
+      console.debug(`.actors.${ApiNames.actors.createWorker}`, input, system, workerName);
+
 
       if (workerName === null) {
         return Promise.reject({ workerName });
       }
 
+      let worker = null;
+
       try {
-        const url = `../${workerName}/index.svelte.js`;
-        const worker = new Worker(new URL(url, import.meta.url), {
-          type: 'module',
-          name: workerName,
-        });
+        switch(workerName) {
+          case 'sec': {
+            worker = new Worker(new URL('../sec/sec.svelte.js', import.meta.url), {
+              type: 'module',
+              name: 'sec',
+            });
+
+            break;
+          }
+          case 'serde': {
+            worker = new Worker(new URL('../serde/serde.svelte.js', import.meta.url), {
+              type: 'module',
+              name: 'serde',
+            });
+
+            break;
+          }
+          case 'comm': {
+            worker = new Worker(new URL('../comm/comm.svelte.js', import.meta.url), {
+              type: 'module',
+              name: 'comm',
+            });
+
+            break;
+          }
+          case 'app': {
+            worker = new Worker(new URL('../app/app.svelte.js', import.meta.url), {
+              type: 'module',
+              name: 'app',
+            });
+
+            break;
+          }
+          default: {
+            throw new Error(`module "${workerName}" is unknown`);
+          }
+        }
         workers.set(workerName, worker);
         worker.addEventListener('message', handleWorkerProtocolMessage);
 
@@ -301,4 +340,3 @@ const handleMessageError = (errorEvent) => {
 self.addEventListener('error', handleError);
 self.addEventListener('message', handleMessage);
 self.addEventListener('messageerror', handleMessageError);
-

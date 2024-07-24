@@ -3,7 +3,7 @@ import {
 } from './SecAPI.js';
 
 class SecStore extends EventTarget {
-  #token = $state(null);
+  #token = null;
 
   #notifyTokenIsNull() {
     if (this.#token === null) {
