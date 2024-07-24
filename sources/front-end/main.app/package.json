@@ -11,6 +11,7 @@
   "scripts": {
     "dev": "vite dev",
     "build": "vite build",
+    "gen:certs": "mkcert -key-file ./.certs/key.pem -cert-file ./.certs/cert.pem 'localhost'",
     "preview": "vite preview",
     "check": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json",
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json --watch",
@@ -36,6 +37,7 @@
     "@sveltejs/kit": "catalog:web",
     "@sveltejs/vite-plugin-svelte": "catalog:web",
     "@types/eslint": "catalog:web",
+    "@vitejs/plugin-basic-ssl": "^1.1.0",
     "eslint": "catalog:web",
     "eslint-config-prettier": "catalog:web",
     "eslint-plugin-svelte": "catalog:web",
@@ -45,6 +47,7 @@
     "svelte-check": "catalog:web",
     "typescript": "catalog:web",
     "vite": "catalog:web",
+    "vite-plugin-mkcert": "^1.17.5",
     "vitest": "catalog:web",
     "xstate": "catalog:web"
   },

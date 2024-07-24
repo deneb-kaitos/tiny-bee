@@ -6,6 +6,7 @@ import {
 } from './WebSocketClient.js';
 
 export class ConnectionFactory {
+  #name = null;
   /**
    * @type {BroadcastChannel}
    */
@@ -21,7 +22,7 @@ export class ConnectionFactory {
       payload,
     } = e.data;
 
-    console.debug(`${this.constructor.name}.#handleBroadcastChannelMessage`, type, payload);
+    console.debug(`${this.#name}.#handleBroadcastChannelMessage`, type, payload);
   }
 
   /**
@@ -29,10 +30,11 @@ export class ConnectionFactory {
    * @param {MessageEvent} e 
    */
   #handleBroadcastChannelMessageError = (e) => {
-    console.debug(`${this.constructor.name}.#handleBroadcastChannelMessageError`, e);
+    console.debug(`${this.#name}.#handleBroadcastChannelMessageError`, e);
   }
 
-  constructor() {
+  constructor(name = null) {
+    this.#name = `${name}::ConnectionFactory`;
     this.#handleBroadcastChannelMessage = this.#handleBroadcastChannelMessage.bind(this);
     this.#handleBroadcastChannelMessageError = this.#handleBroadcastChannelMessageError.bind(this);
 
@@ -40,7 +42,7 @@ export class ConnectionFactory {
     this.#broadcastChannel.addEventListener('message', this.#handleBroadcastChannelMessage);
     this.#broadcastChannel.addEventListener('messageerror', this.#handleBroadcastChannelMessageError);
 
-    console.debug(`${this.constructor.name}.ctor`);
+    console.debug(`${this.#name}.ctor`);
   }
 
   dispose() {
@@ -52,6 +54,6 @@ export class ConnectionFactory {
     this.#broadcastChannel?.close();
     this.#broadcastChannel = null;
 
-    console.debug(`${this.constructor.name}.dispose`);
+    console.debug(`${this.#name}.dispose`);
   }
 }

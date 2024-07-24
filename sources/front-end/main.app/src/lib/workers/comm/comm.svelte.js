@@ -2,21 +2,17 @@ import {
   ProtocolMessageTypes,
 } from '$lib/workers/ProtocolMessageTypes.js';
 import {
+  ConnectionFactory,
+} from './ConnectionFactory.js';
+import {
   BroadcastChannelName,
 } from '../BroadcastChannelName.js';
-import {
-  SerDeManager,
-} from './SerDeManager/SerDeManager.js';
-import {
-  OperationType,
-} from './SerDeManager/OperationType.js';
-import { createBroadcastMessage } from '../helpers/createBroadcastMessage.js';
 
+let connectionFactory = null;
 /**
- * @type {BroadcastChannel}
+ * @type {BroadcastChannel | null}
  */
-let broadCastChannel;
-let serdeManager;
+let broadCastChannel = null;
 
 /**
  * 
@@ -31,69 +27,52 @@ const handleBroadcastChannelMessage = (e) => {
     },
   } = e;
 
-  console.debug('handleBroadcastChannelMessage', type, meta, payload);
-
-  switch(type) {
-    case OperationType.serialize: {
-      serdeManager.serialize(e.data);
-
-      break;
-    }
-    case 'deserialize': {
-      throw new Error('not implemented yet');
-    }
-    default: {
-      throw new TypeError(`unexpected type: ${type}`);
-    }
-  }
+  console.debug(`${self.name}.handleBroadcastChannelMessage`, type, meta, payload);
 }
 
 const handleBroadcastChannelMessageError = (e) => {
-  console.error('handleBroadcastChannelMessageError', e);
-};
+  console.error(`${self.name}.handleBroadcastChannelMessageError`, e);
+}
 
 //#region message handlers
 const handle_INIT = (payload = null) => {
   console.log(`[${self.name}].handle_INIT`, payload);
 
-  broadCastChannel = new BroadcastChannel(BroadcastChannelName.SERDE);
+  broadCastChannel = new BroadcastChannel(BroadcastChannelName.COMM);
   broadCastChannel.addEventListener('message', handleBroadcastChannelMessage);
   broadCastChannel.addEventListener('messageerror', handleBroadcastChannelMessageError);
 
-  serdeManager = new SerDeManager();
+  connectionFactory = new ConnectionFactory(self.name);
 
-  const message = createBroadcastMessage({
+  self.postMessage({
     type: ProtocolMessageTypes.INIT,
-    meta: null,
     payload: {
       workerName: self.name,
     },
   });
-  self.postMessage(message);
 
   console.debug(`%c${self.name}.handle_INIT`, 'background-color: white; color: yellowgreen;');
 };
 
 const handle_DISPOSE = (payload = null) => {
-  broadCastChannel.removeEventListener('messageerror', handleBroadcastChannelMessageError);
-  broadCastChannel.removeEventListener('message', handleBroadcastChannelMessage);
-  broadCastChannel.close();
+  broadCastChannel?.removeEventListener('message', handleBroadcastChannelMessage);
+  broadCastChannel?.removeEventListener('messageerror', handleBroadcastChannelMessageError);
+  broadCastChannel?.close();
   broadCastChannel = null;
+
+  connectionFactory?.dispose();
+  connectionFactory = null;
 
   self.removeEventListener('error', handleError);
   self.removeEventListener('message', handleMessage);
   self.removeEventListener('messageerror', handleMessageError);
 
-  serdeManager = null;
-
-  const message = createBroadcastMessage({
+  self.postMessage({
     type: ProtocolMessageTypes.DISPOSE,
-    meta: null,
     payload: {
       workerName: self.name,
     },
   });
-  self.postMessage(message);
 
   self.close();
 
@@ -101,16 +80,13 @@ const handle_DISPOSE = (payload = null) => {
 };
 
 const handle_RUN = (payload = null) => {
-  const message = createBroadcastMessage({
+  self.postMessage({
     type: ProtocolMessageTypes.RUN,
-    meta: null,
     payload: {
       workerName: self.name,
-    }
+    },
   });
-  self.postMessage(message);
-
-  console.log(`[${self.name}].handle_RUN`, payload);
+  console.debug(`%c${self.name}.handle_RUN`, 'background-color: white; color: yellowgreen;', payload);
 };
 //#endregion
 
@@ -154,11 +130,9 @@ self.addEventListener('messageerror', handleMessageError);
 
 console.debug(`%c${self.name}.ctor`, 'background-color:yellowgreen;color:white;padding:0 .5rem;');
 
-const message = createBroadcastMessage({
+self.postMessage({
   type: ProtocolMessageTypes.CTOR,
-  meta: null,
   payload: {
     workerName: self.name,
   }
 });
-self.postMessage(message);
