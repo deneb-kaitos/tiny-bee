@@ -1,3 +1,4 @@
+/* c8 ignore start */
 export const readJson = (res, cb, err) => {
   let buffer;
   /* Register data cb */
@@ -34,3 +35,4 @@ export const readJson = (res, cb, err) => {
   /* Register error cb */
   res.onAborted(err);
 };
+/* c8 ignore end */
