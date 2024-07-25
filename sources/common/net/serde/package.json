@@ -12,7 +12,7 @@
   "engineStrict": true,
   "scripts": {
     "preinstall": "npx only-allow pnpm",
-    "lint": "ESLINT_USE_FLAT_CONFIG=true ./node_modules/.bin/eslint '**/*.mjs'",
+    "lint": "ESLINT_USE_FLAT_CONFIG=true ./node_modules/.bin/eslint '**/*.js'",
     "build:schema": "cd ../fbs && ./.bin/compile.mjs",
     "test": "pnpm run lint && pnpm run build:schema && ./specs/bin/run-test.sh",
     "cover": "pnpm run lint && ./specs/bin/run-coverage.sh"
