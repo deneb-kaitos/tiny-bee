@@ -4,10 +4,10 @@
   "version": "0.0.0",
   "description": "serializers: AccountRegistrationRequest",
   "type": "module",
-  "packageManager": "pnpm@9.5.0",
+  "packageManager": "pnpm@9.6.0",
   "engines": {
     "node": "22.5.1",
-    "pnpm": "9.5.0"
+    "pnpm": "9.6.0"
   },
   "engineStrict": true,
   "scripts": {
@@ -22,14 +22,14 @@
     "flatbuffers": "catalog:web"
   },
   "devDependencies": {
-    "c8": "catalog:web",
-    "chai": "catalog:web",
+    "c8": "catalog:specs",
+    "chai": "catalog:specs",
     "eslint": "catalog:web",
     "eslint-config-airbnb-base": "catalog:web",
     "eslint-plugin-chai-friendly": "catalog:web",
     "eslint-plugin-import": "catalog:web",
     "eslint-plugin-node": "catalog:web",
-    "mocha": "catalog:web"
+    "mocha": "catalog:specs"
   },
   "mocha": {
     "allowUncaught": true,

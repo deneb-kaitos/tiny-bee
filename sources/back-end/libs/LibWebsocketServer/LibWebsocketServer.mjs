@@ -1,4 +1,3 @@
-import util from 'node:util';
 import {
   EventEmitter,
 } from 'node:events';
@@ -11,7 +10,7 @@ import {
 } from './readJson.js';
 import {
   LibWebsocketServerEvents,
-} from './LibWebsocketServerEvents.js';
+} from './LibWebsocketServerEvents.mjs';
 // import {
 //   Topics,
 // } from './Topics.js';
@@ -22,27 +21,34 @@ const SHOULD_MESSAGE_BE_COMPRESSED = true;
 export class LibWebsocketServer {
   #config = null;
    
+  /* c8 ignore next */
   #debuglog = () => { };
   #handle = null;
   /** @type {uWS.TemplatedApp} */
   #server = null;
-  #encoder = new TextEncoder();
-  #decoder = new TextDecoder();
+  // #encoder = new TextEncoder();
+  // #decoder = new TextDecoder();
   #tsInterval = null;
   #moneyInterval = null;
+  /**
+   * @type {Map<string, object>} #clients
+   */
   #clients = null;
 
   #events = null;
 
-  constructor(config = null) {
+  /* c8 ignore start */
+  constructor({ config = null, debuglog = () => {} }) {
     if (config === null) {
       throw new ReferenceError('config is undefined');
     }
 
-    this.#debuglog = util.debuglog(this.constructor.name);
+    this.#debuglog = debuglog;
+    // this.#debuglog = util.debuglog(this.constructor.name);
     this.#config = Object.freeze({ ...config });
     this.#events = new EventEmitter();
   }
+  /* c8 ignore end */
 
   get IS_RUNNING() {
     return this.#handle !== null;
@@ -56,6 +62,7 @@ export class LibWebsocketServer {
     return this.#clients;
   }
 
+  /* c8 ignore start */
   sendMessageToClient(clientId = null, message = null) {
     if (clientId === null) {
       throw new ReferenceError('clientId is undefined');
@@ -73,6 +80,7 @@ export class LibWebsocketServer {
       this.#debuglog(error);
     }
   }
+  /* c8 ignore end */
 
   start() {
     return new Promise((ok, fail) => {
@@ -149,6 +157,7 @@ export class LibWebsocketServer {
             });
           },
            
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           close: (ws, code, message) => {
             this.#clients.delete(ws.id);
 
