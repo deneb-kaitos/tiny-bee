@@ -38,7 +38,6 @@ jobs:
     steps:
     - name: Check Flatbuffers Location
       run: which flatc
-    - run: exit 1
 
   build:
     runs-on: ubuntu-24.04
@@ -59,10 +58,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'pnpm'
-    - name: Install Google Flatbuffers
-      run: |
-        sudo apt-get update
-        sudo snap install flatbuffers
+    - run: exit 1 
     - run: pnpm --recursive install
     - run: pnpm --recursive run test
     - run: pnpm --recursive run cover
