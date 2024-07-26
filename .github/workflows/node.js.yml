@@ -27,6 +27,8 @@ jobs:
         git clone https://github.com/google/flatbuffers.git --branch v24.3.25 --single-branch .
         cmake -G "Unix Makefiles"
         make -j
+        which flatc
+        flatc --version
 
   build:
     runs-on: ubuntu-24.04
