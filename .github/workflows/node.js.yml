@@ -37,9 +37,8 @@ jobs:
     needs: install-flatbuffers
     steps:
     - name: Check Flatbuffers Location
-      run: |
-        which flatc
-        exit 1
+      run: which flatc
+    - run: exit 1
 
   build:
     runs-on: ubuntu-24.04
