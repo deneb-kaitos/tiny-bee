@@ -16,11 +16,13 @@ jobs:
     - name: Update OS
       run: sudo apt-get update
   
-  install-flatbuffers:
+  build-flatbuffers:
     runs-on: ubuntu-24.04
     needs: update-os
+    outputs:
+      artifact: ${{ steps.flatc-upload-step.outputs.artifact-id }}
     steps:
-    - name: Install Flatbuffers
+    - name: Build Flatbuffers
       run: |
         mkdir ./flatbuffers-source
         cd ./flatbuffers-source
@@ -31,36 +33,45 @@ jobs:
         sudo make install
         which flatc
         flatc --version
+    - uses: actions/upload-artifact@v4
+      id: flatc-upload-step
+      with:
+        name: flatc-distro
+        path: |
+          /usr/local/include/flatbuffers/
+          /usr/local/lib/libflatbuffers.a
+          /usr/local/bin/flatc
+        if-no-files-found: error
+        retention-days: 1
+        compression-level: 0
+        overwrite: true
   
-  check-flatbuffers-location:
+  run-unit-tests:
     runs-on: ubuntu-24.04
-    needs: install-flatbuffers
-    steps:
-    - name: Check Flatbuffers Location And Version
-      run: |
-        flatc --version
-        which flatc
-
-  build:
-    runs-on: ubuntu-24.04
-    needs: check-flatbuffers-location
+    needs: build-flatbuffers
 
     strategy:
       matrix:
         node-version: [22.5.1]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-    - uses: actions/checkout@v4
-    - uses: pnpm/action-setup@v4 
-      with:
-        version: 9.6.0
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'pnpm'
-    - run: exit 1 
-    - run: pnpm --recursive install
-    - run: pnpm --recursive run test
-    - run: pnpm --recursive run cover
+      - env:
+          FLATC_ARTIFACT: ${{ needs.build-flatbuffers.outputs.artifact }}
+        run: echo "Artifact ID from previous job is $FLATC_ARTIFACT"
+      - uses: actions/download-artifact@v4
+        with:
+          name: flatc-distro
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4 
+        with:
+          version: 9.6.0
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
+      - run: flatc --version
+      - run: which flatc
+      - run: pnpm --recursive install
+      - run: pnpm --recursive run test
+      - run: pnpm --recursive run cover
