@@ -10,9 +10,27 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  update-os:
+    runs-on: ubuntu-24.04
+    steps:
+    - name: Update OS
+      run: sudo apt-get update
+  
+  install-flatbuffers:
+    runs-on: ubuntu-24.04
+    needs: update-os
+    steps:
+    - name: Install Flatbuffers
+      run: |
+        mkdir ./flatbuffers-source
+        cd ./flatbuffers-source
+        git clone https://github.com/google/flatbuffers.git --branch v24.3.25 --single-branch .
+        cmake -G "Unix Makefiles"
+        make -j
 
-    runs-on: ubuntu-latest
+  build:
+    runs-on: ubuntu-24.04
+    needs: install-flatbuffers
 
     strategy:
       matrix:
@@ -30,7 +48,9 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'pnpm'
     - name: Install Google Flatbuffers
-      run: sudo apt-get install -y snapd && sudo snap install flatbuffers
+      run: |
+        sudo apt-get update
+        sudo snap install flatbuffers
     - run: pnpm --recursive install
     - run: pnpm --recursive run test
     - run: pnpm --recursive run cover
