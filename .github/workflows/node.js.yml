@@ -30,7 +30,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'pnpm'
     - name: Install Google Flatbuffers
-      run: sudo apt-get install -y snapd && sudo apt-get install -y flatbuffers
+      run: sudo apt-get install -y snapd && sudo snap install flatbuffers
     - run: pnpm --recursive install
     - run: pnpm --recursive run test
     - run: pnpm --recursive run cover
