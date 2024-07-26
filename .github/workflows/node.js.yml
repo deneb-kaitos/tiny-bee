@@ -38,6 +38,8 @@ jobs:
     steps:
     - name: Check Flatbuffers Location
       run: which flatc
+    - name: Check Flatbuffers Version
+      run: flatc --version
 
   build:
     runs-on: ubuntu-24.04
