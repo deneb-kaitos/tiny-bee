@@ -28,7 +28,7 @@ jobs:
         cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release
         make -j
         make test
-        make install
+        sudo make install
         which flatc
         flatc --version
 
