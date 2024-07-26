@@ -31,6 +31,15 @@ jobs:
         sudo make install
         which flatc
         flatc --version
+  
+  check-flatbuffers:
+    runs-on: ubuntu-24.04
+    needs: install-flatbuffers
+    steps:
+    - name: Check Flatbuffers Location
+      run: |
+        which flatc
+        exit 1
 
   build:
     runs-on: ubuntu-24.04
