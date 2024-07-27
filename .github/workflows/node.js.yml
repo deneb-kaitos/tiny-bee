@@ -37,8 +37,6 @@ jobs:
         make -j
         make test
         sudo make install
-        which flatc
-        flatc --version
     - name: Tar Flatbuffers
       if: "${{ steps.check-flatbuffers-built.outputs.exists == 'false' }}"
       run: |
@@ -66,14 +64,9 @@ jobs:
         node-version: [22.5.1]
 
     steps:
-      # - env:
-      #     FLATC_ARTIFACT: ${{ needs.build-flatbuffers.outputs.artifact }}
-      #   run: echo "Artifact ID from previous job is $FLATC_ARTIFACT"
       - uses: actions/download-artifact@v4
         with:
           name: flatc-distro
-      - name: Display flatc distro
-        run: ls -la
       - name: Untar Flatbuffers
         run: sudo tar -xvf flatbuffers.tar -C /
       - name: Check Flatbuffers Location/Version
@@ -89,8 +82,6 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
-      - run: flatc --version
-      - run: which flatc
       - run: pnpm --recursive install
       - run: pnpm --recursive run test
       - run: pnpm --recursive run cover
