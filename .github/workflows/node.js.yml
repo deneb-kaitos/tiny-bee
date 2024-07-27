@@ -67,7 +67,7 @@ jobs:
       - name: Display flatc distro
         run: ls -la
       - name: Untar Flatbuffers
-        run: sudo tar -xvf flatbuffers.tar /
+        run: sudo tar -xvf flatbuffers.tar -C /
       - name: Check Flatbuffers Location/Version
         run: |
           flatc --version
