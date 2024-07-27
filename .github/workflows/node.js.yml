@@ -35,15 +35,15 @@ jobs:
         flatc --version
     - name: Tar Flatbuffers
       run: |
-        tar -cvzf flatbuffers.tgz \
-          /usr/local/include/flatbuffers/ \
+        tar -cvf flatbuffers.tar \
+          /usr/local/include/flatbuffers \
           /usr/local/lib/libflatbuffers.a \
           /usr/local/bin/flatc
     - uses: actions/upload-artifact@v4
       id: flatc-upload-step
       with:
         name: flatc-distro
-        path: flatbuffers.tgz
+        path: flatbuffers.tar
         if-no-files-found: error
         retention-days: 1
         compression-level: 0
@@ -66,6 +66,12 @@ jobs:
           name: flatc-distro
       - name: Display flatc distro
         run: ls -la
+      - name: Untar Flatbuffers
+        run: sudo tar -xvf flatbuffers.tar /
+      - name: Check Flatbuffers Location/Version
+        run: |
+          flatc --version
+          which flatc
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4 
         with:
