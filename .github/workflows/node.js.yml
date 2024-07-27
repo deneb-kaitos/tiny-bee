@@ -55,12 +55,13 @@ jobs:
         node-version: [22.5.1]
 
     steps:
-      - env:
-          FLATC_ARTIFACT: ${{ needs.build-flatbuffers.outputs.artifact }}
-        run: echo "Artifact ID from previous job is $FLATC_ARTIFACT"
+      # - env:
+      #     FLATC_ARTIFACT: ${{ needs.build-flatbuffers.outputs.artifact }}
+      #   run: echo "Artifact ID from previous job is $FLATC_ARTIFACT"
       - uses: actions/download-artifact@v4
         with:
           name: flatc-distro
+          path: /
       - name: Display flatc distro
         run: ls -la
       - uses: actions/checkout@v4
