@@ -33,14 +33,17 @@ jobs:
         sudo make install
         which flatc
         flatc --version
+    - name: Tar Flatbuffers
+      run: |
+        tar -cvzf flatbuffers.tgz \
+          /usr/local/include/flatbuffers/ \
+          /usr/local/lib/libflatbuffers.a \
+          /usr/local/bin/flatc
     - uses: actions/upload-artifact@v4
       id: flatc-upload-step
       with:
         name: flatc-distro
-        path: |
-          /usr/local/include/flatbuffers/
-          /usr/local/lib/libflatbuffers.a
-          /usr/local/bin/flatc
+        path: flatbuffers.tgz
         if-no-files-found: error
         retention-days: 1
         compression-level: 0
@@ -61,7 +64,6 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: flatc-distro
-          path: /
       - name: Display flatc distro
         run: ls -la
       - uses: actions/checkout@v4
