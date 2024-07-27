@@ -22,7 +22,13 @@ jobs:
     outputs:
       artifact: ${{ steps.flatc-upload-step.outputs.artifact-id }}
     steps:
+    - uses: LIT-Protocol/artifact-exists-action@v0
+      name: Check Flatbuffers Are Already Built
+      id: check-flatbuffers-built
+      with:
+        name: flatc-distro
     - name: Build Flatbuffers
+      if: "${{ steps.check-flatbuffers-built.outputs.exists == 'false' }}"
       run: |
         mkdir ./flatbuffers-source
         cd ./flatbuffers-source
@@ -34,12 +40,14 @@ jobs:
         which flatc
         flatc --version
     - name: Tar Flatbuffers
+      if: "${{ steps.check-flatbuffers-built.outputs.exists == 'false' }}"
       run: |
         tar -cvf flatbuffers.tar \
           /usr/local/include/flatbuffers \
           /usr/local/lib/libflatbuffers.a \
           /usr/local/bin/flatc
     - uses: actions/upload-artifact@v4
+      if: "${{ steps.check-flatbuffers-built.outputs.exists == 'false' }}"
       id: flatc-upload-step
       with:
         name: flatc-distro
