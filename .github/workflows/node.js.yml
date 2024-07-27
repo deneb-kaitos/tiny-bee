@@ -10,22 +10,79 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
-
-    runs-on: ubuntu-latest
+  update-os:
+    runs-on: ubuntu-24.04
+    steps:
+    - name: Update OS
+      run: sudo apt-get update
+  
+  build-flatbuffers:
+    runs-on: ubuntu-24.04
+    needs: update-os
+    outputs:
+      artifact: ${{ steps.flatc-upload-step.outputs.artifact-id }}
+    steps:
+    - name: Build Flatbuffers
+      run: |
+        mkdir ./flatbuffers-source
+        cd ./flatbuffers-source
+        git clone https://github.com/google/flatbuffers.git --branch v24.3.25 --single-branch .
+        cmake -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release
+        make -j
+        make test
+        sudo make install
+        which flatc
+        flatc --version
+    - name: Tar Flatbuffers
+      run: |
+        tar -cvf flatbuffers.tar \
+          /usr/local/include/flatbuffers \
+          /usr/local/lib/libflatbuffers.a \
+          /usr/local/bin/flatc
+    - uses: actions/upload-artifact@v4
+      id: flatc-upload-step
+      with:
+        name: flatc-distro
+        path: flatbuffers.tar
+        if-no-files-found: error
+        retention-days: 1
+        compression-level: 0
+        overwrite: true
+  
+  run-unit-tests:
+    runs-on: ubuntu-24.04
+    needs: build-flatbuffers
 
     strategy:
       matrix:
         node-version: [22.5.1]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - run: npm ci
-    - run: npm run build --if-present
-    - run: npm test
+      # - env:
+      #     FLATC_ARTIFACT: ${{ needs.build-flatbuffers.outputs.artifact }}
+      #   run: echo "Artifact ID from previous job is $FLATC_ARTIFACT"
+      - uses: actions/download-artifact@v4
+        with:
+          name: flatc-distro
+      - name: Display flatc distro
+        run: ls -la
+      - name: Untar Flatbuffers
+        run: sudo tar -xvf flatbuffers.tar -C /
+      - name: Check Flatbuffers Location/Version
+        run: |
+          flatc --version
+          which flatc
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4 
+        with:
+          version: 9.6.0
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
+      - run: flatc --version
+      - run: which flatc
+      - run: pnpm --recursive install
+      - run: pnpm --recursive run test
+      - run: pnpm --recursive run cover

@@ -12,9 +12,10 @@
   "engineStrict": true,
   "scripts": {
     "preinstall": "npx only-allow pnpm",
-    "lint": "ESLINT_USE_FLAT_CONFIG=true ./node_modules/.bin/eslint **/*.js",
+    "lint": "ESLINT_USE_FLAT_CONFIG=true ./node_modules/.bin/eslint '**/*.js'",
     "build:schema": "cd ../fbs && ./.bin/compile.mjs",
-    "test": "pnpm run lint && pnpm run build:schema && NODE_ENV=test NODE_DEBUG=serde* ./node_modules/.bin/c8 ./node_modules/.bin/mocha"
+    "test": "pnpm run lint && pnpm run build:schema && ./specs/bin/run-test.sh",
+    "cover": "pnpm run lint && ./specs/bin/run-coverage.sh"
   },
   "author": "Dmitry N. Medvedev <dmitry.medvedev@gmail.com>",
   "license": "MIT",
