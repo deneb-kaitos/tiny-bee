@@ -7,17 +7,15 @@ import {
   after,
   describe,
   it,
-} from 'mocha';
-import {
-  expect,
-} from 'chai';
+} from 'node:test';
+import assert from 'node:assert/strict';
 import flatbuffers from 'flatbuffers';
 import {
   createAccountRegistrationRequest,
-} from '../serializers/AccountRegistrationRequest/createAccountRegistrationRequest.js';
+} from '../serializers/AccountRegistrationRequest/createAccountRegistrationRequest.mjs';
 import {
   deserializeAccountRegistrationRequest,
-} from '../deserializers/AccountRegistrationRequest/deserializeAccountRegistrationRequest.js';
+} from '../deserializers/AccountRegistrationRequest/deserializeAccountRegistrationRequest.mjs';
 
 describe('serializers', () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -33,7 +31,7 @@ describe('serializers', () => {
     builder = undefined;
   });
 
-  it('should serialize/deserialize AccountRegistrationMessage', async () => {
+  it('should serialize/deserialize AccountRegistrationMessage', { skip: false }, async () => {
     const expectedMessage = {
       login: randomUUID(),
       password: randomUUID(),
@@ -42,6 +40,6 @@ describe('serializers', () => {
     const serializedBytes = createAccountRegistrationRequest(builder, expectedMessage.login, expectedMessage.password, expectedMessage.pin);
     const deserializedMessage = deserializeAccountRegistrationRequest(serializedBytes);
 
-    expect(deserializedMessage).to.deep.equal(expectedMessage);
+    assert.deepEqual(deserializedMessage, expectedMessage, 'not equal');
   });
 });
