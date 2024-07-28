@@ -12,7 +12,7 @@
   "engineStrict": true,
   "scripts": {
     "preinstall": "npx only-allow pnpm",
-    "lint": "ESLINT_USE_FLAT_CONFIG=true ./node_modules/.bin/eslint '**/*.js'",
+    "lint": "ESLINT_USE_FLAT_CONFIG=true ./node_modules/.bin/eslint '**/*.mjs'",
     "build:schema": "cd ../fbs && ./.bin/compile.mjs",
     "test": "pnpm run lint && pnpm run build:schema && ./specs/bin/run-test.sh",
     "cover": "pnpm run lint && ./specs/bin/run-coverage.sh"
@@ -31,32 +31,12 @@
     "eslint-plugin-chai-friendly": "catalog:web",
     "eslint-plugin-import": "catalog:web",
     "eslint-plugin-node": "catalog:web",
-    "mocha": "catalog:specs"
+    "monocart-coverage-reports": "catalog:specs"
   },
-  "mocha": {
-    "allowUncaught": true,
-    "failZero": true,
-    "async-only": false,
-    "bail": true,
-    "checkLeaks": true,
-    "forbidOnly": true,
-    "exit": true,
-    "forbidPending": true,
-    "slow": 50,
-    "timeout": 1000,
-    "color": true,
-    "diff": true,
-    "fullTrace": true,
-    "growl": false,
-    "inline-diffs": true,
-    "reporter": "spec",
-    "noConfig": true,
-    "noOpts": true,
-    "exclude": [
-      "**/node_modules/**/*"
-    ],
-    "spec": [
-      "**/specs/*.js"
-    ]
+  "c8": {
+    "check-coverage": true,
+    "lines": 95,
+    "functions": 95,
+    "branches": 95
   }
 }
