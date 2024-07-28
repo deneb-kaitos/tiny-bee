@@ -16,6 +16,9 @@ import {
 import {
   deserializeAccountRegistrationRequest,
 } from '../deserializers/AccountRegistrationRequest/deserializeAccountRegistrationRequest.mjs';
+import {
+  MessagePayload,
+} from '@deneb-kaitos/tiny-bee-fbs/generated/mjs/generated/ts/tinybee/message-payload.js';
 
 describe('serializers', () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -38,8 +41,27 @@ describe('serializers', () => {
       pin: randomUUID(),
     };
     const serializedBytes = createAccountRegistrationRequest(builder, expectedMessage.login, expectedMessage.password, expectedMessage.pin);
+
     const deserializedMessage = deserializeAccountRegistrationRequest(serializedBytes);
 
     assert.deepEqual(deserializedMessage, expectedMessage, 'not equal');
+  });
+
+  it('should fail to deserialize AccountRegistrationMessage', { skip: false }, async () => {
+    // the next must be 0, which the Uint8Array contains zeros
+    const unexpectedMessageType = 0;
+    const serializedBytes = new Uint8Array(1000);
+
+    assert.throws(
+      () => {
+        deserializeAccountRegistrationRequest(serializedBytes);
+      },
+      (err) => {
+        assert(err instanceof TypeError);
+        assert.equal(err.message, `unexpected message type: ${unexpectedMessageType}; expected ${MessagePayload.AccountRegistrationRequest}`);
+
+        return true;
+      }
+    );
   });
 });
