@@ -14,8 +14,8 @@
     "preinstall": "npx only-allow pnpm",
     "lint": "ESLINT_USE_FLAT_CONFIG=true ./node_modules/.bin/eslint '**/*.mjs'",
     "build:schema": "cd ../fbs && ./.bin/compile.mjs",
-    "test": "pnpm run lint && pnpm run build:schema && ./specs/bin/run-test.sh",
-    "cover": "pnpm run lint && ./specs/bin/run-coverage.sh"
+    "specs": "pnpm run lint && pnpm run build:schema && ./node_modules/@deneb-kaitos/tiny-bee-specs/bin/run-specs.mjs",
+    "cover": "pnpm run lint && ./node_modules/@deneb-kaitos/tiny-bee-specs/bin/run-cover.mjs"
   },
   "author": "Dmitry N. Medvedev <dmitry.medvedev@gmail.com>",
   "license": "MIT",
@@ -24,6 +24,7 @@
     "flatbuffers": "catalog:web"
   },
   "devDependencies": {
+    "@deneb-kaitos/tiny-bee-specs": "workspace:^",
     "c8": "catalog:specs",
     "chai": "catalog:specs",
     "eslint": "catalog:web",

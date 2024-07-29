@@ -12,8 +12,8 @@
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "lint": "ESLINT_USE_FLAT_CONFIG=true ./node_modules/.bin/eslint '**/*.mjs'",
-    "test": "pnpm run lint && ./specs/bin/run-test.sh",
-    "cover": "pnpm run lint && ./specs/bin/run-coverage.sh"
+    "specs": "pnpm run lint && ./node_modules/@deneb-kaitos/tiny-bee-specs/bin/run-specs.mjs",
+    "cover": "pnpm run lint && ./node_modules/@deneb-kaitos/tiny-bee-specs/bin/run-cover.mjs"
   },
   "keywords": [],
   "author": "Dmitry N. Medvedev <dmitry.medvedev@gmail.com>",
@@ -23,6 +23,7 @@
     "uWebSockets.js": "catalog:server"
   },
   "devDependencies": {
+    "@deneb-kaitos/tiny-bee-specs": "workspace:^",
     "c8": "catalog:specs",
     "eslint": "catalog:web",
     "eslint-config-airbnb-base": "catalog:web",

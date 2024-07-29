@@ -137,6 +137,9 @@ importers:
         specifier: catalog:server
         version: https://codeload.github.com/uNetworking/uWebSockets.js/tar.gz/8fa05571bf6ea95be8966ad313d9d39453e381ae
     devDependencies:
+      '@deneb-kaitos/tiny-bee-specs':
+        specifier: workspace:^
+        version: link:../../../specs
       c8:
         specifier: catalog:specs
         version: 10.1.2(monocart-coverage-reports@2.9.3)
@@ -210,6 +213,9 @@ importers:
         specifier: catalog:web
         version: 24.3.25
     devDependencies:
+      '@deneb-kaitos/tiny-bee-specs':
+        specifier: workspace:^
+        version: link:../../../specs
       c8:
         specifier: catalog:specs
         version: 10.1.2(monocart-coverage-reports@2.9.3)
@@ -319,6 +325,15 @@ importers:
     dependenciesMeta:
       inter-ui:
         injected: true
+
+  sources/specs:
+    dependencies:
+      execa:
+        specifier: ^9.3.0
+        version: 9.3.0
+      which:
+        specifier: ^4.0.0
+        version: 4.0.0
 
 packages:
 
@@ -2237,6 +2252,10 @@ packages:
   isexe@2.0.0:
     resolution: {integrity: sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==}
 
+  isexe@3.1.1:
+    resolution: {integrity: sha512-LpB/54B+/2J5hqQ7imZHfdU31OlgQqx7ZicVlkm9kzg9/w8GKLEcFfJl/t7DCEDueOyBAD6zCCwTO6Fzs0NoEQ==}
+    engines: {node: '>=16'}
+
   istanbul-lib-coverage@3.2.2:
     resolution: {integrity: sha512-O8dpsF+r0WV/8MNRKfnmrtCWhuKjxrq2w+jpzBL5UZKTi2LeVWnWOmWRxFlesJONmc+wLAGvKQZEOanko0LFTg==}
     engines: {node: '>=8'}
@@ -3276,6 +3295,11 @@ packages:
   which@2.0.2:
     resolution: {integrity: sha512-BLI3Tl1TW3Pvl70l3yq3Y64i+awpwXqsGBYWkkqMtnbXgrMD+yj7rhW0kuEDxzJaYXGjEW5ogapKNMEKNMjibA==}
     engines: {node: '>= 8'}
+    hasBin: true
+
+  which@4.0.0:
+    resolution: {integrity: sha512-GlaYyEb07DPxYCKhKzplCWBJtvxZcZMrL+4UkrTSJHHPyZU4mYYTv3qaOe77H7EODLSSopAUFAc6W8U4yqvscg==}
+    engines: {node: ^16.13.0 || >=18.0.0}
     hasBin: true
 
   why-is-node-running@2.3.0:
@@ -5431,6 +5455,8 @@ snapshots:
 
   isexe@2.0.0: {}
 
+  isexe@3.1.1: {}
+
   istanbul-lib-coverage@3.2.2: {}
 
   istanbul-lib-report@3.0.1:
@@ -6462,6 +6488,10 @@ snapshots:
   which@2.0.2:
     dependencies:
       isexe: 2.0.0
+
+  which@4.0.0:
+    dependencies:
+      isexe: 3.1.1
 
   why-is-node-running@2.3.0:
     dependencies:
