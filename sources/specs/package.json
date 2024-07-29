@@ -1,0 +1,33 @@
+{
+  "name": "@deneb-kaitos/tiny-bee-specs",
+  "version": "0.0.0",
+  "description": "specs runner",
+  "type": "module",
+  "private": true,
+  "packageManager": "pnpm@9.6.0",
+  "engines": {
+    "node": "22.5.1",
+    "pnpm": "9.6.0"
+  },
+  "bin": {
+    "run-specs": "./bin/run-specs.mjs",
+    "run-cover": "./bin/run-cover.mjs"
+  },
+  "scripts": {
+    "preinstall": "npx only-allow pnpm"
+  },
+  "keywords": [],
+  "author": "Dmitry N. Medvedev <dmitry.medvedev@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/deneb-kaitos/tiny-bee.git"
+  },
+  "bugs": {
+    "url": "https://github.com/deneb-kaitos/tiny-bee/issues"
+  },
+  "dependencies": {
+    "execa": "^9.3.0",
+    "which": "^4.0.0"
+  }
+}

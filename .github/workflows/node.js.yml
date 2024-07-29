@@ -83,5 +83,5 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
       - run: pnpm --recursive install
-      - run: pnpm --recursive run test
+      - run: pnpm --recursive run specs
       - run: pnpm --recursive run cover
