@@ -3,7 +3,6 @@ import { Builder } from "flatbuffers";
 import {
   serialize as createAccountRegistrationRequest,
 } from "@deneb-kaitos/tiny-bee-serde-serialize_account_registration_request";
-// from '@deneb-kaitos/tiny-bee-serializers-serde/serializers/AccountRegistrationRequest/createAccountRegistrationRequest.js';
 import {
   MessageType,
 } from '$lib/workers/serde/SerDeManager/MessageType.js';
