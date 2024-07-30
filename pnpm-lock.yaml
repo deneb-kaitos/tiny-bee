@@ -13,9 +13,6 @@ catalogs:
     c8:
       specifier: ^10.1.2
       version: 10.1.2
-    chai:
-      specifier: ^5.1.1
-      version: 5.1.1
     monocart-coverage-reports:
       specifier: '2'
       version: 2.9.3
@@ -56,9 +53,6 @@ catalogs:
     eslint-config-prettier:
       specifier: ^9.1.0
       version: 9.1.0
-    eslint-plugin-chai-friendly:
-      specifier: ^1.0.0
-      version: 1.0.0
     eslint-plugin-import:
       specifier: ^2.29.1
       version: 2.29.1
@@ -115,9 +109,6 @@ importers:
       eslint-config-airbnb-base:
         specifier: ^15.0.0
         version: 15.0.0(eslint-plugin-import@2.29.1(@typescript-eslint/parser@7.16.1(eslint@9.7.0)(typescript@5.5.3))(eslint@9.7.0))(eslint@9.7.0)
-      eslint-plugin-chai-friendly:
-        specifier: ^1.0.0
-        version: 1.0.0(eslint@9.7.0)
       eslint-plugin-import:
         specifier: ^2.29.1
         version: 2.29.1(@typescript-eslint/parser@7.16.1(eslint@9.7.0)(typescript@5.5.3))(eslint@9.7.0)
@@ -179,9 +170,6 @@ importers:
       eslint-config-airbnb-base:
         specifier: ^15.0.0
         version: 15.0.0(eslint-plugin-import@2.29.1(@typescript-eslint/parser@7.16.1(eslint@9.7.0)(typescript@5.5.3))(eslint@9.7.0))(eslint@9.7.0)
-      eslint-plugin-chai-friendly:
-        specifier: ^1.0.0
-        version: 1.0.0(eslint@9.7.0)
       eslint-plugin-import:
         specifier: ^2.29.1
         version: 2.29.1(@typescript-eslint/parser@7.16.1(eslint@9.7.0)(typescript@5.5.3))(eslint@9.7.0)
@@ -204,33 +192,64 @@ importers:
         specifier: ^7.16.1
         version: 7.16.1(eslint@9.7.0)(typescript@5.5.3)
 
-  sources/common/net/serde:
+  sources/common/net/serde/deserializers/AccountRegistrationRequest:
     dependencies:
       '@deneb-kaitos/tiny-bee-fbs':
         specifier: workspace:^
-        version: link:../fbs
+        version: link:../../../fbs
       flatbuffers:
         specifier: catalog:web
         version: 24.3.25
     devDependencies:
+      '@deneb-kaitos/tiny-bee-serde-serialize_account_registration_request':
+        specifier: workspace:^
+        version: link:../../serializers/AccountRegistrationRequest
       '@deneb-kaitos/tiny-bee-specs':
         specifier: workspace:^
-        version: link:../../../specs
+        version: link:../../../../../specs
       c8:
         specifier: catalog:specs
         version: 10.1.2(monocart-coverage-reports@2.9.3)
-      chai:
-        specifier: catalog:specs
-        version: 5.1.1
       eslint:
         specifier: catalog:web
         version: 9.7.0
       eslint-config-airbnb-base:
         specifier: catalog:web
         version: 15.0.0(eslint-plugin-import@2.29.1(@typescript-eslint/parser@7.16.1(eslint@9.7.0)(typescript@5.5.3))(eslint@9.7.0))(eslint@9.7.0)
-      eslint-plugin-chai-friendly:
+      eslint-plugin-import:
         specifier: catalog:web
-        version: 1.0.0(eslint@9.7.0)
+        version: 2.29.1(@typescript-eslint/parser@7.16.1(eslint@9.7.0)(typescript@5.5.3))(eslint@9.7.0)
+      eslint-plugin-node:
+        specifier: catalog:web
+        version: 11.1.0(eslint@9.7.0)
+      monocart-coverage-reports:
+        specifier: catalog:specs
+        version: 2.9.3
+
+  sources/common/net/serde/serializers/AccountRegistrationRequest:
+    dependencies:
+      '@deneb-kaitos/tiny-bee-fbs':
+        specifier: workspace:^
+        version: link:../../../fbs
+      flatbuffers:
+        specifier: catalog:web
+        version: 24.3.25
+    devDependencies:
+      '@deneb-kaitos/tiny-bee-serde-deserialize_account_registration_request':
+        specifier: workspace:^
+        version: link:../../deserializers/AccountRegistrationRequest
+      '@deneb-kaitos/tiny-bee-specs':
+        specifier: workspace:^
+        version: link:../../../../../specs
+      c8:
+        specifier: catalog:specs
+        version: 10.1.2(monocart-coverage-reports@2.9.3)
+      eslint:
+        specifier: catalog:web
+        version: 9.7.0
+      eslint-config-airbnb-base:
+        specifier: catalog:web
+        version: 15.0.0(eslint-plugin-import@2.29.1(@typescript-eslint/parser@7.16.1(eslint@9.7.0)(typescript@5.5.3))(eslint@9.7.0))(eslint@9.7.0)
       eslint-plugin-import:
         specifier: catalog:web
         version: 2.29.1(@typescript-eslint/parser@7.16.1(eslint@9.7.0)(typescript@5.5.3))(eslint@9.7.0)
@@ -246,9 +265,6 @@ importers:
       '@deneb-kaitos/tiny-bee-fbs':
         specifier: workspace:^
         version: link:../../common/net/fbs
-      '@deneb-kaitos/tiny-bee-serializers-serde':
-        specifier: workspace:^
-        version: link:../../common/net/serde
       '@inlang/paraglide-sveltekit':
         specifier: catalog:web
         version: 0.10.10(@sveltejs/kit@2.5.18(@sveltejs/vite-plugin-svelte@4.0.0-next.4(svelte@5.0.0-next.193)(vite@5.3.4(@types/node@20.14.11)))(svelte@5.0.0-next.193)(vite@5.3.4(@types/node@20.14.11)))
@@ -1696,12 +1712,6 @@ packages:
         optional: true
       eslint-import-resolver-webpack:
         optional: true
-
-  eslint-plugin-chai-friendly@1.0.0:
-    resolution: {integrity: sha512-M7pDQ/H5IiMz1LsfNi7Js4LvKx7cx0VMJHT/u1d35GOXxkQdJ2vAeaLC5q6GW126KVOnUMJ8WvBMWWLxtfdcog==}
-    engines: {node: '>=0.10.0'}
-    peerDependencies:
-      eslint: '>=3.0.0'
 
   eslint-plugin-es@3.0.1:
     resolution: {integrity: sha512-GUmAsJaN4Fc7Gbtl8uOBlayo2DqhwWvEzykMHSCZHU3XdJ+NSzzZcVhXh3VxX5icqQ+oQdIEawXX8xkR3mIFmQ==}
@@ -4836,10 +4846,6 @@ snapshots:
       eslint-import-resolver-node: 0.3.9
     transitivePeerDependencies:
       - supports-color
-
-  eslint-plugin-chai-friendly@1.0.0(eslint@9.7.0):
-    dependencies:
-      eslint: 9.7.0
 
   eslint-plugin-es@3.0.1(eslint@9.7.0):
     dependencies:

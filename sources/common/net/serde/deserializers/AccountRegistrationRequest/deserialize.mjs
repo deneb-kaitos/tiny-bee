@@ -9,7 +9,7 @@ import {
   AccountRegistrationRequest,
 } from '@deneb-kaitos/tiny-bee-fbs/generated/mjs/generated/ts/tinybee/account-registration-request.js';
 
-export const deserializeAccountRegistrationRequest = (
+export const deserialize = (
   /**
    * @type {Uint8Array}
    */
