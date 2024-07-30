@@ -265,6 +265,9 @@ importers:
       '@deneb-kaitos/tiny-bee-fbs':
         specifier: workspace:^
         version: link:../../common/net/fbs
+      '@deneb-kaitos/tiny-bee-serde-serialize_account_registration_request':
+        specifier: workspace:^
+        version: link:../../common/net/serde/serializers/AccountRegistrationRequest
       '@inlang/paraglide-sveltekit':
         specifier: catalog:web
         version: 0.10.10(@sveltejs/kit@2.5.18(@sveltejs/vite-plugin-svelte@4.0.0-next.4(svelte@5.0.0-next.193)(vite@5.3.4(@types/node@20.14.11)))(svelte@5.0.0-next.193)(vite@5.3.4(@types/node@20.14.11)))
