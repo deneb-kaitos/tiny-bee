@@ -8,7 +8,7 @@ import {
   AccountRegistrationRequest,
 } from '@deneb-kaitos/tiny-bee-fbs/generated/mjs/generated/ts/tinybee/account-registration-request.js';
 
-export const createAccountRegistrationRequest = (
+export const serialize = (
   /**
    * @type {flatbuffers.Builder}
    */

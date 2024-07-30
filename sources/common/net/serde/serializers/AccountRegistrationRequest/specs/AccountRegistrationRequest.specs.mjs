@@ -11,14 +11,14 @@ import {
 import assert from 'node:assert/strict';
 import flatbuffers from 'flatbuffers';
 import {
-  createAccountRegistrationRequest,
-} from '../serializers/AccountRegistrationRequest/createAccountRegistrationRequest.mjs';
-import {
-  deserializeAccountRegistrationRequest,
-} from '../deserializers/AccountRegistrationRequest/deserializeAccountRegistrationRequest.mjs';
-import {
   MessagePayload,
 } from '@deneb-kaitos/tiny-bee-fbs/generated/mjs/generated/ts/tinybee/message-payload.js';
+import {
+  serialize as createAccountRegistrationRequest,
+} from '../serialize.mjs';
+import {
+  deserialize as deserializeAccountRegistrationRequest,
+} from '@deneb-kaitos/tiny-bee-serde-deserialize_account_registration_request'; 
 
 describe('serializers', () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

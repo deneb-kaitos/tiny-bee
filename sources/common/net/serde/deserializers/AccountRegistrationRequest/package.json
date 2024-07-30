@@ -1,0 +1,42 @@
+{
+  "name": "@deneb-kaitos/tiny-bee-serde-deserialize_account_registration_request",
+  "private": true,
+  "version": "0.0.0",
+  "description": "[deserializer] AccountRegistrationRequest",
+  "type": "module",
+  "packageManager": "pnpm@9.6.0",
+  "engines": {
+    "node": "22.5.1",
+    "pnpm": "9.6.0"
+  },
+  "engineStrict": true,
+  "main": "deserialize.mjs",
+  "scripts": {
+    "preinstall": "npx only-allow pnpm",
+    "lint": "ESLINT_USE_FLAT_CONFIG=true ./node_modules/.bin/eslint '**/*.mjs'",
+    "specs": "pnpm run lint && ./node_modules/@deneb-kaitos/tiny-bee-specs/bin/run-specs.mjs",
+    "cover": "pnpm run lint && ./node_modules/@deneb-kaitos/tiny-bee-specs/bin/run-cover.mjs"
+  },
+  "author": "Dmitry N. Medvedev <dmitry.medvedev@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@deneb-kaitos/tiny-bee-fbs": "workspace:^",
+    "flatbuffers": "catalog:web"
+  },
+  "devDependencies": {
+    "@deneb-kaitos/tiny-bee-specs": "workspace:^",
+    "@deneb-kaitos/tiny-bee-serde-serialize_account_registration_request": "workspace:^",
+    "c8": "catalog:specs",
+    "eslint": "catalog:web",
+    "eslint-config-airbnb-base": "catalog:web",
+    "eslint-plugin-import": "catalog:web",
+    "eslint-plugin-node": "catalog:web",
+    "monocart-coverage-reports": "catalog:specs"
+  },
+  "c8": {
+    "check-coverage": true,
+    "lines": 95,
+    "functions": 95,
+    "branches": 95
+  }
+}

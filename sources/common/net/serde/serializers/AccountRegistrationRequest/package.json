@@ -1,8 +1,8 @@
 {
-  "name": "@deneb-kaitos/tiny-bee-serializers-serde",
+  "name": "@deneb-kaitos/tiny-bee-serde-serialize_account_registration_request",
   "private": true,
   "version": "0.0.0",
-  "description": "SerDe",
+  "description": "[serializer] AccountRegistrationRequest",
   "type": "module",
   "packageManager": "pnpm@9.6.0",
   "engines": {
@@ -10,11 +10,11 @@
     "pnpm": "9.6.0"
   },
   "engineStrict": true,
+  "main": "serialize.mjs",
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "lint": "ESLINT_USE_FLAT_CONFIG=true ./node_modules/.bin/eslint '**/*.mjs'",
-    "build:schema": "cd ../fbs && ./.bin/compile.mjs",
-    "specs": "pnpm run lint && pnpm run build:schema && ./node_modules/@deneb-kaitos/tiny-bee-specs/bin/run-specs.mjs",
+    "specs": "pnpm run lint && ./node_modules/@deneb-kaitos/tiny-bee-specs/bin/run-specs.mjs",
     "cover": "pnpm run lint && ./node_modules/@deneb-kaitos/tiny-bee-specs/bin/run-cover.mjs"
   },
   "author": "Dmitry N. Medvedev <dmitry.medvedev@gmail.com>",
@@ -25,11 +25,10 @@
   },
   "devDependencies": {
     "@deneb-kaitos/tiny-bee-specs": "workspace:^",
+    "@deneb-kaitos/tiny-bee-serde-deserialize_account_registration_request": "workspace:^",
     "c8": "catalog:specs",
-    "chai": "catalog:specs",
     "eslint": "catalog:web",
     "eslint-config-airbnb-base": "catalog:web",
-    "eslint-plugin-chai-friendly": "catalog:web",
     "eslint-plugin-import": "catalog:web",
     "eslint-plugin-node": "catalog:web",
     "monocart-coverage-reports": "catalog:specs"
