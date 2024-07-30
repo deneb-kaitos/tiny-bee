@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "@deneb-kaitos/tiny-bee-fbs": "workspace:^",
+    "@deneb-kaitos/tiny-bee-serde-serialize_account_registration_request": "workspace:^",
     "@inlang/paraglide-sveltekit": "catalog:web",
     "flatbuffers": "catalog:web",
     "inter-ui": "catalog:web"
