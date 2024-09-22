@@ -1,9 +1,7 @@
 import { paraglide } from '@inlang/paraglide-sveltekit/vite'
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vitest/config';
-import mkcert from 'vite-plugin-mkcert';
 import dns from 'node:dns';
-import fs from 'node:fs';
 
 dns.setDefaultResultOrder('verbatim');
 

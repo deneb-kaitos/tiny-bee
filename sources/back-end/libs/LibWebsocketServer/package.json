@@ -25,10 +25,10 @@
   "devDependencies": {
     "@deneb-kaitos/tiny-bee-specs": "workspace:^",
     "c8": "catalog:specs",
-    "eslint": "catalog:web",
-    "eslint-config-airbnb-base": "catalog:web",
-    "eslint-plugin-import": "catalog:web",
-    "eslint-plugin-node": "catalog:web",
+    "eslint": "catalog:utils",
+    "eslint-config-airbnb-base": "catalog:utils",
+    "eslint-plugin-import": "catalog:utils",
+    "eslint-plugin-node": "catalog:utils",
     "monocart-coverage-reports": "catalog:specs",
     "ws": "catalog:web"
   },

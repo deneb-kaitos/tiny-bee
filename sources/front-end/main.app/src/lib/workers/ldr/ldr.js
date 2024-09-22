@@ -18,10 +18,6 @@ import { BroadcastChannelName } from '../BroadcastChannelName.js';
 import {
   createBroadcastMessage,
 } from '$lib/workers/helpers/createBroadcastMessage.js';
-// const secModule = await import('../sec/sec.svelte.js?worker');
-// const serdeModule = await import ('../serde/serde.svelte.js?worker');
-// const commModule = await import('../comm/comm.svelte.js?worker');
-// const appModule = await import('../app/app.svelte.js?worker');
 
 let loaderFSM = null;
 const workerNames = Object.freeze(['sec', 'serde', 'comm', 'app']);
