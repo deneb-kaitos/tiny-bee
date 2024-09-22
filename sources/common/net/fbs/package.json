@@ -4,10 +4,10 @@
   "version": "0.0.0",
   "description": "SerDe",
   "type": "module",
-  "packageManager": "pnpm@9.6.0",
+  "packageManager": "pnpm@9.11.0",
   "engines": {
-    "node": "22.5.1",
-    "pnpm": "9.6.0"
+    "node": "22.9.0",
+    "pnpm": "9.11.0"
   },
   "types": "./generated/ts/tinybee.ts",
   "scripts": {
