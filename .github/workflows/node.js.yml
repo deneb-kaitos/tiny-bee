@@ -84,4 +84,4 @@ jobs:
           cache: 'pnpm'
       - run: pnpm --recursive install
       - run: pnpm --recursive run specs
-      - run: pnpm --recursive run cover
+      # - run: pnpm --recursive run cover

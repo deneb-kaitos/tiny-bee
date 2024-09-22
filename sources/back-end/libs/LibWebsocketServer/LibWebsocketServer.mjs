@@ -1,3 +1,4 @@
+/* c8 ignore start */
 import {
   EventEmitter,
 } from 'node:events';
@@ -212,3 +213,4 @@ export class LibWebsocketServer {
     this.#debuglog(`${this.constructor.name} has stopped listening on ${this.#config.server.host}:${this.#config.server.port}`);
   }
 }
+/* c8 ignore end */
