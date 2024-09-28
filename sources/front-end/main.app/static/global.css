@@ -30,6 +30,9 @@
   --box-shadow-blur-radius: 2px;
   --box-shadow-spread-radius: 0px;
 
+  --ctrl-background-color: var(--theme-black);
+  --button-background-color: var(--theme-green);
+
   box-sizing: border-box;
   text-overflow: ellipsis;
 }
@@ -155,9 +158,12 @@ svg {
   font-size: medium;
 } */
 
+input, label, button {
+  appearance: none;
+}
+
 button {
   aspect-ratio: var(--main-aspect-ratio);
-  min-width: 4.5svw;
   font-size: inherit;
 }
 
@@ -169,9 +175,10 @@ button {
 
 input,
 input:autofill,
-input:-webkit-autofill {
-  color: var(--main-color);
-  background-color: var(--main-background-color);
+input:-webkit-autofill,
+input:-internal-autofill-selected {
+  color: var(--main-color) !important;
+  background-color: var(--main-background-color) !important;
 }
 
 input[type='email'],
@@ -183,29 +190,29 @@ input[type='text'] {
   padding: var(--main-padding);
 }
 
-::-webkit-input-placeholder,
+/* ::-webkit-input-placeholder,
 ::placeholder {
   font-family: var(--main-font-family);
   font-size: calc(var(--main-font-size) * 0.75);
-}
+} */
 
-input[type='radio']:not(:checked) ~ label[for] {
+/* input[type='radio']:not(:checked) ~ label[for] {
  color: var(--main-color);
  background-color: var(--main-background-color);
-}
+} */
 
-input[type='radio']:checked ~ label[for] {
+/* input[type='radio']:checked ~ label[for] {
  color: var(--main-accent-color);
  background-color: var(--main-accent-background-color);
-}
+} */
 
-label {
+/* label {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-}
+} */
 
-label[for],
+/* label[for],
 button {
   cursor: pointer;
-}
+} */

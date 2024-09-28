@@ -6,6 +6,7 @@
     isAuthenticated,
   } from '$lib/workers/sec/helpers/isAuthenticated';
   import AuthZ from '$lib/controls/AuthZ/AuthZ.svelte';
+  import Enter from '$lib/controls/Enter/Enter.svelte';
 
   $effect(() => {
     isAuthenticated()
@@ -26,6 +27,6 @@
   {@html '&nbsp;'}
 {:then isAuthed}
  {#if isAuthed === false}
-  <AuthZ />
+  <Enter />
  {/if} 
 {/await}
