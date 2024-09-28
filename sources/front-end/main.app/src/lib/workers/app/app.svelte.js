@@ -1,9 +1,9 @@
-import {
+const {
   ProtocolMessageTypes,
-} from '$lib/workers/ProtocolMessageTypes.js';
-import {
+} = await import ('$lib/workers/ProtocolMessageTypes.js');
+const {
   createBroadcastMessage,
-} from '$lib/workers/helpers/createBroadcastMessage.js';
+} = await import ('$lib/workers/helpers/createBroadcastMessage.js');
 
 let connectionFactory = null;
 

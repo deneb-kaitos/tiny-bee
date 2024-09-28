@@ -1,16 +1,18 @@
-import {
+const {
   ProtocolMessageTypes,
-} from '$lib/workers/ProtocolMessageTypes.js';
-import {
+} = await import('$lib/workers/ProtocolMessageTypes.js');
+const {
   BroadcastChannelName,
-} from '../BroadcastChannelName.js';
-import {
+} = await import ('../BroadcastChannelName.js');
+const {
   SerDeManager,
-} from './SerDeManager/SerDeManager.js';
-import {
+} = await import ('./SerDeManager/SerDeManager.js');
+const {
   OperationType,
-} from './SerDeManager/OperationType.js';
-import { createBroadcastMessage } from '../helpers/createBroadcastMessage.js';
+} = await import ('./SerDeManager/OperationType.js');
+const {
+  createBroadcastMessage,
+} = await import('../helpers/createBroadcastMessage.js');
 
 /**
  * @type {BroadcastChannel}

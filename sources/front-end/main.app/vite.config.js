@@ -6,7 +6,7 @@ import dns from 'node:dns';
 dns.setDefaultResultOrder('verbatim');
 
 export default defineConfig({
-	plugins: [
+  plugins: [
     // mkcert({
     //   savePath: './.cert',
     //   force: true,
@@ -28,11 +28,11 @@ export default defineConfig({
   //   },
   // },
   worker: {
-    type: 'es',
+    format: 'es',
   },
-	test: {
-		include: ['src/**/*.{test,spec}.{js,ts}']
-	},
+  test: {
+    include: ['src/**/*.{test,spec}.{js,ts}']
+  },
   server: {
     // strictPort: true,
     // https: {
