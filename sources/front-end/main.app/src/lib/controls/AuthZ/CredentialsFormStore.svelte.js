@@ -1,9 +1,9 @@
 import {
-  AuthZModes,
-} from '$lib/controls/AuthZ/fsm/AuthZModes.js';
-import {
   CredentialsFormStoreEvents as Events,
 } from './CredentialsFormStoreEvents.js';
+const {
+  AuthZModes,
+} = await import ('$lib/controls/AuthZ/fsm/AuthZModes.js');
 
 class CredentialsFormStore extends EventTarget {
   #mode = $state(AuthZModes.REGISTRATION);

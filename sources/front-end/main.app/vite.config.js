@@ -1,14 +1,12 @@
 import { paraglide } from '@inlang/paraglide-sveltekit/vite'
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vitest/config';
-import mkcert from 'vite-plugin-mkcert';
 import dns from 'node:dns';
-import fs from 'node:fs';
 
 dns.setDefaultResultOrder('verbatim');
 
 export default defineConfig({
-	plugins: [
+  plugins: [
     // mkcert({
     //   savePath: './.cert',
     //   force: true,
@@ -30,11 +28,11 @@ export default defineConfig({
   //   },
   // },
   worker: {
-    type: 'es',
+    format: 'es',
   },
-	test: {
-		include: ['src/**/*.{test,spec}.{js,ts}']
-	},
+  test: {
+    include: ['src/**/*.{test,spec}.{js,ts}']
+  },
   server: {
     // strictPort: true,
     // https: {

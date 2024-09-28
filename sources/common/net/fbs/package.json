@@ -19,17 +19,17 @@
   "author": "Dmitry N. Medvedev <dmitry.medvedev@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "@eslint/js": "^9.7.0",
-    "@swc/cli": "^0.4.0",
-    "@swc/core": "^1.7.0",
-    "eslint": "^9.7.0",
-    "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-import": "^2.29.1",
-    "eslint-plugin-node": "^11.1.0",
-    "execa": "^9.3.0",
-    "flatbuffers": "^24.3.25",
-    "globals": "^15.8.0",
-    "renamer": "^5.0.1",
-    "typescript-eslint": "^7.16.1"
+    "@eslint/js": "catalog:utils",
+    "@swc/cli": "catalog:utils",
+    "@swc/core": "catalog:utils",
+    "eslint": "catalog:utils",
+    "eslint-config-airbnb-base": "catalog:utils",
+    "eslint-plugin-import": "catalog:utils",
+    "eslint-plugin-node": "catalog:utils",
+    "execa": "catalog:utils",
+    "flatbuffers": "catalog:utils",
+    "globals": "catalog:web",
+    "renamer": "catalog:utils",
+    "typescript-eslint": "catalog:utils"
   }
 }

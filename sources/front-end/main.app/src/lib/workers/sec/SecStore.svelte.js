@@ -1,6 +1,9 @@
-import {
+// import {
+//   SecEvents,
+// } from './SecAPI.js';
+const {
   SecEvents,
-} from './SecAPI.js';
+} = await import('./SecAPI.js');
 
 class SecStore extends EventTarget {
   #token = null;

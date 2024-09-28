@@ -21,16 +21,16 @@
   "license": "MIT",
   "dependencies": {
     "@deneb-kaitos/tiny-bee-fbs": "workspace:^",
-    "flatbuffers": "catalog:web"
+    "flatbuffers": "catalog:utils"
   },
   "devDependencies": {
     "@deneb-kaitos/tiny-bee-specs": "workspace:^",
     "@deneb-kaitos/tiny-bee-serde-deserialize_account_registration_request": "workspace:^",
     "c8": "catalog:specs",
-    "eslint": "catalog:web",
-    "eslint-config-airbnb-base": "catalog:web",
-    "eslint-plugin-import": "catalog:web",
-    "eslint-plugin-node": "catalog:web",
+    "eslint": "catalog:utils",
+    "eslint-config-airbnb-base": "catalog:utils",
+    "eslint-plugin-import": "catalog:utils",
+    "eslint-plugin-node": "catalog:utils",
     "monocart-coverage-reports": "catalog:specs"
   },
   "c8": {

@@ -1,19 +1,19 @@
-import {
+const {
   ProtocolMessageTypes,
-} from '$lib/workers/ProtocolMessageTypes.js';
-import {
+} = await import('$lib/workers/ProtocolMessageTypes.js');
+const {
   BroadcastChannelName,
-} from '../BroadcastChannelName.js';
-import {
+} = await import('../BroadcastChannelName.js');
+const {
   SecAPI,
   SecEvents,
-} from './SecAPI.js';
-import {
-  store as SecStore,
-} from './SecStore.svelte.js';
-import {
+} = await import('./SecAPI.js');
+const {
+  store,
+} = await import('./SecStore.svelte.js');
+const {
   createBroadcastMessage,
-} from '$lib/workers/helpers/createBroadcastMessage.js';
+} = await import('../helpers/createBroadcastMessage.js');
 
 /**
  * @type {BroadcastChannel}
@@ -23,7 +23,7 @@ let broadcastChannel = null;
 //#region API
 const API = Object.freeze({
   [SecAPI.isTokenDefined]: () => {
-    return SecStore.Token !== null;
+    return store.Token !== null;
   },
 });
 //#endregion
@@ -84,8 +84,8 @@ const handle_INIT = (payload = null) => {
   broadcastChannel.addEventListener('message', handleChannelMessage);
   broadcastChannel.addEventListener('messageerror', handleChannelMessageError);
 
-  SecStore.addEventListener(SecEvents.TokenIsNull, handleTokenEvent);
-  SecStore.addEventListener(SecEvents.TokenIsNotNull, handleTokenEvent)
+  store.addEventListener(SecEvents.TokenIsNull, handleTokenEvent);
+  store.addEventListener(SecEvents.TokenIsNotNull, handleTokenEvent)
 
   const message = createBroadcastMessage({
     type: ProtocolMessageTypes.INIT,
@@ -104,8 +104,8 @@ const handle_DISPOSE = (payload = null) => {
   self.removeEventListener('message', handleMessage);
   self.removeEventListener('messageerror', handleMessageError);
 
-  SecStore.removeEventListener(SecEvents.TokenIsNull, handleTokenEvent);
-  SecStore.removeEventListener(SecEvents.TokenIsNotNull, handleTokenEvent);
+  store.removeEventListener(SecEvents.TokenIsNull, handleTokenEvent);
+  store.removeEventListener(SecEvents.TokenIsNotNull, handleTokenEvent);
 
   broadcastChannel.removeEventListener('message', handleChannelMessage);
   broadcastChannel.removeEventListener('messageerror', handleChannelMessageError);

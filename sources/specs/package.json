@@ -26,8 +26,8 @@
   "bugs": {
     "url": "https://github.com/deneb-kaitos/tiny-bee/issues"
   },
-  "dependencies": {
-    "execa": "^9.3.0",
-    "which": "^4.0.0"
+  "devDependencies": {
+    "execa": "catalog:utils",
+    "which": "catalog:utils"
   }
 }

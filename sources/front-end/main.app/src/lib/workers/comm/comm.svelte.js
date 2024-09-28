@@ -1,12 +1,12 @@
-import {
+const {
   ProtocolMessageTypes,
-} from '$lib/workers/ProtocolMessageTypes.js';
-import {
+} = await import ('$lib/workers/ProtocolMessageTypes.js');
+const {
   ConnectionFactory,
-} from './ConnectionFactory.js';
-import {
+} = await import ('./ConnectionFactory.js');
+const {
   BroadcastChannelName,
-} from '../BroadcastChannelName.js';
+} = await import ('../BroadcastChannelName.js');
 
 let connectionFactory = null;
 /**
