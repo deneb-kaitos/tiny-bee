@@ -18,7 +18,7 @@
   --transition-timing-function: cubic-bezier(.03,.97,.93,.95);
   --transition-duration: 0.125s;
 
-  --border-radius: 0.25rem;
+  --border-radius: 0.125rem;
   --scale-factor: 1.125;
 
   --filter-drop-shadow-x: 2px;

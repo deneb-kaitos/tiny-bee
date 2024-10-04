@@ -5,12 +5,19 @@
     inputName = crypto.randomUUID(),
     inputAutocomplete = 'off',
     isRequired = false,
+    onchange = (value) => {},
   } = $props();
+  let value = $state('');
+
+  $effect(() => {
+    onchange(value);
+  });
 </script>
 
 <style>
   .input {
     font-size: 0.75rem;
+    border-radius: var(--border-radius);
   }
 </style>
 
@@ -21,4 +28,5 @@
   name={inputName}
   autocomplete={inputAutocomplete}
   required={isRequired}
+  bind:value={value}
 />
