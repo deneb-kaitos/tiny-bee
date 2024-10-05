@@ -28,5 +28,6 @@
   name={inputName}
   autocomplete={inputAutocomplete}
   required={isRequired}
+  autocapitalize="none"
   bind:value={value}
 />

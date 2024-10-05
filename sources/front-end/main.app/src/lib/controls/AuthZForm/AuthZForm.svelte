@@ -6,6 +6,9 @@
   const {
     mode = AuthZMode.register,
     formLegend = 'N/A',
+    /**
+     * @type {function}
+    */
     onValues,
   } = $props();
 
@@ -29,6 +32,10 @@
   const handleSubmit = (e) => {
     e.preventDefault();
     e.stopPropagation();
+    
+    if ( typeof onValues !== 'function' ) {
+      return;
+    }
 
     const fields = Array.from (e.target?.elements).filter((input) => input.nodeName === 'INPUT').reduce((acc, val) => {
       return {
@@ -39,9 +46,7 @@
       mode,
     });
 
-    if ( typeof(onValues) === 'function' ) {
-      onValues(fields);
-    }
+    onValues(fields);
   }
 </script>
 
