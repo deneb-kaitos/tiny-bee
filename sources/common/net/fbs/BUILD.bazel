@@ -1,0 +1,6 @@
+genrule(
+  name = "common.net.fbs",
+  srcs = [],
+  outs = ["common.net.fbs.txt"],
+  cmd = "sleep 1 && echo 'common.net.fbs' > $@",
+)
