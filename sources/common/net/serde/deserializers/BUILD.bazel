@@ -1,0 +1,6 @@
+genrule(
+  name = "serde.deserializers",
+  srcs = [],
+  outs = ["serder.deserializers.txt"],
+  cmd = "sleep 2 && echo 'serde.deserializers' > $@",
+)
