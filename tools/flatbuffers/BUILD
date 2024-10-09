@@ -13,6 +13,7 @@ genrule(
     "flatc": ["flatc"],
   },
   cmd = [
+    "ls -la",
     "cd tools/flatbuffers/flatbuffers_src",
     "cmake -G \"Unix Makefiles\" -DCMAKE_BUILD_TYPE=Release",
     "make -j",

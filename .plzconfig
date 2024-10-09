@@ -17,7 +17,7 @@ ExitOnError = true
 LinkGeneratedSources = true
 
 [display]
-SystemStats = false
+SystemStats = true
 
 [licences]
 accept = MIT
