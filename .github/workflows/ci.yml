@@ -20,4 +20,4 @@ jobs:
           verbosity: debug
       
       - name: build
-        uses: plz build
+        run: plz build
