@@ -7,11 +7,18 @@ for language in ["ts", "js"]:
         "schema/authz/AccountRegistrationRequest.fbs",
       ],
       outs = [
-        "generated/" + language
+        "generated/" + language,
       ],
+      # output_dirs = [
+      #   "generated/" + language + "/",
+      # ],
       cmd = [
         "flatc --" + language + " --natural-utf8 --gen-all --warnings-as-errors -o $OUTS sources/common/net/fbs/schema/Message.fbs",
       ],
+      tools = {
+        "flatc": ["//tools/flatbuffers:flatcompiler|flatc"],
+        "esbuild": ["//tools/esbuild:esbuild|esbuild"]
+      },
       visibility = ["PUBLIC"]
     )
 
@@ -22,10 +29,16 @@ for language in ["ts", "js"]:
       outs = [
         "generated/" + language,
       ],
+      # output_dirs = [
+      #   "generated/" + language + "/",
+      # ],
       deps = [
         ":generate_ts"
       ],
-      cmd = "esbuild ./**/*.ts --outdir=$OUT"
+      cmd = "esbuild ./**/*.ts --outdir=$OUT",
+      tools = {
+        "esbuild": ["//tools/esbuild:esbuild|esbuild"]
+      },
     )
   else:
     genrule(
@@ -41,5 +54,8 @@ for language in ["ts", "js"]:
       cmd = [
         "flatc --" + language + " --natural-utf8 --gen-all --warnings-as-errors -o $OUTS sources/common/net/fbs/schema/Message.fbs",
       ],
-      visibility = ["PUBLIC"]
+      tools = {
+        "flatc": ["//tools/flatbuffers:flatcompiler|flatc"],
+      },
+      visibility = ["PUBLIC"],
     )

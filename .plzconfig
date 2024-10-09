@@ -17,4 +17,9 @@ ExitOnError = true
 LinkGeneratedSources = true
 
 [display]
-SystemStats = true
+SystemStats = false
+
+[licences]
+accept = MIT
+accept = BSD
+reject = MS-EULA
