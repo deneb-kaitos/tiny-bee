@@ -1,6 +1,0 @@
-genrule(
-  name = "back-end.libs",
-  srcs = [],
-  outs = ["backend.libs.txt"],
-  cmd = "sleep 4 && echo 'backend.libs' > $@",
-)

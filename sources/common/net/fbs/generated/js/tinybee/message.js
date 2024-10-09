@@ -1,0 +1,1 @@
+/Users/dmitrymedvedev/projects/deneb-kaitos/tiny-bee/plz-out/gen/sources/common/net/fbs/generated/js/tinybee/message.js
