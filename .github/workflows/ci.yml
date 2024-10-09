@@ -19,9 +19,6 @@ jobs:
           output: all
           verbosity: debug
       
-      - name: please clean
-        run: plz clean
-
       - name: build
         run: plz build //...
 
