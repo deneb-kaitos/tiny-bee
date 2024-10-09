@@ -1,6 +1,5 @@
 github_repo(
   name = "flatbuffers_src",
-  bazel_compat = True,
   repo = "google/flatbuffers",
   revision = "v24.3.25",
 )
@@ -11,12 +10,13 @@ genrule(
   binary = True,
   srcs = [],
   outs = {
-    "flatc": ["tools/flatbuffers/flatbuffers_src/flatc"],
+    "flatc": ["flatc"],
   },
   cmd = [
     "cd tools/flatbuffers/flatbuffers_src",
     "cmake -G \"Unix Makefiles\" -DCMAKE_BUILD_TYPE=Release",
     "make -j",
+    "cp ./flatc ../../../"
   ],
   deps = [
     ":flatbuffers_src",
