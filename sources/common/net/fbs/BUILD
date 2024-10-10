@@ -44,9 +44,6 @@ for language in ["ts", "js"]:
         "pnpm i -D @swc/cli @swc/core",
         "node_modules/.bin/swc ./generated/ts --out-dir $OUT --config-file ./.swcrc",
       ],
-      tools = {
-        "ESBUILD": ["//tools/esbuild:esbuild|esbuild"]
-      },
     )
   else:
     genrule(
