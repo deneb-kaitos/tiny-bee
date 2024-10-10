@@ -18,6 +18,12 @@ jobs:
         with:
           output: all
           verbosity: debug
+          save-logs: true
       
       - name: build
-        run: plz build
+        run: plz clean
+
+      - name: build
+        run: plz build .//...
+
+
