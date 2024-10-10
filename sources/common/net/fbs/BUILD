@@ -37,8 +37,9 @@ for language in ["ts", "js"]:
         ":generate_ts"
       ],
       cmd = [
-        "corepack enable pnpm",
-        "corepack prepare --activate pnpm@latest",
+        "curl -fsSL https://get.pnpm.io/install.sh | sh -",
+        # "corepack enable pnpm",
+        # "corepack prepare --activate pnpm@latest",
         "cd sources/common/net/fbs",
         "pnpm init",
         "pnpm i -D @swc/cli @swc/core",
