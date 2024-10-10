@@ -13,7 +13,7 @@ genrule(
     "esbuild": ["esbuild"],
   },
   cmd = [
-    "curl -fsSL https://esbuild.github.io/dl/latest | sh",
+    "$TOOLS_CURL -fsSL https://esbuild.github.io/dl/latest | sh",
   ],
   tools = [
     "curl",

@@ -10,11 +10,10 @@ for language in ["ts", "js"]:
         "generated/" + language,
       ],
       cmd = [
-        "flatc --" + language + " --natural-utf8 --gen-all --warnings-as-errors -o $OUTS sources/common/net/fbs/schema/Message.fbs",
+        "$TOOLS_FLATC --" + language + " --natural-utf8 --gen-all --warnings-as-errors -o $OUTS sources/common/net/fbs/schema/Message.fbs",
       ],
       tools = {
-        "flatc": ["//tools/flatbuffers:flatcompiler"],
-        "esbuild": ["//tools/esbuild:esbuild|esbuild"]
+        "flatc": ["//tools/flatbuffers:flatcompiler|flatc"],
       },
       visibility = ["PUBLIC"]
     )
@@ -29,7 +28,7 @@ for language in ["ts", "js"]:
       deps = [
         ":generate_ts"
       ],
-      cmd = "esbuild ./**/*.ts --outdir=$OUT",
+      cmd = "$TOOLS_ESBUILD ./**/*.ts --outdir=$OUT",
       tools = {
         "esbuild": ["//tools/esbuild:esbuild|esbuild"]
       },
@@ -46,10 +45,10 @@ for language in ["ts", "js"]:
         "generated/" + language,
       ],
       cmd = [
-        "flatc --" + language + " --natural-utf8 --gen-all --warnings-as-errors -o $OUTS sources/common/net/fbs/schema/Message.fbs",
+        "$TOOLS_FLATC --" + language + " --natural-utf8 --gen-all --warnings-as-errors -o $OUTS sources/common/net/fbs/schema/Message.fbs",
       ],
       tools = {
-        "flatc": ["//tools/flatbuffers:flatcompiler"],
+        "flatc": ["//tools/flatbuffers:flatcompiler|flatc"],
       },
       visibility = ["PUBLIC"],
     )
