@@ -1,12 +1,12 @@
 import {
   Message
-} from '@deneb-kaitos/tiny-bee-fbs/generated/mjs/generated/ts/tinybee/message.js';
+} from '@deneb-kaitos/tiny-bee-fbs/generated/js/tinybee/message.js';
 import {
   MessagePayload,
-} from '@deneb-kaitos/tiny-bee-fbs/generated/mjs/generated/ts/tinybee/message-payload.js';
+} from '@deneb-kaitos/tiny-bee-fbs/generated/js/tinybee/message-payload.js';
 import {
   AccountRegistrationRequest,
-} from '@deneb-kaitos/tiny-bee-fbs/generated/mjs/generated/ts/tinybee/account-registration-request.js';
+} from '@deneb-kaitos/tiny-bee-fbs/generated/js/tinybee/account-registration-request.js';
 
 export const serialize = (
   /**

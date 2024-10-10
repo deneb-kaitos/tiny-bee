@@ -14,7 +14,7 @@ BlacklistDirs = node_modules
 
 [build]
 ExitOnError = true
-LinkGeneratedSources = true
+LinkGeneratedSources = hard
 
 [display]
 SystemStats = true

@@ -62,7 +62,7 @@ const run = async () => {
     cwd: currentDir,
     stdout: 'inherit',
     stderr: 'inherit',
-  })`node --env-file=${localSpecsDir}/.env --test ${localSpecsDir}/*.specs.mjs`;
+  })`node --env-file=${localSpecsDir}/.env.specs --test ${localSpecsDir}/*.specs.mjs`;
 };
 
 await run();
