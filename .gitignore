@@ -3,6 +3,8 @@ node_modules
 coverage
 bazel-*
 
+.plz_*
+
 # Entries below this point are managed by Please (DO NOT EDIT)
 plz-out
 .plzconfig.local
