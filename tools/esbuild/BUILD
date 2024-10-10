@@ -15,8 +15,8 @@ genrule(
   cmd = [
     "$TOOLS_CURL -fsSL https://esbuild.github.io/dl/latest | sh",
   ],
-  tools = [
-    "curl",
-  ],
+  tools = {
+    "CURL": "curl",
+  },
   visibility = ["PUBLIC"],
 )
