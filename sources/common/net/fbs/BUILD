@@ -42,8 +42,11 @@ for language in ["ts", "js"]:
         "cd sources/common/net/fbs",
         "pnpm init",
         "pnpm i -D @swc/cli @swc/core",
-        "node_modules/.bin/swc ./generated/ts --out-dir $OUT --config-file ./.swcrc",
+        "$TOOLS_NODE node_modules/@swc/cli/bin/swc.js ./generated/ts --out-dir $OUT --config-file ./.swcrc",
       ],
+      tools = {
+        "node": "//tools/nodejs:node_bin|node",
+      },
     )
   else:
     genrule(
