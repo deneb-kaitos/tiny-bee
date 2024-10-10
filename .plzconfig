@@ -15,6 +15,13 @@ BlacklistDirs = node_modules
 [build]
 ExitOnError = true
 LinkGeneratedSources = hard
+Path = /usr/local/bin
+Path = /usr/bin
+Path = /bin
+Path = /usr/sbin
+
+[BuildEnv]
+NODE-VERSION = 22.9.0
 
 [display]
 SystemStats = true
