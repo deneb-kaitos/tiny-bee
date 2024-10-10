@@ -12,7 +12,7 @@ import assert from 'node:assert/strict';
 import flatbuffers from 'flatbuffers';
 import {
   MessagePayload,
-} from '@deneb-kaitos/tiny-bee-fbs/generated/mjs/generated/ts/tinybee/message-payload.js';
+} from '@deneb-kaitos/tiny-bee-fbs/generated/js/tinybee/message-payload.js';
 import {
   serialize as createAccountRegistrationRequest,
 } from '../serialize.mjs';
