@@ -10,14 +10,14 @@ genrule(
   binary = True,
   srcs = [],
   outs = {
-    "flatc": ["flatc"],
+    "flatc": ["tools/flatbuffers/flatbuffers_src/flatc"],
   },
   cmd = [
     "ls -la",
     "cd tools/flatbuffers/flatbuffers_src",
     "cmake -G \"Unix Makefiles\" -DCMAKE_BUILD_TYPE=Release",
     "make -j",
-    "cp ./flatc ../../../",
+    # "cp ./flatc ../../../",
   ],
   deps = [
     ":flatbuffers_src",
