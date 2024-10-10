@@ -17,7 +17,6 @@ genrule(
     "cd tools/flatbuffers/flatbuffers_src",
     "cmake -G \"Unix Makefiles\" -DCMAKE_BUILD_TYPE=Release",
     "make -j",
-    "make install",
     "cp ./flatc ../../../",
   ],
   deps = [
