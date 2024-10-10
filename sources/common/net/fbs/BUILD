@@ -22,13 +22,28 @@ for language in ["ts", "js"]:
     genrule(
       name = "generate_" + language,
       labels = ["codegen"],
+      srcs = glob(
+        [
+          "**/*.js",
+        ],
+        exclude=["node_modules"]
+      ) + [
+        "./.swcrc",
+      ],
       outs = [
         "generated/" + language,
       ],
       deps = [
         ":generate_ts"
       ],
-      cmd = "$TOOLS_ESBUILD ./**/*.ts --outdir=$OUT",
+      cmd = [
+        "corepack enable pnpm",
+        "corepack prepare --activate pnpm@latest",
+        "cd sources/common/net/fbs",
+        "pnpm init",
+        "pnpm i -D @swc/cli @swc/core",
+        "node_modules/.bin/swc ./generated/ts --out-dir $OUT --config-file ./.swcrc",
+      ],
       tools = {
         "ESBUILD": ["//tools/esbuild:esbuild|esbuild"]
       },
