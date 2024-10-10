@@ -21,9 +21,6 @@ jobs:
           save-logs: true
       
       - name: build
-        run: plz clean
-
-      - name: build
         run: plz build .//...
 
 
