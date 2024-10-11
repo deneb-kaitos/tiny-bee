@@ -17,8 +17,7 @@ jobs:
         id: pnpm-cache-restore
         uses: actions/cache/restore@v4
         with:
-          path: |
-            ~/.pnpm-store
+          path: $PNPM_HOME/store/v3
           key: ${{ runner.os }}-pnpm-cache
 
       - name: checkout code
@@ -51,8 +50,7 @@ jobs:
         id: pnpm-cache-store
         uses: actions/cache/save@v4
         with:
-          path: |
-            ~/.pnpm-store
+          path: $PNPM_HOME/store/v3
           key: ${{ steps.pnpm-cache-restore.outputs.cache-primary-key }}
 
 
