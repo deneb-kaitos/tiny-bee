@@ -8,6 +8,8 @@ on:
 
 jobs:
   ci:
+    env:
+      PNPM_STORE_PATH: ~/.pnpm-store
     runs-on: ubuntu-24.04
     defaults:
       run: 
@@ -17,7 +19,7 @@ jobs:
         id: pnpm-cache-restore
         uses: actions/cache/restore@v4
         with:
-          path: $PNPM_HOME/store/v3
+          path: $PNPM_STORE_PATH
           key: ${{ runner.os }}-pnpm-cache
 
       - name: checkout code
@@ -29,6 +31,10 @@ jobs:
           version: 9.12.1
           run_install: false
           standalone: true
+      
+      - name: configure PNPM
+        run: |
+          pnpm config set store-dir ~/.pnpm-store
 
       - name: install Node.JS
         uses: actions/setup-node@v4
@@ -50,7 +56,7 @@ jobs:
         id: pnpm-cache-store
         uses: actions/cache/save@v4
         with:
-          path: $PNPM_HOME/store/v3
+          path: $PNPM_STORE_PATH
           key: ${{ steps.pnpm-cache-restore.outputs.cache-primary-key }}
 
 
