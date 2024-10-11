@@ -29,6 +29,7 @@ jobs:
         with:
           version: 9.12.1
           run_install: false
+          standalone: true
 
       - name: install Node.JS
         uses: actions/setup-node@v4
