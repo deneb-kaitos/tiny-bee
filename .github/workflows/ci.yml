@@ -20,12 +20,13 @@ jobs:
         uses: pnpm/action-setup@v4
         with:
           version: 9.12.1
+          run_install: false
 
       - name: install Node.JS
         uses: actions/setup-node@v4
         with:
           node-version: 22.9.0
-          cache: 'pnpm'
+          # cache: 'pnpm'
 
       - name: setup Please
         uses: sagikazarmark/setup-please-action@v0
