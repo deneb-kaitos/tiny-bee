@@ -8,20 +8,13 @@ on:
 
 jobs:
   ci:
-    env:
-      PNPM_STORE_PATH: ~/.pnpm-store
+    # env:
+    #   PNPM_STORE_PATH: ~/.pnpm-store
     runs-on: ubuntu-24.04
     defaults:
       run: 
         shell: bash
     steps:
-      - name: restore pnpm cache
-        id: pnpm-cache-restore
-        uses: actions/cache/restore@v4
-        with:
-          path: $PNPM_STORE_PATH
-          key: ${{ runner.os }}-pnpm-cache
-
       - name: checkout code
         uses: actions/checkout@v2
       
@@ -34,13 +27,22 @@ jobs:
       
       - name: configure PNPM
         run: |
-          pnpm config set store-dir ~/.pnpm-store
+          echo "$PNPM_STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+          echo "pnpm store path: $PNPM_STORE_PATH"
+          pnpm config set store-dir $PNPM_STORE_PATH
+      
+      - name: restore pnpm cache
+        id: pnpm-cache-restore
+        uses: actions/cache/restore@v4
+        with:
+          path: $PNPM_STORE_PATH
+          key: ${{ runner.os }}-pnpm-cache
 
       - name: install Node.JS
         uses: actions/setup-node@v4
         with:
           node-version: 22.9.0
-          cache: 'pnpm'
+          cache: pnpm
       
       - name: setup Please
         uses: sagikazarmark/setup-please-action@v0
