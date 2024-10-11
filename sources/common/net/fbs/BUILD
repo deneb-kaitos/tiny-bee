@@ -51,7 +51,9 @@ for language in ["ts", "js"]:
       env = {
         "NODE_HOME": "$(exe //tools/nodejs/node_bin:node)",
         "SHELL": "/bin/bash",
+        # see: https://github.com/pnpm/pnpm/issues/4495#issuecomment-1518584959
         "PNPM_HOME": "/usr/local/bin",
+        "PNPM_VERSION": "9.11.0",
       },
     )
   else:
