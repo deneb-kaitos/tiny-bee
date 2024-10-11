@@ -124,7 +124,7 @@ importers:
         version: 9.12.0
       eslint-config-airbnb-base:
         specifier: catalog:utils
-        version: 15.0.0(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.8.1(eslint@9.12.0)(typescript@5.6.3))(eslint@9.12.0))(eslint@9.12.0)
+        version: 15.0.0(eslint-plugin-import@2.31.0(eslint@9.12.0))(eslint@9.12.0)
       eslint-plugin-import:
         specifier: catalog:utils
         version: 2.31.0(@typescript-eslint/parser@8.8.1(eslint@9.12.0)(typescript@5.6.3))(eslint@9.12.0)
@@ -155,7 +155,7 @@ importers:
         version: 9.12.0
       eslint-config-airbnb-base:
         specifier: catalog:utils
-        version: 15.0.0(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.8.1(eslint@9.12.0)(typescript@5.6.3))(eslint@9.12.0))(eslint@9.12.0)
+        version: 15.0.0(eslint-plugin-import@2.31.0(eslint@9.12.0))(eslint@9.12.0)
       eslint-plugin-import:
         specifier: catalog:utils
         version: 2.31.0(@typescript-eslint/parser@8.8.1(eslint@9.12.0)(typescript@5.6.3))(eslint@9.12.0)
@@ -185,7 +185,7 @@ importers:
         version: 9.12.0
       eslint-config-airbnb-base:
         specifier: catalog:utils
-        version: 15.0.0(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.8.1(eslint@9.12.0)(typescript@5.6.3))(eslint@9.12.0))(eslint@9.12.0)
+        version: 15.0.0(eslint-plugin-import@2.31.0(eslint@9.12.0))(eslint@9.12.0)
       eslint-plugin-import:
         specifier: catalog:utils
         version: 2.31.0(@typescript-eslint/parser@8.8.1(eslint@9.12.0)(typescript@5.6.3))(eslint@9.12.0)
@@ -231,7 +231,7 @@ importers:
         version: 9.12.0
       eslint-config-airbnb-base:
         specifier: catalog:utils
-        version: 15.0.0(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.8.1(eslint@9.12.0)(typescript@5.6.3))(eslint@9.12.0))(eslint@9.12.0)
+        version: 15.0.0(eslint-plugin-import@2.31.0(eslint@9.12.0))(eslint@9.12.0)
       eslint-plugin-import:
         specifier: catalog:utils
         version: 2.31.0(@typescript-eslint/parser@8.8.1(eslint@9.12.0)(typescript@5.6.3))(eslint@9.12.0)
@@ -265,7 +265,7 @@ importers:
         version: 9.12.0
       eslint-config-airbnb-base:
         specifier: catalog:utils
-        version: 15.0.0(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.8.1(eslint@9.12.0)(typescript@5.6.3))(eslint@9.12.0))(eslint@9.12.0)
+        version: 15.0.0(eslint-plugin-import@2.31.0(eslint@9.12.0))(eslint@9.12.0)
       eslint-plugin-import:
         specifier: catalog:utils
         version: 2.31.0(@typescript-eslint/parser@8.8.1(eslint@9.12.0)(typescript@5.6.3))(eslint@9.12.0)
@@ -4664,7 +4664,7 @@ snapshots:
       eslint: 9.12.0
       semver: 7.6.3
 
-  eslint-config-airbnb-base@15.0.0(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.8.1(eslint@9.12.0)(typescript@5.6.3))(eslint@9.12.0))(eslint@9.12.0):
+  eslint-config-airbnb-base@15.0.0(eslint-plugin-import@2.31.0(eslint@9.12.0))(eslint@9.12.0):
     dependencies:
       confusing-browser-globals: 1.0.11
       eslint: 9.12.0

@@ -16,10 +16,16 @@ jobs:
       - name: checkout code
         uses: actions/checkout@v2
       
+      - name: setup PNPM
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9.12.1
+
       - name: install Node.JS
         uses: actions/setup-node@v4
         with:
           node-version: 22.9.0
+          cache: 'pnpm'
 
       - name: setup Please
         uses: sagikazarmark/setup-please-action@v0

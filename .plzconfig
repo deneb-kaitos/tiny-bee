@@ -24,7 +24,6 @@ Path = /usr/sbin
 [BuildEnv]
 NODE-VERSION = 22.9.0
 PNPM-VERSION = 9.12.1
-PNPM-HOME = /usr/local/bin
 
 [display]
 SystemStats = true

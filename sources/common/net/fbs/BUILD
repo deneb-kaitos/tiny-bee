@@ -34,22 +34,22 @@ for language in ["ts", "js"]:
         "generated/" + language,
       ],
       deps = [
-        ":generate_ts"
+        ":generate_ts",
       ],
       cmd = [
-        "curl -fsSL https://get.pnpm.io/install.sh | $SHELL -",
         "cd sources/common/net/fbs",
         "pnpm init",
         "pnpm add -D @swc/cli @swc/core",
         "pnpm --recursive install",
-        "node node_modules/@swc/cli/bin/swc.js ./generated/ts --out-dir $OUT --config-file ./.swcrc",
+        "$TOOLS_NODE node_modules/@swc/cli/bin/swc.js ./generated/ts --out-dir $OUT --config-file ./.swcrc",
       ],
       pass_env = [
         "SHELL",
       ],
-      tools = [
-        "curl",
-      ],
+      tools = {
+        "CURL": "curl",
+        "NODE": "node",
+      },
       # env = {
       #   # see: https://github.com/pnpm/pnpm/issues/4495#issuecomment-1518584959
         # "PNPM_HOME": "/usr/local/bin",
