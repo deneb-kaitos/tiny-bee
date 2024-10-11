@@ -50,7 +50,8 @@ for language in ["ts", "js"]:
       },
       env = {
         "NODE_HOME": "$(exe //tools/nodejs/node_bin:node)",
-        "SHELL": "/bin/sh"
+        "SHELL": "/bin/bash",
+        "PNPM_HOME": "/usr/local/bin",
       },
     )
   else:
