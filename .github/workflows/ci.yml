@@ -25,18 +25,16 @@ jobs:
           run_install: false
           standalone: true
       
-      - name: configure PNPM
-        run: |
-          # echo "$PNPM_STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
-          # echo "pnpm store path: $PNPM_STORE_PATH"
-          pnpm config set store-dir $PNPM_STORE_PATH
+      # - name: configure PNPM
+      #   run: |
+      #     pnpm config set store-dir $PNPM_STORE_PATH
       
-      - name: restore pnpm cache
-        id: pnpm-cache-restore
-        uses: actions/cache/restore@v4
-        with:
-          path: $PNPM_STORE_PATH
-          key: ${{ runner.os }}-pnpm-cache
+      # - name: restore pnpm cache
+      #   id: pnpm-cache-restore
+      #   uses: actions/cache/restore@v4
+      #   with:
+      #     path: $PNPM_STORE_PATH
+      #     key: ${{ runner.os }}-pnpm-cache
 
       - name: install Node.JS
         uses: actions/setup-node@v4
@@ -54,11 +52,11 @@ jobs:
       - name: build
         run: plz build .//...
       
-      - name: store pnpm cache
-        id: pnpm-cache-store
-        uses: actions/cache/save@v4
-        with:
-          path: $PNPM_STORE_PATH
-          key: ${{ steps.pnpm-cache-restore.outputs.cache-primary-key }}
+      # - name: store pnpm cache
+      #   id: pnpm-cache-store
+      #   uses: actions/cache/save@v4
+      #   with:
+      #     path: $PNPM_STORE_PATH
+      #     key: ${{ steps.pnpm-cache-restore.outputs.cache-primary-key }}
 
 
