@@ -9,14 +9,24 @@ on:
 jobs:
   ci:
     runs-on: ubuntu-24.04
+    defaults:
+      run: 
+        shell: bash
     steps:
       - name: checkout code
         uses: actions/checkout@v2
       
+      - name: setup PNPM
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9.12.1
+          run_install: false
+
       - name: install Node.JS
         uses: actions/setup-node@v4
         with:
           node-version: 22.9.0
+          # cache: 'pnpm'
 
       - name: setup Please
         uses: sagikazarmark/setup-please-action@v0

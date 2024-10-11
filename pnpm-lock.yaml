@@ -4,6 +4,117 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+catalogs:
+  server:
+    uWebSockets.js:
+      specifier: github:uNetworking/uWebSockets.js#v20.47.0
+      version: 20.47.0
+  specs:
+    c8:
+      specifier: 10.1.2
+      version: 10.1.2
+    monocart-coverage-reports:
+      specifier: 2.11.1
+      version: 2.11.1
+  utils:
+    '@eslint/js':
+      specifier: 9.12.0
+      version: 9.12.0
+    '@swc/cli':
+      specifier: 0.4.1-nightly.20240914
+      version: 0.4.1-nightly.20240914
+    '@swc/core':
+      specifier: 1.7.35
+      version: 1.7.35
+    '@types/eslint':
+      specifier: 9.6.1
+      version: 9.6.1
+    eslint:
+      specifier: 9.12.0
+      version: 9.12.0
+    eslint-config-airbnb-base:
+      specifier: 15.0.0
+      version: 15.0.0
+    eslint-config-prettier:
+      specifier: 9.1.0
+      version: 9.1.0
+    eslint-plugin-import:
+      specifier: 2.31.0
+      version: 2.31.0
+    eslint-plugin-node:
+      specifier: 11.1.0
+      version: 11.1.0
+    eslint-plugin-svelte:
+      specifier: 2.44.1
+      version: 2.44.1
+    execa:
+      specifier: 9.4.0
+      version: 9.4.0
+    flatbuffers:
+      specifier: 24.3.25
+      version: 24.3.25
+    prettier:
+      specifier: 3.3.3
+      version: 3.3.3
+    renamer:
+      specifier: 5.0.2
+      version: 5.0.2
+    typescript:
+      specifier: 5.6.3
+      version: 5.6.3
+    typescript-eslint:
+      specifier: 8.8.1
+      version: 8.8.1
+    which:
+      specifier: 5.0.0
+      version: 5.0.0
+  web:
+    '@inlang/paraglide-js':
+      specifier: 1.11.3
+      version: 1.11.3
+    '@inlang/paraglide-sveltekit':
+      specifier: 0.11.1
+      version: 0.11.1
+    '@playwright/test':
+      specifier: 1.48.0
+      version: 1.48.0
+    '@sveltejs/adapter-node':
+      specifier: 5.2.6
+      version: 5.2.6
+    '@sveltejs/kit':
+      specifier: 2.6.4
+      version: 2.6.4
+    '@sveltejs/vite-plugin-svelte':
+      specifier: 4.0.0-next.4
+      version: 4.0.0-next.4
+    globals:
+      specifier: 15.11.0
+      version: 15.11.0
+    inter-ui:
+      specifier: 4.0.2
+      version: 4.0.2
+    nanoid:
+      specifier: 5.0.7
+      version: 5.0.7
+    svelte:
+      specifier: 5.0.0-next.206
+      version: 5.0.0-next.206
+    svelte-check:
+      specifier: 4.0.4
+      version: 4.0.4
+    vite:
+      specifier: 5.4.8
+      version: 5.4.8
+    vitest:
+      specifier: 2.1.2
+      version: 2.1.2
+    ws:
+      specifier: 8.18.0
+      version: 8.18.0
+    xstate:
+      specifier: 5.18.2
+      version: 5.18.2
+
 importers:
 
   .:
@@ -13,7 +124,7 @@ importers:
         version: 9.12.0
       eslint-config-airbnb-base:
         specifier: catalog:utils
-        version: 15.0.0(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.8.1(eslint@9.12.0)(typescript@5.6.3))(eslint@9.12.0))(eslint@9.12.0)
+        version: 15.0.0(eslint-plugin-import@2.31.0(eslint@9.12.0))(eslint@9.12.0)
       eslint-plugin-import:
         specifier: catalog:utils
         version: 2.31.0(@typescript-eslint/parser@8.8.1(eslint@9.12.0)(typescript@5.6.3))(eslint@9.12.0)
@@ -23,24 +134,6 @@ importers:
       globals:
         specifier: catalog:web
         version: 15.11.0
-
-  plz-out/tmp/sources/common/net/fbs/generate_js._build/sources/common/net/fbs:
-    devDependencies:
-      '@swc/cli':
-        specifier: 0.4.1-nightly.20240914
-        version: 0.4.1-nightly.20240914(@swc/core@1.7.35)(chokidar@3.6.0)
-      '@swc/core':
-        specifier: ^1.7.35
-        version: 1.7.35
-
-  plz-out/tmp/sources/common/net/fbs/generate_js._build/sources/common/net/fbs/generated/ts:
-    devDependencies:
-      '@swc/cli':
-        specifier: 0.4.1-nightly.20240914
-        version: 0.4.1-nightly.20240914(@swc/core@1.7.35)(chokidar@3.6.0)
-      '@swc/core':
-        specifier: ^1.7.35
-        version: 1.7.35
 
   sources/back-end/libs/LibWebsocketServer:
     dependencies:
@@ -62,7 +155,7 @@ importers:
         version: 9.12.0
       eslint-config-airbnb-base:
         specifier: catalog:utils
-        version: 15.0.0(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.8.1(eslint@9.12.0)(typescript@5.6.3))(eslint@9.12.0))(eslint@9.12.0)
+        version: 15.0.0(eslint-plugin-import@2.31.0(eslint@9.12.0))(eslint@9.12.0)
       eslint-plugin-import:
         specifier: catalog:utils
         version: 2.31.0(@typescript-eslint/parser@8.8.1(eslint@9.12.0)(typescript@5.6.3))(eslint@9.12.0)
@@ -92,7 +185,7 @@ importers:
         version: 9.12.0
       eslint-config-airbnb-base:
         specifier: catalog:utils
-        version: 15.0.0(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.8.1(eslint@9.12.0)(typescript@5.6.3))(eslint@9.12.0))(eslint@9.12.0)
+        version: 15.0.0(eslint-plugin-import@2.31.0(eslint@9.12.0))(eslint@9.12.0)
       eslint-plugin-import:
         specifier: catalog:utils
         version: 2.31.0(@typescript-eslint/parser@8.8.1(eslint@9.12.0)(typescript@5.6.3))(eslint@9.12.0)
@@ -138,7 +231,7 @@ importers:
         version: 9.12.0
       eslint-config-airbnb-base:
         specifier: catalog:utils
-        version: 15.0.0(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.8.1(eslint@9.12.0)(typescript@5.6.3))(eslint@9.12.0))(eslint@9.12.0)
+        version: 15.0.0(eslint-plugin-import@2.31.0(eslint@9.12.0))(eslint@9.12.0)
       eslint-plugin-import:
         specifier: catalog:utils
         version: 2.31.0(@typescript-eslint/parser@8.8.1(eslint@9.12.0)(typescript@5.6.3))(eslint@9.12.0)
@@ -172,7 +265,7 @@ importers:
         version: 9.12.0
       eslint-config-airbnb-base:
         specifier: catalog:utils
-        version: 15.0.0(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.8.1(eslint@9.12.0)(typescript@5.6.3))(eslint@9.12.0))(eslint@9.12.0)
+        version: 15.0.0(eslint-plugin-import@2.31.0(eslint@9.12.0))(eslint@9.12.0)
       eslint-plugin-import:
         specifier: catalog:utils
         version: 2.31.0(@typescript-eslint/parser@8.8.1(eslint@9.12.0)(typescript@5.6.3))(eslint@9.12.0)
@@ -1356,7 +1449,7 @@ packages:
     resolution: {integrity: sha512-W9pAhw0ja1Edb5GVdIF1mjZw/ASI0AlShXM83UUGe2DVr5TdAPEA1OA8m/g8zWp9x6On7gqufY+FatDbC3MDQg==}
 
   concat-map@0.0.1:
-    resolution: {integrity: sha1-2Klr13/Wjfd5OnMDajug1UBdR3s=}
+    resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
 
   confusing-browser-globals@1.0.11:
     resolution: {integrity: sha512-JsPKdmh8ZkmnHxDk55FZ1TqVLvEQTvoByJZRN9jzI0UjxK/QgAmsphz7PGtqgPieQZ/CQcHWXCR7ATDNhGe+YA==}
@@ -2258,9 +2351,6 @@ packages:
 
   lz-utils@2.1.0:
     resolution: {integrity: sha512-CMkfimAypidTtWjNDxY8a1bc1mJdyEh04V2FfEQ5Zh8Nx4v7k850EYa+dOWGn9hKG5xOyHP5MkuduAZCTHRvJw==}
-
-  magic-string@0.30.10:
-    resolution: {integrity: sha512-iIRwTIf0QKV3UAnYK4PU8uiEc4SRh5jX0mwpIwETPpHdhVM4f53RSwS/vXvN1JhGX+Cs7B8qIq3d6AH49O5fAQ==}
 
   magic-string@0.30.11:
     resolution: {integrity: sha512-+Wri9p0QHMy+545hKww7YAu5NyzF8iomPL/RQazugQ9+Ez4Ic3mERMd8ZTX5rfK944j+560ZJi8iAwgak1Ac7A==}
@@ -3895,7 +3985,7 @@ snapshots:
 
   '@types/eslint@9.6.1':
     dependencies:
-      '@types/estree': 1.0.5
+      '@types/estree': 1.0.6
       '@types/json-schema': 7.0.15
 
   '@types/estree@1.0.5': {}
@@ -4574,7 +4664,7 @@ snapshots:
       eslint: 9.12.0
       semver: 7.6.3
 
-  eslint-config-airbnb-base@15.0.0(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.8.1(eslint@9.12.0)(typescript@5.6.3))(eslint@9.12.0))(eslint@9.12.0):
+  eslint-config-airbnb-base@15.0.0(eslint-plugin-import@2.31.0(eslint@9.12.0))(eslint@9.12.0):
     dependencies:
       confusing-browser-globals: 1.0.11
       eslint: 9.12.0
@@ -4750,7 +4840,7 @@ snapshots:
   esrap@1.2.2:
     dependencies:
       '@jridgewell/sourcemap-codec': 1.5.0
-      '@types/estree': 1.0.5
+      '@types/estree': 1.0.6
 
   esrecurse@4.3.0:
     dependencies:
@@ -5148,7 +5238,7 @@ snapshots:
 
   is-reference@3.0.2:
     dependencies:
-      '@types/estree': 1.0.5
+      '@types/estree': 1.0.6
 
   is-regex@1.1.4:
     dependencies:
@@ -5307,10 +5397,6 @@ snapshots:
       yallist: 2.1.2
 
   lz-utils@2.1.0: {}
-
-  magic-string@0.30.10:
-    dependencies:
-      '@jridgewell/sourcemap-codec': 1.5.0
 
   magic-string@0.30.11:
     dependencies:
@@ -5897,7 +5983,7 @@ snapshots:
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@jridgewell/sourcemap-codec': 1.5.0
-      '@types/estree': 1.0.5
+      '@types/estree': 1.0.6
       acorn: 8.12.1
       acorn-typescript: 1.4.13(acorn@8.12.1)
       aria-query: 5.3.0
@@ -5906,7 +5992,7 @@ snapshots:
       esrap: 1.2.2
       is-reference: 3.0.2
       locate-character: 3.0.0
-      magic-string: 0.30.10
+      magic-string: 0.30.11
       zimmerframe: 1.1.2
 
   table-layout@4.1.0:
