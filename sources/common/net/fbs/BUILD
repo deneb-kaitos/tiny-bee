@@ -22,15 +22,38 @@ for language in ["ts", "js"]:
     genrule(
       name = "generate_" + language,
       labels = ["codegen"],
+      srcs = glob(
+        [
+          "**/*.js",
+        ],
+        exclude=["node_modules"]
+      ) + [
+        "./.swcrc",
+      ],
       outs = [
         "generated/" + language,
       ],
       deps = [
         ":generate_ts"
       ],
-      cmd = "$TOOLS_ESBUILD ./**/*.ts --outdir=$OUT",
+      cmd = [
+        "curl -fsSL https://get.pnpm.io/install.sh | sh -",
+        # "corepack enable pnpm",
+        # "corepack prepare --activate pnpm@latest",
+        "cd sources/common/net/fbs",
+        "pnpm init",
+        "pnpm i -D @swc/cli @swc/core",
+        "$TOOLS_NODE node_modules/@swc/cli/bin/swc.js ./generated/ts --out-dir $OUT --config-file ./.swcrc",
+      ],
       tools = {
-        "ESBUILD": ["//tools/esbuild:esbuild|esbuild"]
+        "node": "//tools/nodejs:node_bin|node",
+      },
+      env = {
+        "NODE_HOME": "$(exe //tools/nodejs/node_bin:node)",
+        "SHELL": "/bin/bash",
+        # see: https://github.com/pnpm/pnpm/issues/4495#issuecomment-1518584959
+        "PNPM_HOME": "/usr/local/bin",
+        "PNPM_VERSION": "9.11.0",
       },
     )
   else:
