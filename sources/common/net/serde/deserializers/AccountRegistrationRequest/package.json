@@ -4,10 +4,10 @@
   "version": "0.0.0",
   "description": "[deserializer] AccountRegistrationRequest",
   "type": "module",
-  "packageManager": "pnpm@9.11.0",
+  "packageManager": "pnpm@9.12.1",
   "engines": {
     "node": "22.9.0",
-    "pnpm": "9.11.0"
+    "pnpm": "9.12.1"
   },
   "engineStrict": true,
   "main": "deserialize.mjs",

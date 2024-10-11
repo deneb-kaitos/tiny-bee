@@ -37,18 +37,21 @@ for language in ["ts", "js"]:
         ":generate_ts"
       ],
       cmd = [
-        "curl -fsSL https://get.pnpm.io/install.sh | sh -",
+        "curl -fsSL https://get.pnpm.io/install.sh | $SHELL -",
         "cd sources/common/net/fbs",
         "pnpm init",
-        "pnpm i -D @swc/cli @swc/core",
+        "pnpm add -D @swc/cli @swc/core",
+        "pnpm --recursive install",
         "node node_modules/@swc/cli/bin/swc.js ./generated/ts --out-dir $OUT --config-file ./.swcrc",
       ],
-      env = {
-        "SHELL": "/bin/bash",
-        # see: https://github.com/pnpm/pnpm/issues/4495#issuecomment-1518584959
-        "PNPM_HOME": "/usr/local/bin",
-        "PNPM_VERSION": "9.11.0",
-      },
+      pass_env = [
+        "SHELL",
+      ],
+      # env = {
+      #   # see: https://github.com/pnpm/pnpm/issues/4495#issuecomment-1518584959
+        # "PNPM_HOME": "/usr/local/bin",
+      #   # "PNPM_VERSION": "9.11.0",
+      # },
     )
   else:
     genrule(
