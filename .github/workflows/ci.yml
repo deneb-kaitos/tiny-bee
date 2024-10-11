@@ -8,8 +8,8 @@ on:
 
 jobs:
   ci:
-    # env:
-    #   PNPM_STORE_PATH: ~/.pnpm-store
+    env:
+      PNPM_STORE_PATH: .pnpm-store
     runs-on: ubuntu-24.04
     defaults:
       run: 
@@ -27,8 +27,8 @@ jobs:
       
       - name: configure PNPM
         run: |
-          echo "$PNPM_STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
-          echo "pnpm store path: $PNPM_STORE_PATH"
+          # echo "$PNPM_STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+          # echo "pnpm store path: $PNPM_STORE_PATH"
           pnpm config set store-dir $PNPM_STORE_PATH
       
       - name: restore pnpm cache
