@@ -16,11 +16,11 @@ BlacklistDirs = node_modules
 ExitOnError = true
 LinkGeneratedSources = hard
 ; Shell = /bin/zsh
+Path = $(exe //tools/nodejs/node_bin:node)
 Path = /usr/local/bin
 Path = /usr/bin
 Path = /bin
 Path = /usr/sbin
-Path = $(exe //tools/nodejs/node_bin:node)
 
 [BuildEnv]
 NODE-VERSION = 22.9.0

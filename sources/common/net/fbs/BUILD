@@ -48,6 +48,9 @@ for language in ["ts", "js"]:
       tools = {
         "node": "//tools/nodejs:node_bin|node",
       },
+      env = {
+        "NODE_HOME": "$(exe //tools/nodejs/node_bin:node)",
+      },
     )
   else:
     genrule(
