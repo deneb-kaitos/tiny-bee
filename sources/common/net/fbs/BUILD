@@ -47,6 +47,9 @@ for language in ["ts", "js"]:
       pass_env = [
         "SHELL",
       ],
+      tools = [
+        "curl",
+      ],
       # env = {
       #   # see: https://github.com/pnpm/pnpm/issues/4495#issuecomment-1518584959
         # "PNPM_HOME": "/usr/local/bin",
