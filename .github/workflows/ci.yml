@@ -40,7 +40,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22.9.0
-          cache: pnpm
+          # cache: pnpm
       
       - name: setup Please
         uses: sagikazarmark/setup-please-action@v0
