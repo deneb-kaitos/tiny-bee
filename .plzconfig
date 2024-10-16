@@ -5,30 +5,56 @@
 ;
 ; Or you can uncomment the following to pin everyone to a particular version;
 ; when you change it all users will automatically get updated.
-[please]
+[Please]
 SelfUpdate = true
-version = 17.11.0
+version = 17.12.0
 
-[parse]
+[Parse]
 BlacklistDirs = node_modules
 
 [build]
 ExitOnError = true
 LinkGeneratedSources = hard
-Path = $(exe //tools/nodejs/node_bin:node)
 Path = /usr/local/bin
 Path = /usr/bin
 Path = /bin
 Path = /usr/sbin
 
-[BuildEnv]
+; [BuildEnv]
+
+[Buildconfig]
 NODE-VERSION = 22.9.0
 PNPM-VERSION = 9.12.1
+FLATBUFFERS-VERSION = 24.3.25 
 
-[display]
+[Display]
 SystemStats = true
 
-[licences]
+[Licences]
 accept = MIT
+accept = MIT License
 accept = BSD
-reject = MS-EULA
+accept = BSD-3
+accept = BSD License
+accept = Simplified BSD
+accept = BSD 3-Clause
+accept = BSD-3-Clause
+accept = BSD-2-Clause
+accept = 3-Clause BSD License
+accept = New BSD License
+accept = Apache Software License
+accept = Apache 2.0
+accept = Apache-2.0
+accept = Apache License, Version 2.0
+accept = The Apache Software License, Version 2.0
+accept = PSF
+accept = ASL
+accept = MPL-2.0
+accept = LGPL
+accept = Artistic License
+accept = ISC
+# Not really a licence, but Bazel projects commonly describe things this way.
+accept = notice
+
+[Test]
+; Verbosity = 4
