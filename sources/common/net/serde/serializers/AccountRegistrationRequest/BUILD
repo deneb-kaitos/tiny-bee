@@ -8,14 +8,6 @@ genrule(
     "//sources/common/net/fbs:generate_js",
     "//:pnpm_common_files",
   ],
-  # outs = [
-  #   "specs/AccountRegistrationRequest.specs.mjs",
-  #   "serialize.mjs",
-  #   "package.json",
-  #   "specs/.env.specs",
-  #   "//sources/common/net/fbs:generate_js",
-  #   "//:pnpm_common_files",
-  # ],
   cmd = [
     "rm -rf node_modules",
     "pnpm fetch",
