@@ -8,9 +8,6 @@ genrule(
   name = "flatcompiler",
   exit_on_error = True,
   binary = True,
-  # srcs = [
-  #   # ":flatbuffers_src",
-  # ],
   outs = {
     "flatc": ["tools/flatbuffers/flatbuffers_src/flatc"],
   },

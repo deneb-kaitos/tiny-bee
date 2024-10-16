@@ -2,7 +2,6 @@ for language in ["ts", "js"]:
   if language == "ts":
     genrule(
       name = f"generate_{language}",
-      # labels = ["codegen"],
       srcs = [
         "schema/Message.fbs",
         "schema/authz/AccountRegistrationRequest.fbs",
@@ -12,7 +11,6 @@ for language in ["ts", "js"]:
       ],
       deps = [
         "//:pnpm_common_files",
-        # "//tools/flatbuffers:flatcompiler",
       ],
       cmd = [
         f"$TOOLS_FLATC --{language} --natural-utf8 --gen-all --warnings-as-errors -o $OUTS sources/common/net/fbs/schema/Message.fbs",
@@ -57,7 +55,7 @@ for language in ["ts", "js"]:
   else:
     genrule(
       name = f"generate_{language}",
-      # labels = ["codegen"],
+      labels = ["codegen"],
       srcs = [
         "schema/Message.fbs",
         "schema/authz/AccountRegistrationRequest.fbs",
