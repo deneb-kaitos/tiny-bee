@@ -1,16 +1,21 @@
 for language in ["ts", "js"]:
   if language == "ts":
     genrule(
-      name = "generate_" + language,
+      name = f"generate_{language}",
+      # labels = ["codegen"],
       srcs = [
         "schema/Message.fbs",
         "schema/authz/AccountRegistrationRequest.fbs",
       ],
       outs = [
-        "generated/" + language,
+        f"generated/{language}",
+      ],
+      deps = [
+        "//:pnpm_common_files",
+        # "//tools/flatbuffers:flatcompiler",
       ],
       cmd = [
-        "$TOOLS_FLATC --" + language + " --natural-utf8 --gen-all --warnings-as-errors -o $OUTS sources/common/net/fbs/schema/Message.fbs",
+        f"$TOOLS_FLATC --{language} --natural-utf8 --gen-all --warnings-as-errors -o $OUTS sources/common/net/fbs/schema/Message.fbs",
       ],
       tools = {
         "FLATC": ["//tools/flatbuffers:flatcompiler|flatc"],
@@ -20,28 +25,25 @@ for language in ["ts", "js"]:
 
   elif language == "js":
     genrule(
-      name = "generate_" + language,
+      name = f"generate_{language}",
       labels = ["codegen"],
-      srcs = glob(
-        [
-          "**/*.js",
-        ],
-        exclude=["node_modules"]
-      ) + [
-        "./.swcrc",
+      srcs = [
+        ".swcrc",
+        "package.json",
+        ":generate_ts",
       ],
       outs = [
-        "generated/" + language,
+        f"generated/{language}",
       ],
       deps = [
-        ":generate_ts",
+        "//:pnpm_common_files",
+        # ":generate_ts",
       ],
       cmd = [
         "cd sources/common/net/fbs",
-        "pnpm init",
-        "pnpm add -D @swc/cli @swc/core",
-        "pnpm --recursive install",
-        "$TOOLS_NODE node_modules/@swc/cli/bin/swc.js ./generated/ts --out-dir $OUT --config-file ./.swcrc",
+        "pnpm install",
+        "cd generated",
+        "$TOOLS_NODE ../node_modules/@swc/cli/bin/swc.js ts --out-dir $OUT --config-file ../.swcrc --strip-leading-paths",
       ],
       pass_env = [
         "SHELL",
@@ -50,25 +52,25 @@ for language in ["ts", "js"]:
         "CURL": "curl",
         "NODE": "node",
       },
-      # env = {
-      #   # see: https://github.com/pnpm/pnpm/issues/4495#issuecomment-1518584959
-        # "PNPM_HOME": "/usr/local/bin",
-      #   # "PNPM_VERSION": "9.11.0",
-      # },
+      visibility = ["PUBLIC"],
     )
   else:
     genrule(
-      name = "generate_" + language,
-      labels = ["codegen"],
+      name = f"generate_{language}",
+      # labels = ["codegen"],
       srcs = [
         "schema/Message.fbs",
         "schema/authz/AccountRegistrationRequest.fbs",
       ],
+      deps = [
+        "//:pnpm_common_files",
+        "//tools/flatbuffers:flatcompiler",
+      ],
       outs = [
-        "generated/" + language,
+        f"generated/{language}",
       ],
       cmd = [
-        "$TOOLS_FLATC --" + language + " --natural-utf8 --gen-all --warnings-as-errors -o $OUTS sources/common/net/fbs/schema/Message.fbs",
+        f"$TOOLS_FLATC --{language} --natural-utf8 --gen-all --warnings-as-errors -o $OUTS sources/common/net/fbs/schema/Message.fbs",
       ],
       tools = {
         "FLATC": ["//tools/flatbuffers:flatcompiler|flatc"],
