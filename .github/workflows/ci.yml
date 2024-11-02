@@ -21,7 +21,7 @@ jobs:
       - name: setup PNPM
         uses: pnpm/action-setup@v4
         with:
-          version: 9.12.1
+          version: 9.12.3
           run_install: false
           standalone: true
       
@@ -39,7 +39,7 @@ jobs:
       - name: install Node.JS
         uses: actions/setup-node@v4
         with:
-          node-version: 22.9.0
+          node-version: 23.1.0
           # cache: 'pnpm'
           # cache-dependency-path: |
           #   pnpm-lock.yaml
@@ -52,7 +52,10 @@ jobs:
           save-logs: true
       
       - name: build
-        run: plz build .//...
+        run: plz build .//... -v=4 --show_all_output
+      
+      - name: test
+        run: plz test .//... -v=4 --show_all_output
       
       # - name: store pnpm cache
       #   id: pnpm-cache-store

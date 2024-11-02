@@ -4,10 +4,10 @@
   "description": "specs runner",
   "type": "module",
   "private": true,
-  "packageManager": "pnpm@9.12.1",
+  "packageManager": "pnpm@9.12.3",
   "engines": {
-    "node": "22.9.0",
-    "pnpm": "9.12.1"
+    "node": "23.1.0",
+    "pnpm": "9.12.3"
   },
   "bin": {
     "run-specs": "./bin/run-specs.mjs",

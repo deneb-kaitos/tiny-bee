@@ -3,10 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
-  "packageManager": "pnpm@9.12.1",
+  "packageManager": "pnpm@9.12.3",
   "engines": {
-    "node": "22.9.0",
-    "pnpm": "9.12.1"
+    "node": "23.1.0",
+    "pnpm": "9.12.3"
   },
   "scripts": {
     "dev": "vite dev",
@@ -24,8 +24,7 @@
     "test:unit": "vitest"
   },
   "dependencies": {
-    "@deneb-kaitos/tiny-bee-fbs": "workspace:^",
-    "@deneb-kaitos/tiny-bee-serde-serialize_account_registration_request": "workspace:^",
+    "@deneb-kaitos/serialize_account_registration_request": "workspace:^",
     "@inlang/paraglide-sveltekit": "catalog:web",
     "flatbuffers": "catalog:utils",
     "inter-ui": "catalog:web"

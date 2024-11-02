@@ -1,21 +1,8 @@
 {
-  "name": "@deneb-kaitos/tiny-bee-fbs",
+  "name": "@deneb-kaitos/tiny-bee-fbs-ts",
   "private": true,
   "version": "0.0.0",
-  "description": "SerDe",
   "type": "module",
-  "packageManager": "pnpm@9.12.3",
-  "engines": {
-    "node": "23.1.0",
-    "pnpm": "9.12.3"
-  },
-  "types": "./generated/ts/tinybee.ts",
-  "scripts": {
-    "preinstall": "npx only-allow pnpm",
-    "rename:js:mjs": "./node_modules/.bin/renamer --force --silent --find .js --replace .mjs **/generated/mjs/**",
-    "lint:mjs": "ESLINT_USE_FLAT_CONFIG=true ./node_modules/.bin/eslint ./generated/mjs/**/*.js --fix",
-    "build:schema": "node ./.bin/compile.mjs && pnpm run lint:mjs"
-  },
   "author": "Dmitry N. Medvedev <dmitry.medvedev@gmail.com>",
   "license": "MIT",
   "devDependencies": {

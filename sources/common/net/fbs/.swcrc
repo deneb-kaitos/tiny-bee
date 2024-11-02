@@ -1,12 +1,15 @@
 {
   "$schema": "https://swc.rs/schema.json",
+  "exclude": [
+    "node_modules"
+  ],
   "jsc": {
     "parser": {
       "syntax": "typescript",
       "tsx": false,
       "dynamicImport": true,
       "decorators": false,
-      "dts": true,
+      "dts": false,
       "noEarlyErrors": true,
       "importAssertions": true
     },

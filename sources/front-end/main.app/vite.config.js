@@ -16,6 +16,9 @@ export default defineConfig({
     paraglide({ project: './project.inlang', outdir: './src/lib/paraglide' }),
     sveltekit()
   ],
+  build: {
+    target: 'esnext',
+  },
   // build: {
   //   rollupOptions: {
   //     output: {

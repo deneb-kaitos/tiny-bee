@@ -12,13 +12,13 @@ import assert from 'node:assert/strict';
 import flatbuffers from 'flatbuffers';
 import {
   MessagePayload,
-} from '@deneb-kaitos/tiny-bee-fbs/generated/js/tinybee/message-payload.js';
+} from '@deneb-kaitos/tiny-bee-fbs-js/tinybee/message-payload.js';
 import {
   serialize as createAccountRegistrationRequest,
 } from '../serialize.mjs';
 import {
   deserialize as deserializeAccountRegistrationRequest,
-} from '@deneb-kaitos/tiny-bee-serde-deserialize_account_registration_request'; 
+} from '@deneb-kaitos/deserialize_account_registration_request'; 
 
 describe('serializers', () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
