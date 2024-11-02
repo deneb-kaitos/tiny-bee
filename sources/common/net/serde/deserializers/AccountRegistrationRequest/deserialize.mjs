@@ -1,13 +1,13 @@
 import flatbuffers from 'flatbuffers';
 import {
   Message
-} from '@deneb-kaitos/tiny-bee-fbs/generated/js/tinybee/message.js';
+} from '@deneb-kaitos/tiny-bee-fbs-js/tinybee/message.js';
 import {
   MessagePayload,
-} from '@deneb-kaitos/tiny-bee-fbs/generated/js/tinybee/message-payload.js';
+} from '@deneb-kaitos/tiny-bee-fbs-js/tinybee/message-payload.js';
 import {
   AccountRegistrationRequest,
-} from '@deneb-kaitos/tiny-bee-fbs/generated/js/tinybee/account-registration-request.js';
+} from '@deneb-kaitos/tiny-bee-fbs-js/tinybee/account-registration-request.js';
 
 export const deserialize = (
   /**

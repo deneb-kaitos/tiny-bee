@@ -1,3 +1,15 @@
+package(
+  default_visibility = ["PUBLIC"],
+)
+
+filegroup(
+  name = "tiny-bee-fbs-packages",
+  srcs = {
+    "ts": "ci/ts.package.json",
+    "js": "ci/js.package.json",
+  },
+)
+
 for language in ["ts", "js"]:
   if language == "ts":
     genrule(
@@ -5,20 +17,18 @@ for language in ["ts", "js"]:
       srcs = [
         "schema/Message.fbs",
         "schema/authz/AccountRegistrationRequest.fbs",
+        f":tiny-bee-fbs-packages|{language}",
       ],
       outs = [
         f"generated/{language}",
       ],
-      deps = [
-        "//:pnpm_common_files",
-      ],
       cmd = [
         f"$TOOLS_FLATC --{language} --natural-utf8 --gen-all --warnings-as-errors -o $OUTS sources/common/net/fbs/schema/Message.fbs",
+        f"cp sources/common/net/fbs/ci/{language}.package.json $OUT/package.json",
       ],
       tools = {
         "FLATC": ["//tools/flatbuffers:flatcompiler|flatc"],
       },
-      visibility = ["PUBLIC"]
     )
 
   elif language == "js":
@@ -27,21 +37,23 @@ for language in ["ts", "js"]:
       labels = ["codegen"],
       srcs = [
         ".swcrc",
-        "package.json",
         ":generate_ts",
+        f":tiny-bee-fbs-packages|{language}",
+      ],
+      data = [
+        ".swcrc",
       ],
       outs = [
         f"generated/{language}",
       ],
       deps = [
         "//:pnpm_common_files",
-        # ":generate_ts",
       ],
       cmd = [
-        "cd sources/common/net/fbs",
         "pnpm install",
-        "cd generated",
-        "$TOOLS_NODE ../node_modules/@swc/cli/bin/swc.js ts --out-dir $OUT --config-file ../.swcrc --strip-leading-paths",
+        "cd sources/common/net/fbs/generated/ts",
+        "$TOOLS_NODE node_modules/@swc/cli/bin/swc.js . --out-dir $OUT --config-file ../../.swcrc",
+        f"cp ../../ci/{language}.package.json $OUT/package.json",
       ],
       pass_env = [
         "SHELL",
@@ -50,8 +62,8 @@ for language in ["ts", "js"]:
         "CURL": "curl",
         "NODE": "node",
       },
-      visibility = ["PUBLIC"],
     )
+    
   else:
     genrule(
       name = f"generate_{language}",
@@ -61,7 +73,6 @@ for language in ["ts", "js"]:
         "schema/authz/AccountRegistrationRequest.fbs",
       ],
       deps = [
-        "//:pnpm_common_files",
         "//tools/flatbuffers:flatcompiler",
       ],
       outs = [
@@ -73,5 +84,4 @@ for language in ["ts", "js"]:
       tools = {
         "FLATC": ["//tools/flatbuffers:flatcompiler|flatc"],
       },
-      visibility = ["PUBLIC"],
     )

@@ -1,0 +1,31 @@
+package(
+  default_visibility = ["PUBLIC"],
+)
+
+filegroup(
+  name = "fg_serialize_account_registration_request",
+  srcs = [
+    "serialize.mjs",
+    "package.json",
+    "specs/.env.specs",
+    "specs/AccountRegistrationRequest.specs.mjs",
+  ],
+)
+
+gentest(
+  name = "test",
+  data = [
+    ":fg_serialize_account_registration_request",
+    "//sources/common/net/serde/deserializers/AccountRegistrationRequest:fg_deserialize_account_registration_request",
+    "//:pnpm_common_files",
+    "//sources/common/net/fbs:generate_js",
+  ],
+  test_cmd = [
+    "cd sources/common/net/serde/serializers/AccountRegistrationRequest",
+    "pnpm --recursive install",
+    "node --env-file=specs/.env.specs --test specs/*.specs.mjs",
+  ],
+  no_test_output = True,
+  exit_on_error = True,
+  # needs_transitive_deps = True,
+)

@@ -1,0 +1,46 @@
+package(
+  default_visibility = ["PUBLIC"],
+)
+
+genrule(
+  name = "build",
+  srcs = [
+    "environments",
+    "messages",
+    "project.inlang",
+    "src",
+    "static",
+    ".gitignore",
+    ".prettierrc",
+    "eslint.config.js",
+    "jsconfig.json",
+    "package.json",
+    "playwright.config.js",
+    "svelte.config.js",
+    "vite.config.js",
+    "//:pnpm_common_files",
+    "//sources/common/net/fbs:generate_js",
+    "//sources/common/net/serde/serializers/AccountRegistrationRequest:fg_serialize_account_registration_request",
+    "//sources/common/net/serde/deserializers/AccountRegistrationRequest:fg_deserialize_account_registration_request",
+  ],
+  # data = [
+  #   "//sources/common/net/serde/serializers/AccountRegistrationRequest:fg_serialize_account_registration_request",
+  #   "//sources/common/net/serde/deserializers/AccountRegistrationRequest:fg_deserialize_account_registration_request",
+  # ],
+  outs = [
+    "result",
+  ],
+  # deps = [
+  #   "//sources/common/net/serde/serializers/AccountRegistrationRequest:build",
+  # ],
+  # outs = [
+  #   "build",
+  # ],
+  cmd = [
+    "pnpm --recursive install",
+    "cd sources/front-end/main.app",
+    "pnpm run build",
+    "ls -lar .",
+    "cp -r ./build $OUT",
+  ],
+)
