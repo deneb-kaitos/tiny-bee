@@ -30,6 +30,14 @@ jobs:
         with:
           node-version: 23.1.0
       
+      - name: restore Please cache
+        id: restore-please-cache
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            plz-out
+          key: restore-please-cache-key
+
       - name: setup Please
         uses: sagikazarmark/setup-please-action@v0
         with:
@@ -37,14 +45,6 @@ jobs:
           verbosity: debug
           save-logs: true
       
-      - name: restore Please cache
-        id: restore-please-cache
-        uses: actions/cache/restore@v4
-        with:
-          path: |
-            plz-out
-            ${{ env.PNPM_STORE_PATH }}
-          key: restore-please-cache-key
       
       - name: build
         run: plz build .//... -v=4 --show_all_output
@@ -58,6 +58,5 @@ jobs:
         with:
           path: |
             plz-out
-            ${{ env.PNPM_STORE_PATH }}
           key: ${{ steps.restore-please-cache.outputs.cache-primary-key }}
       
