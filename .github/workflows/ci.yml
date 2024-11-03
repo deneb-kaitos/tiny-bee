@@ -43,6 +43,7 @@ jobs:
         with:
           path: |
             plz-out
+            ${{ env.PNPM_STORE_PATH }}
           key: restore-please-cache-key
       
       - name: build
@@ -57,5 +58,6 @@ jobs:
         with:
           path: |
             plz-out
+            ${{ env.PNPM_STORE_PATH }}
           key: ${{ steps.restore-please-cache.outputs.cache-primary-key }}
       
