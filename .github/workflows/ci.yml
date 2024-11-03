@@ -47,6 +47,11 @@ jobs:
             plz-out/subrepos
           key: restore-please-cache-key
       
+      - name: list cache
+        run: |
+          ls -lar plz-out
+          exit 1
+      
       - name: build
         run: plz build .//... -v=4 --show_all_output
       
