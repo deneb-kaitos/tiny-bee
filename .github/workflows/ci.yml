@@ -43,6 +43,7 @@ jobs:
         with:
           path: |
             plz-out
+            plz-out/bin/tools/flatbuffers
           key: restore-please-cache-key
       
       - name: build
@@ -57,5 +58,6 @@ jobs:
         with:
           path: |
             plz-out
+            plz-out/bin/tools/flatbuffers
           key: ${{ steps.restore-please-cache.outputs.cache-primary-key }}
       
