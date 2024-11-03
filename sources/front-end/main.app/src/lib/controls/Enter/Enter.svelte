@@ -1,13 +1,24 @@
 <script>
   import AuthZForm from "$lib/controls/AuthZForm/AuthZForm.svelte";
   import { AuthZMode } from "$lib/controls/AuthZForm/AuthZMode.svelte.js";
+  import { fieldsToAuthObject } from '$lib/messageObjects/fieldsToAuthObject.mjs';
 
   /**
    * 
    * @param {Object | null | undefined} fields
    */
   const handleOnValues = (fields = null) => {
-    console.debug({ fields });
+    /**
+     * TODO:
+     * 1. send fields for serialization
+     * 2. get serialized message ( SM )
+     * 3. send SM to communicator
+    */
+
+    const messageObject = fieldsToAuthObject(fields);
+
+
+    console.debug({ fields }, { messageObject });
   };
 </script>
 
