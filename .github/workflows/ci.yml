@@ -43,8 +43,6 @@ jobs:
         with:
           path: |
             plz-out
-            plz-out/bin/tools/flatbuffers
-            plz-out/subrepos
           key: restore-please-cache-key
       
       - name: list cache
@@ -64,7 +62,5 @@ jobs:
         with:
           path: |
             plz-out
-            plz-out/bin/tools/flatbuffers
-            plz-out/subrepos
           key: ${{ steps.restore-please-cache.outputs.cache-primary-key }}
       
