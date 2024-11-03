@@ -18,6 +18,14 @@ jobs:
       - name: checkout code
         uses: actions/checkout@v2
       
+      - name: restore pnpm cache
+        id: restore-pnpm-cache
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            ${{ env.PNPM_STORE_PATH }}
+          key: restore-pnpm-cache-key
+
       - name: setup PNPM
         uses: pnpm/action-setup@v4
         with:
@@ -60,3 +68,10 @@ jobs:
             plz-out
           key: ${{ steps.restore-please-cache.outputs.cache-primary-key }}
       
+      - name: save pnpm cache
+        id: save-pnpm-cache
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            ${{ env.PNPM_STORE_PATH }}
+          key: ${{ steps.restore-pnpm-cache.outputs.cache-primary-key }}
