@@ -53,7 +53,7 @@ jobs:
       - name: test
         run: plz test .//... -v=4 --show_all_output
       
-      - name: save Please cache
+      - name: save all caches
         id: save-all-caches
         uses: actions/cache/save@v4
         with:
