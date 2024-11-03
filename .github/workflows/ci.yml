@@ -49,7 +49,7 @@ jobs:
       
       - name: list cache
         run: |
-          ls -lar plz-out
+          tree -a plz-out
           exit 1
       
       - name: build
