@@ -29,6 +29,6 @@ export class SerDeManager {
         payload: result,
       });
       (new BroadcastChannel(returnTo)).postMessage(m);
-    } 
+    }
   }
 }
