@@ -1,14 +1,14 @@
 catalogs:
   web:
-    "@sveltejs/kit": "2.7.4"
-    "svelte": "5.1.9"
+    "@sveltejs/kit": "2.8.0"
+    "svelte": "5.1.12"
     "@sveltejs/adapter-node": "5.2.9"
     "@sveltejs/vite-plugin-svelte": "4.0.0"
     "svelte-check": "4.0.5"
     "vite": "5.4.10"
     "vitest": "2.1.4"
     "@playwright/test": "1.48.2"
-    "globals": "15.11.0"
+    "globals": "15.12.0"
     "xstate": "5.18.2"
     "@inlang/paraglide-js": "1.11.3"
     "inter-ui": "4.0.2"
@@ -19,9 +19,9 @@ catalogs:
     "uWebSockets.js": "github:uNetworking/uWebSockets.js#v20.47.0"
   specs:
     "c8": "10.1.2"
-    "monocart-coverage-reports": "2.11.1"
+    "monocart-coverage-reports": "2.11.2"
   utils:
-    "@swc/core": "1.7.42"
+    "@swc/core": "1.9.1"
     "@swc/cli": "0.5.0"
     "@eslint/js": "9.14.0"
     "eslint": "9.14.0"
@@ -35,7 +35,7 @@ catalogs:
     "typescript": "5.6.3"
     "flatbuffers": "24.3.25"
     "renamer": "5.0.2"
-    "typescript-eslint": "8.12.2"
+    "typescript-eslint": "8.13.0"
     "execa": "9.5.1"
     "which": "5.0.0"
 packages:

@@ -6,28 +6,33 @@ const expectedFieldNames = Object.freeze([
   'username',
 ]);
 
-const field = (value = null) => {
-  return {
-    value,
-    writable: false,
-    enumerable: true,
-    configurable: false,
-  };
-};
-
-export const fieldsToAuthObject = (fields = null) => {
+export const fieldsToAuthObject = (objectType = null, operationType = null, fields = null) => {
+  if (objectType === null) {
+    throw new TypeError('objectType is undefined');
+  }
+  if (operationType === null) {
+    throw new TypeError('operationType is undefined');
+  }
   if (fields === null) {
-    throw new TypeError('fields undefined');
+    throw new TypeError('fields is undefined');
   }
 
-  const result = Object.create(null);
+  const message = Object.assign(Object.create(null), {
+    type: operationType,
+    meta: {
+      returnTo: null,
+    },
+    payload: Object.create(null),
+  });
+
+  message.payload.type = objectType;
 
   for(const expectedFieldName of expectedFieldNames) {
     if (Object.hasOwn(fields, expectedFieldName) === false) {
       throw new TypeError(`fields.${expectedFieldName} is undefined`);
     }
 
-    result[expectedFieldName] = field(fields[expectedFieldName]);
+    message.payload[expectedFieldName] = fields[expectedFieldName];
   }
 
   if (fields.mode === AuthZMode.register) {
@@ -35,8 +40,8 @@ export const fieldsToAuthObject = (fields = null) => {
       throw new TypeError('.pin is undefined');
     }
 
-    result.pin = field(fields.pin);
+    message.payload.pin = fields.pin;
   }
 
-  return Object.create(null, result);
+  return Object.freeze(message);
 };

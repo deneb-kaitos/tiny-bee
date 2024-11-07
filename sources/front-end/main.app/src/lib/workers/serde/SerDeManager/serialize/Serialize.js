@@ -10,13 +10,13 @@ import {
 export class Serialize {
   #builder = null;
   #handlers = Object.freeze({
-    [MessageType.AccountRegistrationRequest]: (payload) => createAccountRegistrationRequest(this.#builder, payload.login, payload.password, payload.pin),
+    [MessageType.AccountRegistrationRequest]: (payload) => createAccountRegistrationRequest(this.#builder, payload.username, payload.password, payload.pin),
   });
 
   constructor() {
     this.#builder = new Builder(0);
 
-    console.debug(`${this.constructor.name}.ctor`);
+    console.debug(`${this.constructor.name}.ctor::#builder`, this.#builder);
   }
 
   serialize(message = null) {

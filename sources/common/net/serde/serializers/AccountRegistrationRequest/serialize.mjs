@@ -29,7 +29,6 @@ export const serialize = (
   const loginOffset = builder.createString(login);
   const passwordOffset = builder.createString(password);
   const pinOffset = builder.createString(pin);
-
   const accountRegistrationRequestOffset = AccountRegistrationRequest.createAccountRegistrationRequest(builder, loginOffset, passwordOffset, pinOffset);
   const messageOffset = Message.createMessage(builder, MessagePayload.AccountRegistrationRequest, accountRegistrationRequestOffset);
 

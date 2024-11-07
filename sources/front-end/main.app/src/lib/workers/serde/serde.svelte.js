@@ -33,16 +33,11 @@ const handleBroadcastChannelMessage = (e) => {
     },
   } = e;
 
-  console.debug('handleBroadcastChannelMessage', type, meta, payload);
-
   switch(type) {
     case OperationType.serialize: {
       serdeManager.serialize(e.data);
 
       break;
-    }
-    case 'deserialize': {
-      throw new Error('not implemented yet');
     }
     default: {
       throw new TypeError(`unexpected type: ${type}`);

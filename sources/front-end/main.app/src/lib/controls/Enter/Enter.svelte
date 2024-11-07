@@ -2,10 +2,44 @@
   import AuthZForm from "$lib/controls/AuthZForm/AuthZForm.svelte";
   import { AuthZMode } from "$lib/controls/AuthZForm/AuthZMode.svelte.js";
   import { fieldsToAuthObject } from '$lib/messageObjects/fieldsToAuthObject.mjs';
+  import {
+    BroadcastChannelName,
+  } from '$lib/workers/BroadcastChannelName.js';
+  import {
+    OperationType,
+  } from '$lib/workers/serde/SerDeManager/OperationType.js';
+  import {
+    MessageType,
+  } from '$lib/workers/serde/SerDeManager/MessageType.js';
+
+  /**
+   * @type {BroadcastChannel | null}
+   */
+  let returnToBroadcastChannel = null;
+
+  /**
+   * @param {MessageEvent | null} e
+   */
+  const handleReturnToMessage = (e) => {
+    returnToBroadcastChannel?.removeEventListener('message', handleReturnToMessage);
+    returnToBroadcastChannel?.close();
+
+    if (e?.isTrusted === false) {
+      throw new TypeError('handleReturnToMessage(e): e.isTrusted === false');
+    }
+
+    const {
+      data: {
+        payload,
+      },
+    } = e;
+
+    console.debug('handleReturnToMessage', payload);
+  };
 
   /**
    * 
-   * @param {Object | null | undefined} fields
+   * @param { Object | null } fields
    */
   const handleOnValues = (fields = null) => {
     /**
@@ -15,11 +49,18 @@
      * 3. send SM to communicator
     */
 
-    const messageObject = fieldsToAuthObject(fields);
+    const messageObject = fieldsToAuthObject(MessageType.AccountRegistrationRequest, OperationType.serialize, fields);
+    messageObject.meta.returnTo = returnToBroadcastChannel?.name;
 
-
-    console.debug({ fields }, { messageObject });
+    const serde = new BroadcastChannel(BroadcastChannelName.SERDE);
+    serde.postMessage(messageObject);
+    serde.close();
   };
+
+  $effect(() => {
+    returnToBroadcastChannel = new BroadcastChannel(crypto.randomUUID());
+    returnToBroadcastChannel.addEventListener('message', handleReturnToMessage);
+  });
 </script>
 
 <style>
