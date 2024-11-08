@@ -8,9 +8,15 @@
   import {
     OperationType,
   } from '$lib/workers/serde/SerDeManager/OperationType.js';
+  // import {
+  //   MessageType,
+  // } from '$lib/workers/serde/SerDeManager/MessageType.js';
   import {
-    MessageType,
-  } from '$lib/workers/serde/SerDeManager/MessageType.js';
+    AccountRegistrationRequest,
+  } from '$lib/workers/serde/SerDeManager/classes/AccountRegistrationRequest.js';
+  import {
+    AccountAuthenticationRequest,
+  } from '$lib/workers/serde/SerDeManager/classes/AccountAuthenticationRequest.js';
 
   /**
    * @type {BroadcastChannel | null}
@@ -21,13 +27,6 @@
    * @param {MessageEvent | null} e
    */
   const handleReturnToMessage = (e) => {
-    returnToBroadcastChannel?.removeEventListener('message', handleReturnToMessage);
-    returnToBroadcastChannel?.close();
-
-    if (e?.isTrusted === false) {
-      throw new TypeError('handleReturnToMessage(e): e.isTrusted === false');
-    }
-
     const {
       data: {
         payload,
@@ -41,7 +40,7 @@
    * 
    * @param { Object | null } fields
    */
-  const handleOnValues = (fields = null) => {
+  const handleAuthZValues = (fields = null) => {
     /**
      * TODO:
      * 1. send fields for serialization
@@ -49,17 +48,35 @@
      * 3. send SM to communicator
     */
 
-    const messageObject = fieldsToAuthObject(MessageType.AccountRegistrationRequest, OperationType.serialize, fields);
-    messageObject.meta.returnTo = returnToBroadcastChannel?.name;
+    if ( fields === null ) {
+      throw ReferenceError('fields is undefined');
+    }
 
+    const message = {
+      type: OperationType.serialize,
+      meta: {
+        returnTo: returnToBroadcastChannel?.name,
+      },
+      payload: null,
+    };
+
+    message.payload = Object.hasOwn(fields, 'pin') === true ? 
+      new AccountRegistrationRequest(fields.username, fields.password, fields.pin) : 
+      new AccountAuthenticationRequest(fields.username, fields.password);
+    
     const serde = new BroadcastChannel(BroadcastChannelName.SERDE);
-    serde.postMessage(messageObject);
+    serde.postMessage(message);
     serde.close();
   };
 
   $effect(() => {
     returnToBroadcastChannel = new BroadcastChannel(crypto.randomUUID());
     returnToBroadcastChannel.addEventListener('message', handleReturnToMessage);
+
+    return () => {
+      returnToBroadcastChannel?.removeEventListener('message', handleReturnToMessage);
+      returnToBroadcastChannel?.close();
+    };
   });
 </script>
 
@@ -101,14 +118,14 @@
     <AuthZForm
       mode={AuthZMode.register}
       formLegend="register account"
-      onValues={handleOnValues}
+      onValues={handleAuthZValues}
     />
   </section>
   <section class='login'>
     <AuthZForm
       mode={AuthZMode.login}
       formLegend="login"
-      onValues={handleOnValues}
+      onValues={handleAuthZValues}
     />
   </section>
 </article>
