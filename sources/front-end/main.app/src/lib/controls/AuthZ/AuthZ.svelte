@@ -6,9 +6,9 @@
   import {
     BroadcastChannelName,
   } from '../../workers/BroadcastChannelName.js';
-  import {
-    MessageType,
-  } from '$lib/workers/serde/SerDeManager/MessageType.js';
+  // import {
+  //   MessageType,
+  // } from '$lib/workers/serde/SerDeManager/MessageType.js';
   import {
     OperationType,
   } from '$lib/workers/serde/SerDeManager/OperationType.js';
@@ -68,7 +68,7 @@
         returnTo: ownBroadcastChannel?.name,
       },
       payload: {
-        type: MessageType.AccountRegistrationRequest,
+        // type: MessageType.AccountRegistrationRequest,
         value: credentials,
       }
     });
@@ -99,17 +99,17 @@
     console.debug('handleOwnBroadcastChannelMessage', type, payload);
 
     switch(type) {
-      case MessageType.AccountRegistrationRequest: {
-        console.debug(`now send the ${type} bytes to the COMM worker`);
-        const message = createBroadcastMessage({
-          type,
-          meta: null,
-          payload,
-        });
-        commBroadcastChannel?.postMessage(message);
+      // case MessageType.AccountRegistrationRequest: {
+      //   console.debug(`now send the ${type} bytes to the COMM worker`);
+      //   const message = createBroadcastMessage({
+      //     type,
+      //     meta: null,
+      //     payload,
+      //   });
+      //   commBroadcastChannel?.postMessage(message);
 
-        break;
-      }
+      //   break;
+      // }
       default: {
         throw new TypeError(`message type (${type}) is unexpected`);
       }
