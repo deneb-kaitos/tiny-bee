@@ -1,19 +1,15 @@
-export const createBroadcastMessage = ({ type = null, meta, payload }) => {
+export const createBroadcastMessage = ({ type = null, meta = null, payload = null }) => {
   if (type === null) {
     throw new ReferenceError('type is undefined');
   }
-  
-  if (typeof meta === typeof undefined) {
-    throw new ReferenceError('meta is undefined');
-  }
 
-  if (typeof payload === typeof undefined) {
-    throw new ReferenceError('payload is undefined');
-  }
+  const p = (payload instanceof Uint8Array) ? structuredClone(payload, { transfer: [payload.buffer] }) : null;
 
-  return Object.freeze({
-    type,
-    meta,
-    payload,
-  });
+  const result = {
+    type: Object.freeze(type),
+    meta: meta === null ? {} : Object.freeze(meta),
+    payload: p === null ? payload ?? {} : p,
+  };
+
+  return result;
 };
