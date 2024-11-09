@@ -3,7 +3,8 @@ export const createBroadcastMessage = ({ type = null, meta = null, payload = nul
     throw new ReferenceError('type is undefined');
   }
 
-  const p = (payload instanceof Uint8Array) ? structuredClone(payload, { transfer: [payload.buffer] }) : null;
+  // const p = (payload instanceof Uint8Array) ? structuredClone(payload, { transfer: [payload.buffer] }) : null;
+  const p = (payload instanceof Uint8Array) ? structuredClone(payload, { }) : null;
 
   const result = {
     type: Object.freeze(type),

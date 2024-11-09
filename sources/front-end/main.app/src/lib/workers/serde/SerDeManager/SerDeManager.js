@@ -63,6 +63,8 @@ export class SerDeManager {
       case AccountRegistrationRequest.name: {
         bytes = createAccountRegistrationRequest(this.#builder, username, password, pin);
 
+        this.#builder.clear();
+
         break;
       }
       default: {
