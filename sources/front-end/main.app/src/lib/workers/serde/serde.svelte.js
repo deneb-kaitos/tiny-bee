@@ -28,8 +28,6 @@ const handleBroadcastChannelMessage = (e) => {
   const {
     data: {
       type,
-      meta,
-      payload,
     },
   } = e;
 
