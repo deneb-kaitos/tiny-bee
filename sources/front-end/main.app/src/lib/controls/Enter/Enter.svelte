@@ -1,16 +1,12 @@
 <script>
   import AuthZForm from "$lib/controls/AuthZForm/AuthZForm.svelte";
   import { AuthZMode } from "$lib/controls/AuthZForm/AuthZMode.svelte.js";
-  import { fieldsToAuthObject } from '$lib/messageObjects/fieldsToAuthObject.mjs';
   import {
     BroadcastChannelName,
   } from '$lib/workers/BroadcastChannelName.js';
   import {
     OperationType,
   } from '$lib/workers/serde/SerDeManager/OperationType.js';
-  // import {
-  //   MessageType,
-  // } from '$lib/workers/serde/SerDeManager/MessageType.js';
   import {
     AccountRegistrationRequest,
   } from '$lib/workers/serde/SerDeManager/classes/AccountRegistrationRequest.js';
@@ -24,7 +20,7 @@
   let returnToBroadcastChannel = null;
 
   /**
-   * @param {MessageEvent | null} e
+   * @param {MessageEvent} e
    */
   const handleReturnToMessage = (e) => {
     const {
@@ -38,8 +34,12 @@
 
   /**
    * 
-   * @param { Object | null } fields
+   * @param {object} fields
+   * @param {string} fields.username - a user name
+   * @param {string} fields.password- a user password
+   * @param {string=} fields.pin - an invitation pin
    */
+  // @ts-ignore
   const handleAuthZValues = (fields = null) => {
     /**
      * TODO:
@@ -57,6 +57,9 @@
       meta: {
         returnTo: returnToBroadcastChannel?.name,
       },
+      /**
+       * @type {null | object}
+      */
       payload: null,
     };
 

@@ -16,7 +16,7 @@ import {
 const serdeMap = {
   [OperationType.serialize]: {
     [AccountRegistrationRequest.name]: (builder, username, password, pin) => createAccountRegistrationRequest(builder, username, password, pin),
-    [AccountAuthenticationRequest.name]: (builder, username, password) => { throw new ReferenceError(`serialization of ${AccountAuthenticationRequest.name} has not been implemented yet`) },
+    [AccountAuthenticationRequest.name]: () => { throw new ReferenceError(`serialization of ${AccountAuthenticationRequest.name} has not been implemented yet`) },
   },
 };
 
