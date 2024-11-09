@@ -1,7 +1,7 @@
 export class AccountAuthenticationRequest {
   username = null;
   password = null;
-  type = Object.freeze(this.constructor.name);
+  type = AccountAuthenticationRequest.name;
 
   /**
    * 

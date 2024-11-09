@@ -3,22 +3,15 @@ import {
   serialize as createAccountRegistrationRequest,
 } from "@deneb-kaitos/serialize_account_registration_request";
 import { createBroadcastMessage } from '$lib/workers/helpers/createBroadcastMessage.js';
-import {
-  OperationType,
-} from '$lib/workers/serde/SerDeManager/OperationType.js';
+// import {
+//   OperationType,
+// } from '$lib/workers/serde/SerDeManager/OperationType.js';
 import {
   AccountRegistrationRequest,
 } from '$lib/workers/serde/SerDeManager/classes/AccountRegistrationRequest.js';
 import {
   AccountAuthenticationRequest,
 } from '$lib/workers/serde/SerDeManager/classes/AccountAuthenticationRequest.js';
-
-const serdeMap = {
-  [OperationType.serialize]: {
-    [AccountRegistrationRequest.name]: (builder, username, password, pin) => createAccountRegistrationRequest(builder, username, password, pin),
-    [AccountAuthenticationRequest.name]: () => { throw new ReferenceError(`serialization of ${AccountAuthenticationRequest.name} has not been implemented yet`) },
-  },
-};
 
 export class SerDeManager {
   #builder = null;
@@ -64,20 +57,27 @@ export class SerDeManager {
       },
     } = message;
 
-    try {
-      const bytes = ((serdeMap[OperationType.serialize])[message.payload.type])(this.#builder, username, password, pin);
+    let bytes = null;
 
-      if (returnTo) {
-        const m = createBroadcastMessage({
-          type: message.payload.type,
-          meta: Object.create(null),
-          payload: bytes,
-        });
+    switch(message.payload.type) {
+      case AccountRegistrationRequest.name: {
+        bytes = createAccountRegistrationRequest(this.#builder, username, password, pin);
 
-        this.#resolveChannel(message.meta.returnTo).postMessage(m);
+        break;
       }
-    } catch(notImplementedError) {
-      console.error(notImplementedError);
+      default: {
+        throw new TypeError(`serialization for ${message.payload.type} has not been implemented yet`);
+      }
+    }
+
+    if (returnTo) {
+      const m = createBroadcastMessage({
+        type: message.payload.type,
+        meta: Object.create(null),
+        payload: bytes,
+      });
+
+      this.#resolveChannel(message.meta.returnTo).postMessage(m);
     }
   }
 
