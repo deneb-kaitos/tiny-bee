@@ -66,7 +66,7 @@
     message.payload = Object.hasOwn(fields, 'pin') === true ? 
       new AccountRegistrationRequest(fields.username, fields.password, fields.pin) : 
       new AccountAuthenticationRequest(fields.username, fields.password);
-    
+   
     const serde = new BroadcastChannel(BroadcastChannelName.SERDE);
     serde.postMessage(message);
     serde.close();

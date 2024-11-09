@@ -2,7 +2,7 @@ export class AccountRegistrationRequest {
   username = null;
   password = null;
   pin = null;
-  type = Object.freeze(this.constructor.name);
+  type = AccountRegistrationRequest.name;
 
   /**
    * 
