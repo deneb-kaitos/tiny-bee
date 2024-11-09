@@ -81,6 +81,7 @@ const handle_DISPOSE = (payload = null) => {
   self.removeEventListener('message', handleMessage);
   self.removeEventListener('messageerror', handleMessageError);
 
+  serdeManager.destructor();
   serdeManager = null;
 
   const message = createBroadcastMessage({

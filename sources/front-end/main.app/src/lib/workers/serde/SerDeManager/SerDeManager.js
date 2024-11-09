@@ -23,12 +23,33 @@ const serdeMap = {
 export class SerDeManager {
   #builder = null;
   #name = null;
+  #channels = null;
 
   constructor(name = null) {
     this.#name = `${name}::SerDeManager`
     this.#builder = new Builder(0);
+    this.#channels = new Map();
 
     console.debug(`${this.#name}.ctor`);
+  }
+
+  /**
+   * 
+   * @param {string} channelName 
+   * @returns {BroadcastChannel}
+   */
+  #resolveChannel(channelName = null) {
+    if (channelName === null || channelName.length === 0) {
+      throw new ReferenceError(`${this.constructor.name}.#resolveChannel(channelName === null)`);
+    }
+
+    if (this.#channels.has(channelName) === true) {
+      return this.#channels.get(channelName);
+    }
+
+    this.#channels.set(channelName, new BroadcastChannel(channelName));
+
+    return this.#channels.get(channelName);
   }
 
   serialize(message = null) {
@@ -43,24 +64,34 @@ export class SerDeManager {
       },
     } = message;
 
-    let bytes = null;
-
     try {
-      bytes = ((serdeMap[OperationType.serialize])[message.payload.type])(this.#builder, username, password, pin);
+      const bytes = ((serdeMap[OperationType.serialize])[message.payload.type])(this.#builder, username, password, pin);
 
       if (returnTo) {
         const m = createBroadcastMessage({
           type: message.payload.type,
-          meta: null,
+          meta: Object.create(null),
           payload: bytes,
         });
 
-        (new BroadcastChannel(message.meta.returnTo)).postMessage(m);
+        this.#resolveChannel(message.meta.returnTo).postMessage(m);
       }
-
-      bytes = undefined;
     } catch(notImplementedError) {
       console.error(notImplementedError);
     }
+  }
+
+  destructor() {
+    for (const channel of this.#channels.values()) {
+      console.debug(`closing ${channel.name}`);
+
+      channel?.close();
+    }
+
+    this.#channels.clear();
+    this.#channels = undefined;
+
+    this.#builder = undefined;
+    this.#name = undefined;
   }
 }
