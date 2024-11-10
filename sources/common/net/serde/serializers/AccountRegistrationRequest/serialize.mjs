@@ -34,5 +34,9 @@ export const serialize = (
 
   Message.finishMessageBuffer(builder, messageOffset);
 
-  return builder.asUint8Array();
+  const result = structuredClone(builder.asUint8Array());
+
+  builder.clear();
+  
+  return result;
 };

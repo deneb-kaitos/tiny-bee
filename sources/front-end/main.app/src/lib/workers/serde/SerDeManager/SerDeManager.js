@@ -63,14 +63,14 @@ export class SerDeManager {
       case AccountRegistrationRequest.name: {
         bytes = createAccountRegistrationRequest(this.#builder, username, password, pin);
 
-        this.#builder.clear();
-
         break;
       }
       default: {
         throw new TypeError(`serialization for ${message.payload.type} has not been implemented yet`);
       }
     }
+
+    this.#builder.clear();
 
     if (returnTo) {
       const m = createBroadcastMessage({
