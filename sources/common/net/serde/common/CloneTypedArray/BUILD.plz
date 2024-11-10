@@ -1,0 +1,28 @@
+package(
+  default_visibility = ["PUBLIC"],
+)
+
+filegroup(
+  name = "fg_clone_type_array",
+  srcs = [
+    "generate.js",
+    "package.json",
+    "specs/.env.specs",
+    "specs/CloneTypedArray.specs.mjs",
+  ],
+)
+
+gentest(
+  name = "test",
+  data = [
+    ":fg_clone_type_array",
+    "//:pnpm_common_files",
+  ],
+  test_cmd = [
+    "cd sources/common/net/serde/common/CloneTypedArray",
+    "pnpm --recursive install",
+    "node --env-file=specs/.env.specs --test specs/*.specs.mjs",
+  ],
+  no_test_output = True,
+  exit_on_error = True,
+)
