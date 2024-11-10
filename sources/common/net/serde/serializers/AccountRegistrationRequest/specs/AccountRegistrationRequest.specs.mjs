@@ -41,7 +41,6 @@ describe('serializers', () => {
       pin: randomUUID(),
     };
     const serializedBytes = createAccountRegistrationRequest(builder, expectedMessage.login, expectedMessage.password, expectedMessage.pin);
-
     const deserializedMessage = deserializeAccountRegistrationRequest(serializedBytes);
 
     assert.deepEqual(deserializedMessage, expectedMessage, 'not equal');
