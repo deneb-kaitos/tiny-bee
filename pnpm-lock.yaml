@@ -214,6 +214,27 @@ importers:
         specifier: catalog:utils
         version: 24.3.25
 
+  sources/common/net/serde/common/CloneTypedArray:
+    devDependencies:
+      c8:
+        specifier: catalog:specs
+        version: 10.1.2(monocart-coverage-reports@2.11.2)
+      eslint:
+        specifier: catalog:utils
+        version: 9.14.0
+      eslint-config-airbnb-base:
+        specifier: catalog:utils
+        version: 15.0.0(eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.13.0(eslint@9.14.0)(typescript@5.6.3))(eslint@9.14.0))(eslint@9.14.0)
+      eslint-plugin-import:
+        specifier: catalog:utils
+        version: 2.31.0(@typescript-eslint/parser@8.13.0(eslint@9.14.0)(typescript@5.6.3))(eslint@9.14.0)
+      eslint-plugin-node:
+        specifier: catalog:utils
+        version: 11.1.0(eslint@9.14.0)
+      monocart-coverage-reports:
+        specifier: catalog:specs
+        version: 2.11.2
+
   sources/common/net/serde/deserializers/AccountRegistrationRequest:
     dependencies:
       '@deneb-kaitos/tiny-bee-fbs-js':
