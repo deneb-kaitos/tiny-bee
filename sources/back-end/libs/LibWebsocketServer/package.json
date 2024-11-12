@@ -12,15 +12,14 @@
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "lint": "ESLINT_USE_FLAT_CONFIG=true ./node_modules/.bin/eslint '**/*.mjs'",
-    "specs": "pnpm run lint && ./node_modules/@deneb-kaitos/tiny-bee-specs/bin/run-specs.mjs",
-    "cover": "pnpm run lint && ./node_modules/@deneb-kaitos/tiny-bee-specs/bin/run-cover.mjs"
+    "test": "node --env-file=specs/.env.specs --test specs/*.specs.mjs"
   },
   "keywords": [],
   "author": "Dmitry N. Medvedev <dmitry.medvedev@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "nanoid": "catalog:web",
-    "uWebSockets.js": "catalog:server"
+    "uWebSockets.js": "workspace:20.49.0"
   },
   "devDependencies": {
     "@deneb-kaitos/tiny-bee-specs": "workspace:^",

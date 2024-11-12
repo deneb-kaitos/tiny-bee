@@ -5,10 +5,6 @@ settings:
   excludeLinksFromLockfile: false
 
 catalogs:
-  server:
-    uWebSockets.js:
-      specifier: github:uNetworking/uWebSockets.js#v20.47.0
-      version: 20.47.0
   specs:
     c8:
       specifier: 10.1.2
@@ -135,14 +131,16 @@ importers:
         specifier: catalog:web
         version: 15.12.0
 
+  libs/uWebSockets.js/files: {}
+
   sources/back-end/libs/LibWebsocketServer:
     dependencies:
       nanoid:
         specifier: catalog:web
         version: 5.0.8
       uWebSockets.js:
-        specifier: catalog:server
-        version: https://codeload.github.com/uNetworking/uWebSockets.js/tar.gz/6f4b450fc642abba540535f0755c990b42a16026
+        specifier: workspace:^
+        version: link:../../../../libs/uWebSockets.js/files
     devDependencies:
       '@deneb-kaitos/tiny-bee-specs':
         specifier: workspace:^
@@ -3098,10 +3096,6 @@ packages:
   typical@7.1.1:
     resolution: {integrity: sha512-T+tKVNs6Wu7IWiAce5BgMd7OZfNYUndHwc5MknN+UHOudi7sGZzuHdCadllRuqJ3fPtgFtIH9+lt9qRv6lmpfA==}
     engines: {node: '>=12.17'}
-
-  uWebSockets.js@https://codeload.github.com/uNetworking/uWebSockets.js/tar.gz/6f4b450fc642abba540535f0755c990b42a16026:
-    resolution: {tarball: https://codeload.github.com/uNetworking/uWebSockets.js/tar.gz/6f4b450fc642abba540535f0755c990b42a16026}
-    version: 20.47.0
 
   unbox-primitive@1.0.2:
     resolution: {integrity: sha512-61pPlCD9h51VoreyJ0BReideM3MDKMKnh6+V9L08331ipq6Q8OFXZYiqP6n/tbHx4s5I9uRhcye6BrbkizkBDw==}
@@ -6170,8 +6164,6 @@ snapshots:
   typescript@5.6.3: {}
 
   typical@7.1.1: {}
-
-  uWebSockets.js@https://codeload.github.com/uNetworking/uWebSockets.js/tar.gz/6f4b450fc642abba540535f0755c990b42a16026: {}
 
   unbox-primitive@1.0.2:
     dependencies:
