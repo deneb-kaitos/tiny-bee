@@ -37,7 +37,7 @@ struct node_version {
     char *name;
     char *abi;
 } versions[] = {
-    {"v23.1.0", "131"}
+    {"vNODE_VERSION", "NODE_ABI_VERSION"}
 };
 
 /* Downloads headers, creates folders */

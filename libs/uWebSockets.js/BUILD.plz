@@ -26,6 +26,8 @@ genrule(
   cmd = [
     "git clone --recurse-submodules --depth 1 https://github.com/uNetworking/uWebSockets.js.git",
     "cp libs/uWebSockets.js/files/build.c uWebSockets.js/",
+    f"sed -i 's/NODE_VERSION/{CONFIG.NODE_VERSION}/g' uWebSockets.js/build.c",
+    f"sed -i 's/NODE_ABI_VERSION/{CONFIG.NODE_ABI_VERSION}/g' uWebSockets.js/build.c",
     "make -C uWebSockets.js",
     "mkdir $OUT",
     "cp -r uWebSockets.js/dist/* $OUT",
