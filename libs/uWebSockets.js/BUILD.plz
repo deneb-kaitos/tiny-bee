@@ -1,0 +1,38 @@
+package(
+  default_visibility = ["PUBLIC"],
+)
+
+filegroup(
+  name = "fg_uws_custom_files",
+  srcs = {
+    "build_c": "files/build.c",
+    "esm_wrapper": "files/ESM_wrapper.mjs",
+    "package.json": "files/package_json",
+  },
+)
+
+
+genrule(
+  name = "build",
+  labels = ["codegen"],
+  exit_on_error = True,
+  binary = True,
+  outs = [
+    "dist",
+  ],
+  deps = [
+    ":fg_uws_custom_files",
+  ],
+  cmd = [
+    "git clone --recurse-submodules --depth 1 https://github.com/uNetworking/uWebSockets.js.git",
+    "cp libs/uWebSockets.js/files/build.c uWebSockets.js/",
+    "make -C uWebSockets.js",
+    "mkdir $OUT",
+    "cp -r uWebSockets.js/dist/* $OUT",
+    "cp uWebSockets.js/docs/index.d.ts $OUT",
+    "cp uWebSockets.js/docs/tsconfig.json $OUT",
+    "cp libs/uWebSockets.js/files/ESM_wrapper.mjs $OUT", 
+    "cp libs/uWebSockets.js/files/package_json $OUT/package.json",
+    "ls -lar $OUT",
+  ],
+)
