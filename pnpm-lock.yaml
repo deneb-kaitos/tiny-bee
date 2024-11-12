@@ -131,7 +131,7 @@ importers:
         specifier: catalog:web
         version: 15.12.0
 
-  libs/uWebSockets.js/files: {}
+  libs/uWebSockets.js/dist: {}
 
   sources/back-end/libs/LibWebsocketServer:
     dependencies:
@@ -139,8 +139,8 @@ importers:
         specifier: catalog:web
         version: 5.0.8
       uWebSockets.js:
-        specifier: workspace:^
-        version: link:../../../../libs/uWebSockets.js/files
+        specifier: workspace:20.49.0
+        version: link:../../../../libs/uWebSockets.js/dist
     devDependencies:
       '@deneb-kaitos/tiny-bee-specs':
         specifier: workspace:^
