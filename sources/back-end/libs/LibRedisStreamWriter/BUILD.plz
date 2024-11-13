@@ -3,10 +3,10 @@ package(
 )
 
 filegroup(
-  name = "fg_librediswriter",
+  name = "fg_libredistreamswriter",
   srcs = [
     "specs/",
-    "LibRedisWriter.mjs",
+    "LibRedisStreamWriter.mjs",
     "package.json",
   ],
 )
@@ -14,12 +14,12 @@ filegroup(
 gentest(
   name = "test",
   data = [
-    ":fg_librediswriter",
+    ":fg_libredistreamswriter",
     "//:pnpm_common_files",
   ],
   test_cmd = [
     "pnpm --recursive install",
-    "cd sources/back-end/libs/LibRedisWriter",
+    "cd sources/back-end/libs/LibRedisStreamWriter",
     "node --env-file=specs/.env.specs --test specs/*.specs.mjs",
   ],
   no_test_output = True,

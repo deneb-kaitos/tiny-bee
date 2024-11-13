@@ -2,7 +2,7 @@ import {
   createClient,
 } from '@redis/client';
 
-export class LibRedisWriter {
+export class LibRedisStreamWriter {
   #redisConfig = null;
   /**
    * @type {RedisClient}
@@ -31,7 +31,7 @@ export class LibRedisWriter {
     return this.#redisClient.destroy();
   }
 
-  async write(streamName = null, streamId = '*', message = null) {
+  async write(streamName = null, message = null) {
     if (streamName === null) {
       throw new ReferenceError(`${this.constructor.name}.write: streamName is undefined`);
     }
@@ -42,7 +42,7 @@ export class LibRedisWriter {
 
     return this.#redisClient.xAdd(
       streamName,
-      streamId,
+      '*',
       message,
       {},
     );
