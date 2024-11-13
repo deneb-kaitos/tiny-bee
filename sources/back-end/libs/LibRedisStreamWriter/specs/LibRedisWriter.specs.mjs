@@ -12,8 +12,8 @@ import {
   createClient,
 } from '@redis/client';
 import {
-  LibRedisWriter,
-} from '../LibRedisWriter.mjs';
+  LibRedisStreamWriter,
+} from '../LibRedisStreamWriter.mjs';
 
 describe('LibRedisWriter', function describeLibRedisWriter() {
   /**
@@ -42,7 +42,7 @@ describe('LibRedisWriter', function describeLibRedisWriter() {
     name: env.REDIS_CLIENT_NAME,
     database: parseInt(env.REDIS_DB),
   });
-  let libRedisWriter = null;
+  let libRedisStreamWriter = null;
   let specsRedisClient = null; 
   const redisKeys = [];
   const clearRedis = (keys = []) => {
@@ -50,13 +50,13 @@ describe('LibRedisWriter', function describeLibRedisWriter() {
   }; 
 
   before(async () => {
-    libRedisWriter = new LibRedisWriter(redisConfig);
-    await libRedisWriter.start();
+    libRedisStreamWriter = new LibRedisStreamWriter(redisConfig);
+    await libRedisStreamWriter.start();
   });
 
   after(async () => {
-    await libRedisWriter.stop();
-    libRedisWriter = null;
+    await libRedisStreamWriter.stop();
+    libRedisStreamWriter = null;
 
     specsRedisClient = createClient(redisConfig);
     await specsRedisClient.connect();
@@ -75,6 +75,6 @@ describe('LibRedisWriter', function describeLibRedisWriter() {
     };
     redisKeys.push(streamName);
 
-    await libRedisWriter.write(streamName, record);
+    await libRedisStreamWriter.write(streamName, record);
   });
 });

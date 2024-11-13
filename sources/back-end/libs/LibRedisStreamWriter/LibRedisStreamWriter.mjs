@@ -2,7 +2,7 @@ import {
   createClient,
 } from '@redis/client';
 
-export class LibRedisWriter {
+export class LibRedisStreamWriter {
   #redisConfig = null;
   /**
    * @type {RedisClient}
