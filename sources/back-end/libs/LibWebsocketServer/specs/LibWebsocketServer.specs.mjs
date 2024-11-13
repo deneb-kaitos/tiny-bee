@@ -68,4 +68,11 @@ describe('LibWebsocketServer', function describeLibWebsocketServer() {
     assert(globalThis.wss.IS_RUNNING === false);
     assert(globalThis.wss.Clients === null);
   });
+
+  it('should start/stop LibWebsocketServer', { skip: false}, async() => {
+    await globalThis.wss.start();
+    assert(globalThis.wss.IS_RUNNING === true);
+    await globalThis.wss.stop();
+    assert(globalThis.wss.IS_RUNNING === false);
+  });
 });
