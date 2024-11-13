@@ -1,0 +1,31 @@
+package(
+  default_visibility = ["PUBLIC"],
+)
+
+filegroup(
+  name = "fg_libwebsocketserver",
+  srcs = [
+    "specs/",
+    "LibWebsocketServer.mjs",
+    "LibWebsocketServerEvents.mjs",
+    "package.json",
+    "Proto.mjs",
+    "readJson.js",
+  ],
+)
+
+gentest(
+  name = "test",
+  data = [
+    ":fg_libwebsocketserver",
+    "//:pnpm_common_files",
+    "//libs/uWebSockets.js:build",
+  ],
+  test_cmd = [
+    "pnpm --recursive install",
+    "cd sources/back-end/libs/LibWebsocketServer",
+    "node --env-file=specs/.env.specs --test specs/*.specs.mjs",
+  ],
+  no_test_output = True,
+  exit_on_error = True,
+)

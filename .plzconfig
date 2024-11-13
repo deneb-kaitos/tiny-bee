@@ -23,7 +23,7 @@ Path = /usr/sbin
 ; [BuildEnv]
 
 [Buildconfig]
-NODE-VERSION = 23.1.0
+NODE-VERSION = 23.2.0
 NODE-ABI-VERSION = 131
 PNPM-VERSION = 9.12.3
 FLATBUFFERS-VERSION = 24.3.25
