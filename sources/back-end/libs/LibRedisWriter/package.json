@@ -1,0 +1,38 @@
+{
+  "name": "@deneb-kaitos/tiny-bee-librediswriter",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@9.12.3",
+  "engines": {
+    "node": "23.2.0",
+    "pnpm": "9.12.3"
+  },
+  "version": "0.0.0",
+  "description": "[lib] libRedisWriter",
+  "scripts": {
+    "preinstall": "npx only-allow pnpm",
+    "lint": "ESLINT_USE_FLAT_CONFIG=true ./node_modules/.bin/eslint '**/*.mjs'",
+    "test": "node --env-file=specs/.env.specs --test specs/*.specs.mjs"
+  },
+  "keywords": [],
+  "author": "Dmitry N. Medvedev <dmitry.medvedev@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "nanoid": "catalog:web",
+    "@redis/client": "5.0.0-next.5"
+  },
+  "devDependencies": {
+    "c8": "catalog:specs",
+    "eslint": "catalog:utils",
+    "eslint-config-airbnb-base": "catalog:utils",
+    "eslint-plugin-import": "catalog:utils",
+    "eslint-plugin-node": "catalog:utils",
+    "monocart-coverage-reports": "catalog:specs"
+  },
+  "c8": {
+    "check-coverage": true,
+    "lines": 95,
+    "functions": 95,
+    "branches": 95
+  }
+}

@@ -1,0 +1,27 @@
+package(
+  default_visibility = ["PUBLIC"],
+)
+
+filegroup(
+  name = "fg_librediswriter",
+  srcs = [
+    "specs/",
+    "LibRedisWriter.mjs",
+    "package.json",
+  ],
+)
+
+gentest(
+  name = "test",
+  data = [
+    ":fg_librediswriter",
+    "//:pnpm_common_files",
+  ],
+  test_cmd = [
+    "pnpm --recursive install",
+    "cd sources/back-end/libs/LibRedisWriter",
+    "node --env-file=specs/.env.specs --test specs/*.specs.mjs",
+  ],
+  no_test_output = True,
+  exit_on_error = True,
+)
