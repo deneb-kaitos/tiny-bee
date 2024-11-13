@@ -55,13 +55,13 @@ describe('LibRedisWriter', function describeLibRedisWriter() {
   });
 
   after(async () => {
-    await libRedisStreamWriter.stop();
+    libRedisStreamWriter.stop();
     libRedisStreamWriter = null;
 
     specsRedisClient = createClient(redisConfig);
     await specsRedisClient.connect();
     await specsRedisClient.unlink(redisKeys.join(' '));
-    await specsRedisClient.destroy();
+    specsRedisClient.destroy();
 
     specsRedisClient = undefined;
   });

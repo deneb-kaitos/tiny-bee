@@ -3,6 +3,9 @@ import {
 } from '@redis/client';
 
 export class LibRedisStreamWriter {
+  /**
+   * @type {import('@redis/client').RedisClientOptions}
+   */
   #redisConfig = null;
   /**
    * @type {import('@redis/client').RedisClientType}
@@ -11,7 +14,7 @@ export class LibRedisStreamWriter {
 
   /**
    * 
-   * @param {import('@redis/client').RedisClientOptions} config 
+   * @param {import('@redis/client').RedisClientOptions} redisConfig
    */
   constructor(redisConfig = null) {
     if (redisConfig === null) {
@@ -27,8 +30,8 @@ export class LibRedisStreamWriter {
     return this.#redisClient.connect();
   }
 
-  async stop() {
-    return this.#redisClient.destroy();
+  stop() {
+    this.#redisClient.destroy();
   }
 
   async write(streamName = null, message = null) {
