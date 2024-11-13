@@ -139,12 +139,9 @@ importers:
         specifier: catalog:web
         version: 5.0.8
       uWebSockets.js:
-        specifier: workspace:20.49.0
+        specifier: workspace:^
         version: link:../../../../libs/uWebSockets.js/dist
     devDependencies:
-      '@deneb-kaitos/tiny-bee-specs':
-        specifier: workspace:^
-        version: link:../../../specs
       c8:
         specifier: catalog:specs
         version: 10.1.2(monocart-coverage-reports@2.11.2)

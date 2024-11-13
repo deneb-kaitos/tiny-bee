@@ -4,7 +4,7 @@
   "type": "module",
   "packageManager": "pnpm@9.12.3",
   "engines": {
-    "node": "23.1.0",
+    "node": "23.2.0",
     "pnpm": "9.12.3"
   },
   "version": "0.0.0",
@@ -19,10 +19,9 @@
   "license": "MIT",
   "dependencies": {
     "nanoid": "catalog:web",
-    "uWebSockets.js": "workspace:20.49.0"
+    "uWebSockets.js": "workspace:^"
   },
   "devDependencies": {
-    "@deneb-kaitos/tiny-bee-specs": "workspace:^",
     "c8": "catalog:specs",
     "eslint": "catalog:utils",
     "eslint-config-airbnb-base": "catalog:utils",
