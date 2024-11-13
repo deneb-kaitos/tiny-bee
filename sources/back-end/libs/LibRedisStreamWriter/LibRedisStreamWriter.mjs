@@ -5,7 +5,7 @@ import {
 export class LibRedisStreamWriter {
   #redisConfig = null;
   /**
-   * @type {RedisClient}
+   * @type {import('@redis/client').RedisClientType}
    */
   #redisClient = null;
 
@@ -40,11 +40,11 @@ export class LibRedisStreamWriter {
       throw new ReferenceError(`${this.constructor.name}.write: message is undefined`);
     }
 
-    return this.#redisClient.xAdd(
+    return this.#redisClient.sendCommand([
+      'XADD',
       streamName,
       '*',
-      message,
-      {},
-    );
+      ...Object.entries(message).flat(),
+    ]);
   }
 }
