@@ -30,6 +30,11 @@ jobs:
         with:
           node-version: 23.2.0
       
+      - name: start Redis
+        uses: supercharge/redis-github-action@1.7.0
+        with:
+          redis-version: 7.2.6 
+      
       - name: restore all caches
         id: restore-all-caches
         uses: actions/cache/restore@v4
