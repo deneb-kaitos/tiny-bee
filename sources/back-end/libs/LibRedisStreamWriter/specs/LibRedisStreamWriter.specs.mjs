@@ -68,10 +68,16 @@ describe('LibRedisWriter', function describeLibRedisWriter() {
 
   it('should write client message to the Incoming Stream', async() => {
     const streamName = `stream:${crypto.randomUUID()}`
+    const payload = Buffer.alloc(150);
+
+    crypto.getRandomValues(payload);
+
+    console.debug(payload);
+
     const record = {
       sid: `sid:${crypto.randomUUID()}`,
       cid: `cid:${crypto.randomUUID()}`,
-      payload: Buffer.from(`payload:${crypto.randomUUID()}`),
+      payload,
     };
     redisKeys.push(streamName);
 
