@@ -133,7 +133,7 @@ importers:
 
   libs/uWebSockets.js/dist: {}
 
-  sources/back-end/libs/LibRedisWriter:
+  sources/back-end/libs/LibRedisStreamWriter:
     dependencies:
       '@redis/client':
         specifier: 5.0.0-next.5
