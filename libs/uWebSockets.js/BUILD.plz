@@ -8,7 +8,7 @@ filegroup(
     "build_c": "files/build.c",
     "esm_wrapper": "files/ESM_wrapper.mjs",
     "package.json": "files/package_json",
-    ".gitignore": "files/.gitignore",
+    "gitignore": "files/.gitignore",
   },
 )
 
