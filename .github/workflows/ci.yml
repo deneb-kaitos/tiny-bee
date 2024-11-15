@@ -21,7 +21,7 @@ jobs:
       - name: setup PNPM
         uses: pnpm/action-setup@v4
         with:
-          version: 9.13.0
+          version: 9.13.1
           run_install: false
           standalone: true
       
