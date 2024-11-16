@@ -18,6 +18,14 @@ jobs:
       - name: checkout code
         uses: actions/checkout@v2
       
+      - name: setup zig
+        uses: mlugg/setup-zig@v1
+        with:
+          version: latest
+     
+      - name: which-zig
+        run: which zig
+
       - name: setup PNPM
         uses: pnpm/action-setup@v4
         with:
