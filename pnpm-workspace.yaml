@@ -39,3 +39,4 @@ catalogs:
 packages:
   - 'sources/**'
   - 'libs/**'
+  - 'experiments/**'
