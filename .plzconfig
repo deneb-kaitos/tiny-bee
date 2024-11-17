@@ -15,10 +15,11 @@ BlacklistDirs = node_modules
 [build]
 ExitOnError = true
 LinkGeneratedSources = hard
-Path = /usr/local/bin
-Path = /usr/bin
-Path = /bin
-Path = /usr/sbin
+; Path = /usr/local/bin
+; Path = /usr/bin
+; Path = /bin
+; Path = /usr/sbin
+passenv = PATH
 
 ; [BuildEnv]
 
