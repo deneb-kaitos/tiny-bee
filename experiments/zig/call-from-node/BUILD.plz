@@ -1,0 +1,59 @@
+package(
+  default_visibility = ["PUBLIC"],
+)
+
+filegroup(
+  name = "fg_zig_lib",
+  srcs = [
+    "lib/build.zig",
+    "lib/build.zig.zon",
+    "lib/src/lib.zig",
+  ],
+)
+
+filegroup(
+  name = "fg_specs",
+  srcs = [
+    "package.json",
+    "specs",
+  ],
+)
+
+genrule(
+  name = "build",
+  deps = [
+    ":fg_zig_lib",
+  ],
+  outs = [
+    "out",
+  ],
+  exit_on_error = True,
+  binary = True,
+  cmd = [
+    "export LIB_NAME=math",
+    "cd experiments/zig/call-from-node/lib",
+    "mkdir -p $OUT",
+    "$TOOLS_ZIG build-lib -dynamic src/lib.zig --name $LIB_NAME -O ReleaseSafe",
+    "mv lib$LIB_NAME.* $OUT",
+  ],
+  tools = {
+    "zig": ["zig"],
+  },
+)
+
+gentest(
+  name = "test",
+  data = [
+    "//:pnpm_common_files",
+    ":build",
+    ":fg_specs",
+  ],
+  test_cmd = [
+    "pnpm --recursive install",
+    "cd experiments/zig/call-from-node",
+    "cp out/* specs/",
+    "node --env-file=specs/.env.specs --test specs/*.specs.mjs",
+  ],
+  no_test_output = True,
+  exit_on_error = True,
+)

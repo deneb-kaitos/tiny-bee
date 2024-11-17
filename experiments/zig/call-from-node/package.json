@@ -8,10 +8,11 @@
     "pnpm": "9.13.2"
   },
   "version": "0.0.0",
-  "description": "[lib] ZeroMQ research",
+  "description": "[lib] call C/Zig code from Node",
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "lint": "ESLINT_USE_FLAT_CONFIG=true ./node_modules/.bin/eslint '**/*.mjs'",
+    "copy_lib": "cp ./lib/libmath.dylib specs/",
     "test": "node --env-file=specs/.env.specs --test specs/*.specs.mjs"
   },
   "keywords": [],
@@ -30,5 +31,8 @@
     "lines": 95,
     "functions": 95,
     "branches": 95
+  },
+  "dependencies": {
+    "koffi": "^2.9.2"
   }
 }
