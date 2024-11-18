@@ -15,10 +15,11 @@ BlacklistDirs = node_modules
 [build]
 ExitOnError = true
 LinkGeneratedSources = hard
-; Path = /usr/local/bin
-; Path = /usr/bin
-; Path = /bin
-; Path = /usr/sbin
+Path = /usr/local/bin
+Path = /usr/bin
+Path = /bin
+Path = /usr/sbin
+Path = /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include
 passenv = PATH
 
 ; [BuildEnv]

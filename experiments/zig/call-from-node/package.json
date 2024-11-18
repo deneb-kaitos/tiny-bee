@@ -33,6 +33,6 @@
     "branches": 95
   },
   "dependencies": {
-    "koffi": "^2.9.2"
+    "koffi": "catalog:server"
   }
 }

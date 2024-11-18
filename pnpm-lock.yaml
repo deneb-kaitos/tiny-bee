@@ -5,6 +5,10 @@ settings:
   excludeLinksFromLockfile: false
 
 catalogs:
+  server:
+    koffi:
+      specifier: ^2.9.2
+      version: 2.9.2
   specs:
     c8:
       specifier: 10.1.2
@@ -134,7 +138,7 @@ importers:
   experiments/zig/call-from-node:
     dependencies:
       koffi:
-        specifier: ^2.9.2
+        specifier: catalog:server
         version: 2.9.2
     devDependencies:
       c8:

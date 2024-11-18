@@ -36,6 +36,8 @@ catalogs:
     "typescript-eslint": "8.14.0"
     "execa": "9.5.1"
     "which": "5.0.0"
+  server:
+    "koffi": "^2.9.2"
 packages:
   - 'sources/**'
   - 'libs/**'
