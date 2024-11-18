@@ -8,7 +8,7 @@ filegroup(
     "build_c": "files/build.c",
     "esm_wrapper": "files/ESM_wrapper.mjs",
     "package.json": "files/package_json",
-    "gitignore": "files/.gitignore",
+    # "gitignore": "files/.gitignore",
   },
 )
 
@@ -26,10 +26,10 @@ genrule(
   ],
   cmd = [
     "mkdir $OUT",
-    "cp libs/uWebSockets.js/files/.gitignore $OUT",
+    "git clone --recurse-submodules --depth 1 https://github.com/uNetworking/uWebSockets.js.git",
+    # "cp libs/uWebSockets.js/files/.gitignore $OUT",
     "cp libs/uWebSockets.js/files/ESM_wrapper.mjs $OUT", 
     "cp libs/uWebSockets.js/files/package_json $OUT/package.json",
-    "git clone --recurse-submodules --depth 1 https://github.com/uNetworking/uWebSockets.js.git",
     "cp libs/uWebSockets.js/files/build.c uWebSockets.js/",
     f"sed -i 's/NODE_VERSION/{CONFIG.NODE_VERSION}/g' uWebSockets.js/build.c",
     f"sed -i 's/NODE_ABI_VERSION/{CONFIG.NODE_ABI_VERSION}/g' uWebSockets.js/build.c",
