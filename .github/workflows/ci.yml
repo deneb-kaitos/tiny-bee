@@ -59,10 +59,10 @@ jobs:
       
       
       - name: build
-        run: plz build .//... -v=4 --show_all_output
+        run: plz build .//...
       
       - name: test
-        run: plz test .//... -v=4 --show_all_output
+        run: plz test .//...
       
       - name: save all caches
         id: save-all-caches

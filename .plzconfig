@@ -15,16 +15,22 @@ BlacklistDirs = node_modules
 [build]
 ExitOnError = true
 LinkGeneratedSources = hard
-PassEnv = PATH
+; PassEnv = PATH
 ; PassEnv = PATH:/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include
-; Path = /usr/local/bin
-; Path = /usr/bin
-; Path = /bin
-; Path = /usr/sbin
-; Path = /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include
+Path = /usr/local/bin
+Path = /usr/bin
+Path = /bin
+Path = /usr/sbin
+Path = /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include
 ; Path = $HOME/zig/bin/zig
 
 ; [BuildEnv]
+; CMAKE-INCLUDE-PATH=/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include
+; CFLAGS="-I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include"
+; CXXFLAGS="-I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include"
+; CPATH=/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include
+; C-INCLUDE-PATH=/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include
+; CPLUS-INCLUDE-PATH=/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include
 
 [Buildconfig]
 NODE-VERSION = 23.2.0
