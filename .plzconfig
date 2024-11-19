@@ -17,11 +17,11 @@ ExitOnError = true
 LinkGeneratedSources = hard
 ; PassEnv = PATH
 ; PassEnv = PATH:/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include
-Path = /usr/local/bin
-Path = /usr/bin
-Path = /bin
-Path = /usr/sbin
-Path = /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include
+; Path = /usr/local/bin
+; Path = /usr/bin
+; Path = /bin
+; Path = /usr/sbin
+; Path = /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include
 ; Path = $HOME/zig/bin/zig
 
 ; [BuildEnv]

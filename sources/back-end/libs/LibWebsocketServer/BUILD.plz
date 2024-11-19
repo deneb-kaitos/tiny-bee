@@ -19,7 +19,7 @@ gentest(
   data = [
     ":fg_libwebsocketserver",
     "//:pnpm_common_files",
-    "//libs/uWebSockets.js:build",
+    # "//libs/uWebSockets.js:build",
   ],
   deps = [
     "//libs/uWebSockets.js:build",
