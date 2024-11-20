@@ -33,12 +33,15 @@ genrule(
     "export LIB_NAME=math",
     "cd experiments/zig/call-from-node/lib",
     "mkdir -p $OUT",
-    "$TOOLS_ZIG build-lib -dynamic src/lib.zig --name $LIB_NAME -O ReleaseSafe",
+    "zig build-lib -dynamic src/lib.zig --name $LIB_NAME -O ReleaseSafe",
     "mv lib$LIB_NAME.* $OUT",
   ],
-  tools = {
-    "zig": ["zig"],
-  },
+  # tools = {
+  #   "zig": ["zig"],
+  # },
+  pass_env = [
+    "PATH",
+  ],
 )
 
 gentest(
@@ -56,4 +59,7 @@ gentest(
   ],
   no_test_output = True,
   exit_on_error = True,
+  pass_env = [
+    "PATH",
+  ],
 )

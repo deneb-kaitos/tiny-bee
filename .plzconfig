@@ -7,22 +7,25 @@
 ; when you change it all users will automatically get updated.
 [Please]
 SelfUpdate = true
-version = 17.12.0
+version = 17.12.5
 
 [Parse]
 BlacklistDirs = node_modules
 
 [build]
 ExitOnError = true
-LinkGeneratedSources = hard
+; LinkGeneratedSources = hard
+LinkGeneratedSources = true 
 ; PassEnv = PATH
+; PassEnv = ZIG_PATH
 ; PassEnv = PATH:/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include
-Path = /usr/local/bin
-Path = /usr/bin
-Path = /bin
-Path = /usr/sbin
-Path = /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include
+; Path = /usr/local/bin
+; Path = /usr/bin
+; Path = /bin
+; Path = /usr/sbin
+; Path = /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include
 ; Path = $HOME/zig/bin/zig
+Lang = en_US.UTF-8
 
 ; [BuildEnv]
 ; CMAKE-INCLUDE-PATH=/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include

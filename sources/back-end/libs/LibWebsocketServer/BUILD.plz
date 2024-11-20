@@ -21,9 +21,9 @@ gentest(
     "//:pnpm_common_files",
     "//libs/uWebSockets.js:build",
   ],
-  deps = [
-    "//libs/uWebSockets.js:build",
-  ],
+  # deps = [
+  #   "//libs/uWebSockets.js:build",
+  # ],
   test_cmd = [
     "pnpm --recursive install",
     "cd sources/back-end/libs/LibWebsocketServer",
