@@ -422,7 +422,7 @@ importers:
       inter-ui:
         injected: true
 
-  sources/specs:
+  sources/~specs:
     devDependencies:
       execa:
         specifier: catalog:utils
@@ -4991,7 +4991,7 @@ snapshots:
 
   execa@5.1.1:
     dependencies:
-      cross-spawn: 7.0.3
+      cross-spawn: 7.0.5
       get-stream: 6.0.1
       human-signals: 2.1.0
       is-stream: 2.0.1
@@ -5004,7 +5004,7 @@ snapshots:
   execa@9.5.1:
     dependencies:
       '@sindresorhus/merge-streams': 4.0.0
-      cross-spawn: 7.0.3
+      cross-spawn: 7.0.5
       figures: 6.1.0
       get-stream: 9.0.1
       human-signals: 8.0.0
