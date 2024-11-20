@@ -14,26 +14,8 @@ BlacklistDirs = node_modules
 
 [build]
 ExitOnError = true
-; LinkGeneratedSources = hard
 LinkGeneratedSources = true 
-; PassEnv = PATH
-; PassEnv = ZIG_PATH
-; PassEnv = PATH:/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include
-; Path = /usr/local/bin
-; Path = /usr/bin
-; Path = /bin
-; Path = /usr/sbin
-; Path = /Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include
-; Path = $HOME/zig/bin/zig
 Lang = en_US.UTF-8
-
-; [BuildEnv]
-; CMAKE-INCLUDE-PATH=/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include
-; CFLAGS="-I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include"
-; CXXFLAGS="-I/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include"
-; CPATH=/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include
-; C-INCLUDE-PATH=/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include
-; CPLUS-INCLUDE-PATH=/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include
 
 [Buildconfig]
 NODE-VERSION = 23.2.0
@@ -70,6 +52,3 @@ accept = Artistic License
 accept = ISC
 # Not really a licence, but Bazel projects commonly describe things this way.
 accept = notice
-
-[Test]
-; Verbosity = 4
