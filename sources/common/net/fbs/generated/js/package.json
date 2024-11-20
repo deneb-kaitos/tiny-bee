@@ -1,11 +1,1 @@
-{
-  "name": "@deneb-kaitos/tiny-bee-fbs-js",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "author": "Dmitry N. Medvedev <dmitry.medvedev@gmail.com>",
-  "license": "MIT",
-  "devDependencies": {
-    "flatbuffers": "catalog:utils"
-  }
-}
+/Users/dmitrymedvedev/projects/deneb-kaitos/tiny-bee/plz-out/gen/sources/common/net/fbs/generated/js/package.json
