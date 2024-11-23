@@ -15,14 +15,14 @@ filegroup(
 gentest(
   name = "test",
   deps = [
-    "//libs/flatbuffers.js:build",
+    "//sources/libs/flatbuffers.js:build",
   ],
   data = [
     ":fg_serialize_account_registration_request",
     "//sources/common/net/serde/deserializers/AccountRegistrationRequest:fg_deserialize_account_registration_request",
     "//:pnpm_common_files",
     "//sources/common/net/fbs:generate_js",
-    "//libs/flatbuffers.js:build",
+    "//sources/libs/flatbuffers.js:build",
   ],
   test_cmd = [
     "cd sources/common/net/serde/serializers/AccountRegistrationRequest",

@@ -19,7 +19,7 @@ gentest(
   data = [
     ":fg_libwebsocketserver",
     "//:pnpm_common_files",
-    "//libs/uWebSockets.js:build",
+    "//sources/libs/uWebSockets.js:build",
   ],
   test_cmd = [
     "pnpm --recursive install",
