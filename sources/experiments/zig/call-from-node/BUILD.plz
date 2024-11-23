@@ -31,7 +31,7 @@ genrule(
   binary = True,
   cmd = [
     "export LIB_NAME=math",
-    "cd experiments/zig/call-from-node/lib",
+    "cd sources/experiments/zig/call-from-node/lib",
     "mkdir -p $OUT",
     "zig build-lib -dynamic src/lib.zig --name $LIB_NAME -O ReleaseSafe",
     "mv lib$LIB_NAME.* $OUT",
@@ -53,7 +53,7 @@ gentest(
   ],
   test_cmd = [
     "pnpm --recursive install",
-    "cd experiments/zig/call-from-node",
+    "cd sources/experiments/zig/call-from-node",
     "cp out/* specs/",
     "node --env-file=specs/.env.specs --test specs/*.specs.mjs",
   ],
