@@ -16,14 +16,14 @@ filegroup(
 gentest(
   name = "test",
   deps = [
-    "//libs/flatbuffers.js:build",
+    "//sources/libs/flatbuffers.js:build",
   ],
   data = [
     ":fg_deserialize_account_registration_request",
     "//sources/common/net/serde/serializers/AccountRegistrationRequest:fg_serialize_account_registration_request",
     "//sources/common/net/fbs:generate_js",
     "//:pnpm_common_files",
-    "//libs/flatbuffers.js:build",
+    "//sources/libs/flatbuffers.js:build",
   ],
   test_cmd = [
     "pnpm --recursive install",
