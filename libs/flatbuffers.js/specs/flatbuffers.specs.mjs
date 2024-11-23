@@ -6,7 +6,7 @@ import {
   it,
 } from 'node:test';
 import assert from 'node:assert/strict';
-import flatbuffers from 'flatbuffers';
+import flatbuffers from '../out/index.js';
 
 describe('flatbuffers.js', () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
