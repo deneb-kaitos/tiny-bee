@@ -1,0 +1,33 @@
+{
+  "$schema": "https://swc.rs/schema.json",
+  "exclude": [
+    "node_modules"
+  ],
+  "jsc": {
+    "parser": {
+      "syntax": "typescript",
+      "tsx": false,
+      "decorators": false,
+      "dynamicImport": true
+    },
+    "transform": {},
+    "target": "es2024",
+    "loose": false,
+    "externalHelpers": false,
+    "keepClassNames": true,
+    "baseUrl": "./"
+  },
+  "minify": false,
+  "isModule": true,
+  "module": {
+    "type": "es6",
+    "strict": false,
+    "strictMode": false,
+    "lazy": false,
+    "noInterop": false,
+    "ignoreDynamic": true,
+    "importInterop": "swc",
+    "preserveImportMeta": true,
+    "resolveFully": true
+  }
+}

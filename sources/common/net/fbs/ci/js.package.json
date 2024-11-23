@@ -6,6 +6,6 @@
   "author": "Dmitry N. Medvedev <dmitry.medvedev@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "flatbuffers": "catalog:utils"
+    "flatbuffers": "workspace:^"
   }
 }

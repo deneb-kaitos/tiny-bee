@@ -18,6 +18,7 @@ for language in ["ts", "js"]:
         "schema/Message.fbs",
         "schema/authz/AccountRegistrationRequest.fbs",
         f":tiny-bee-fbs-packages|{language}",
+        "//libs/flatbuffers.js:build",
       ],
       outs = [
         f"generated/{language}",
@@ -39,6 +40,7 @@ for language in ["ts", "js"]:
         ".swcrc",
         ":generate_ts",
         f":tiny-bee-fbs-packages|{language}",
+        "//libs/flatbuffers.js:build",
       ],
       data = [
         ".swcrc",

@@ -14,7 +14,7 @@
     "eslint-plugin-import": "catalog:utils",
     "eslint-plugin-node": "catalog:utils",
     "execa": "catalog:utils",
-    "flatbuffers": "catalog:utils",
+    "flatbuffers": "workspace:^",
     "globals": "catalog:web",
     "renamer": "catalog:utils",
     "typescript-eslint": "catalog:utils"
