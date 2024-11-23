@@ -1,5 +1,5 @@
 {
-  "name": "flatbuffers",
+  "name": "flatbuffers_build",
   "version": "0.0.0",
   "description": "Memory Efficient Serialization Library",
   "author": "The FlatBuffers project",

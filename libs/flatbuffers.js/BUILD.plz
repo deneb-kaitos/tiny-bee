@@ -8,8 +8,8 @@ genrule(
   labels = ["codegen"],
   srcs = [
     "//tools/flatbuffers:flatbuffers_src|tools/flatbuffers/flatbuffers_src/ts",
-    ".files/js/build.package.json",
-    ".files/js/package.json",
+    ".files/js/package.build.json",
+    ".files/js/package.install.json",
     ".files/js/tsconfig.json",
   ],
   outs = [
@@ -18,10 +18,10 @@ genrule(
   cmd = [
     "mkdir -p out.ts",
     "mkdir -p out",
-    "cp libs/flatbuffers.js/.files/js/build.package.json out.ts/package.json",
+    "cp libs/flatbuffers.js/.files/js/package.build.json out.ts/package.json",
     "cp libs/flatbuffers.js/.files/js/tsconfig.json out.ts/",
     "cp -r tools/flatbuffers/flatbuffers_src/ts/ out.ts/",
-    "cp libs/flatbuffers.js/.files/js/package.json $OUT",
+    "cp libs/flatbuffers.js/.files/js/package.install.json $OUT/package.json",
     """echo "export * from './flatbuffers.js';" >> $OUT/index.js""",
     """echo "export default './flatbuffers.js';" >> $OUT/index.js""",
     "pnpm install",
@@ -53,7 +53,7 @@ gentest(
     ":build",
   ],
   test_cmd = [
-    "pnpm install",
+    "pnpm --recursive install",
     "cd libs/flatbuffers.js",
     "node --env-file=specs/.env.specs --test specs/*.specs.mjs",
   ],
