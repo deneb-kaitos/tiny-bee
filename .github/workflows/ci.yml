@@ -57,6 +57,9 @@ jobs:
           verbosity: debug
           save-logs: true
       
+      - name: build 
+        run: plz build .//...
+
       - name: test
         run: plz test .//...
       
