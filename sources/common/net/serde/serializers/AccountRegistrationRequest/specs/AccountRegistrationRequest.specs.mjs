@@ -9,7 +9,7 @@ import {
   it,
 } from 'node:test';
 import assert from 'node:assert/strict';
-import flatbuffers from 'flatbuffers';
+import { Builder } from 'flatbuffers';
 import {
   MessagePayload,
 } from '@deneb-kaitos/tiny-bee-fbs-js/tinybee/message-payload.js';
@@ -27,7 +27,7 @@ describe('serializers', () => {
   let builder = null;
 
   before(() => {
-    builder = new flatbuffers.Builder(0);
+    builder = new Builder(0);
   });
 
   after(() => {

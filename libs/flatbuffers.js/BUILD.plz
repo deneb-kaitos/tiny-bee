@@ -1,0 +1,62 @@
+package(
+  default_visibility = ["PUBLIC"],
+)
+
+genrule(
+  name = "build",
+  exit_on_error = True,
+  labels = ["codegen"],
+  srcs = [
+    "//tools/flatbuffers:flatbuffers_src|tools/flatbuffers/flatbuffers_src/ts",
+    ".files/js/package.build.json",
+    ".files/js/package.install.json",
+    ".files/js/tsconfig.json",
+  ],
+  outs = [
+    "out",
+  ],
+  cmd = [
+    "mkdir -p out.ts",
+    "mkdir -p out",
+    "cp libs/flatbuffers.js/.files/js/package.build.json out.ts/package.json",
+    "cp libs/flatbuffers.js/.files/js/tsconfig.json out.ts/",
+    "cp -r tools/flatbuffers/flatbuffers_src/ts/ out.ts/",
+    "cp libs/flatbuffers.js/.files/js/package.install.json $OUT/package.json",
+    """echo "export * from './flatbuffers.js';" >> $OUT/index.js""",
+    """echo "export default './flatbuffers.js';" >> $OUT/index.js""",
+    "pnpm install",
+    "cd out.ts",
+    "node node_modules/typescript/bin/tsc --project tsconfig.json",
+  ],
+  deps = [
+    "//tools/flatbuffers:flatbuffers_src",
+    "//:pnpm_common_files",
+  ],
+)
+
+filegroup(
+  name = "fg_flatbuffers_test_files",
+  srcs = [
+    "specs/.env.specs",
+    "specs/flatbuffers.specs.mjs",
+  ],
+)
+
+gentest(
+  name = "test",
+  data = [
+    "//:pnpm_common_files",
+    ":build",
+    ":fg_flatbuffers_test_files",
+  ],
+  deps = [
+    ":build",
+  ],
+  test_cmd = [
+    "pnpm --recursive install",
+    "cd libs/flatbuffers.js",
+    "node --env-file=specs/.env.specs --test specs/*.specs.mjs",
+  ],
+  no_test_output = True,
+  exit_on_error = True,
+)

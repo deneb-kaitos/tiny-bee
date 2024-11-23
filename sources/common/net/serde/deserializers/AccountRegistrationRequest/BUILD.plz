@@ -15,14 +15,15 @@ filegroup(
 
 gentest(
   name = "test",
-  # labels = ["codegen"],
+  deps = [
+    "//libs/flatbuffers.js:build",
+  ],
   data = [
     ":fg_deserialize_account_registration_request",
     "//sources/common/net/serde/serializers/AccountRegistrationRequest:fg_serialize_account_registration_request",
     "//sources/common/net/fbs:generate_js",
     "//:pnpm_common_files",
-  ],
-  cmd = [
+    "//libs/flatbuffers.js:build",
   ],
   test_cmd = [
     "pnpm --recursive install",
@@ -30,4 +31,5 @@ gentest(
     "node --env-file=specs/.env.specs --test specs/*.specs.mjs",
   ],
   no_test_output = True,
+  exit_on_error = True,
 )

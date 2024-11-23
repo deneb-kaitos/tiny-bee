@@ -1,4 +1,4 @@
-import flatbuffers from 'flatbuffers';
+import { ByteBuffer } from 'flatbuffers';
 import {
   Message
 } from '@deneb-kaitos/tiny-bee-fbs-js/tinybee/message.js';
@@ -15,7 +15,7 @@ export const deserialize = (
    */
   byteArray = null
 ) => {
-  const messageRoot = Message.getRootAsMessage(new flatbuffers.ByteBuffer(byteArray));
+  const messageRoot = Message.getRootAsMessage(new ByteBuffer(byteArray));
   const payloadType = messageRoot.payloadType();
 
   if (payloadType === MessagePayload.AccountRegistrationRequest) {

@@ -4,10 +4,10 @@
   "version": "0.0.0",
   "description": "[serializer] AccountRegistrationRequest",
   "type": "module",
-  "packageManager": "pnpm@9.14.1",
+  "packageManager": "pnpm@9.14.2",
   "engines": {
-    "node": "23.2.0",
-    "pnpm": "9.14.1"
+    "node": "23.3.0",
+    "pnpm": "9.14.2"
   },
   "engineStrict": true,
   "main": "serialize.mjs",
@@ -20,7 +20,7 @@
   "license": "MIT",
   "dependencies": {
     "@deneb-kaitos/tiny-bee-fbs-js": "workspace:^",
-    "flatbuffers": "catalog:utils"
+    "flatbuffers": "workspace:^"
   },
   "devDependencies": {
     "@deneb-kaitos/deserialize_account_registration_request": "workspace:^",

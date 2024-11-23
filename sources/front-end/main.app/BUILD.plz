@@ -22,6 +22,7 @@ genrule(
     "//sources/common/net/fbs:generate_js",
     "//sources/common/net/serde/serializers/AccountRegistrationRequest:fg_serialize_account_registration_request",
     "//sources/common/net/serde/deserializers/AccountRegistrationRequest:fg_deserialize_account_registration_request",
+    "//libs/flatbuffers.js:build",
   ],
   # data = [
   #   "//sources/common/net/serde/serializers/AccountRegistrationRequest:fg_serialize_account_registration_request",

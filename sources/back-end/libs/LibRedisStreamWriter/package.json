@@ -2,10 +2,10 @@
   "name": "@deneb-kaitos/tiny-bee-libredisstreamwriter",
   "private": true,
   "type": "module",
-  "packageManager": "pnpm@9.14.1",
+  "packageManager": "pnpm@9.14.2",
   "engines": {
-    "node": "23.2.0",
-    "pnpm": "9.14.1"
+    "node": "23.3.0",
+    "pnpm": "9.14.2"
   },
   "version": "0.0.0",
   "description": "[lib] libRedisStreamWriter",

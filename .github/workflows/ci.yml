@@ -26,14 +26,14 @@ jobs:
       - name: setup PNPM
         uses: pnpm/action-setup@v4
         with:
-          version: 9.14.1
+          version: 9.14.2
           run_install: false
           standalone: true
       
       - name: install Node.JS
         uses: actions/setup-node@v4
         with:
-          node-version: 23.2.0
+          node-version: 23.3.0
       
       - name: start Redis
         uses: supercharge/redis-github-action@1.7.0

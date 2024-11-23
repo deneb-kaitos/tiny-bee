@@ -4,10 +4,10 @@
   "version": "0.0.0",
   "description": "[serializer] AccountRegistrationRequest",
   "type": "module",
-  "packageManager": "pnpm@9.14.1",
+  "packageManager": "pnpm@9.14.2",
   "engines": {
-    "node": "23.2.0",
-    "pnpm": "9.14.1"
+    "node": "23.3.0",
+    "pnpm": "9.14.2"
   },
   "engineStrict": true,
   "main": "generate.js",
