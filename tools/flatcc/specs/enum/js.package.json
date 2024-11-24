@@ -1,0 +1,31 @@
+{
+  "name": "@deneb-kaitos/flatcc_interop",
+  "private": true,
+  "version": "0.0.0",
+  "description": "SerDe",
+  "type": "module",
+  "packageManager": "pnpm@9.14.2",
+  "engines": {
+    "node": "23.3.0",
+    "pnpm": "9.14.2"
+  },
+  "scripts": {
+    "preinstall": "npx only-allow pnpm"
+  },
+  "author": "Dmitry N. Medvedev <dmitry.medvedev@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@eslint/js": "catalog:utils",
+    "@swc/cli": "catalog:utils",
+    "@swc/core": "catalog:utils",
+    "eslint": "catalog:utils",
+    "eslint-config-airbnb-base": "catalog:utils",
+    "eslint-plugin-import": "catalog:utils",
+    "eslint-plugin-node": "catalog:utils",
+    "execa": "catalog:utils",
+    "flatbuffers": "workspace:^",
+    "globals": "catalog:web",
+    "renamer": "catalog:utils",
+    "typescript-eslint": "catalog:utils"
+  }
+}

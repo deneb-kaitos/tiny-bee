@@ -1,0 +1,1 @@
+/Users/dmitrymedvedev/projects/deneb-kaitos/tiny-bee/plz-out/gen/tools/flatcc/specs/enum/js/interop/color.js

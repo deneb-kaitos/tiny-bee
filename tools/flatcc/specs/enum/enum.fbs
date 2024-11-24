@@ -1,0 +1,13 @@
+namespace interop;
+
+enum Color : byte {
+  Red = 1,
+  Green,
+  Blue,
+}
+
+table EnumTable {
+  color: Color = Blue;
+}
+
+root_type EnumTable;

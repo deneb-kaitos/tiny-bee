@@ -1,0 +1,92 @@
+genrule(
+  name = "enums_c",
+  labels = ["codegen"],
+  srcs = {
+    "enum_fbs": "enum.fbs",
+  },
+  outs = {
+    "c": ["c"],
+  },
+  cmd = [
+    "mkdir -p $OUTS_C",
+    "$TOOLS_FLATCC -w -c -r -o$OUTS_C $SRCS_ENUM_FBS",
+  ],
+  deps = [
+    "//tools/flatcc:build",
+  ],
+  tools = {
+    "flatcc": "//tools/flatcc:build|flatcc",
+  },
+)
+
+genrule(
+  name = "enums_ts",
+  srcs = {
+    "enum_fbs": "enum.fbs",
+  },
+  outs = {
+    "ts": ["ts"],
+  },
+  cmd = [
+    "mkdir -p $OUTS_TS",
+    "$TOOLS_FLATC --ts --natural-utf8 --gen-all --warnings-as-errors -o $OUTS_TS $SRCS_ENUM_FBS",
+    # "$TOOLS_NODE node_modules/@swc/cli/bin/swc.js . --out-dir $OUT --config-file ../../.swcrc",
+  ],
+  deps = [
+    "//tools/flatbuffers:build",
+  ],
+  tools = {
+    "flatc": "//tools/flatbuffers:build|flatc",
+  },
+)
+
+genrule(
+  name = "enums_js",
+  labels = ["codegen"],
+  srcs = {
+    "enum_fbs": "enum.fbs",
+    "package_json": "js.package.json",
+    "swcrc": ".swcrc",
+  },
+  outs = {
+    "js": ["js"],
+  },
+  cmd = [
+    "mkdir -p $OUTS_JS",
+    "cp $SRCS_PACKAGE_JSON tools/flatcc/specs/enum/ts/package.json",
+    "cp $SRCS_SWCRC tools/flatcc/specs/enum/ts",
+    "pnpm install",
+    "cd tools/flatcc/specs/enum/ts",
+    "$TOOLS_NODE node_modules/@swc/cli/bin/swc.js . --out-dir ../../../../../$OUTS_JS --config-file .swcrc",
+  ],
+  deps = [
+    "//:pnpm_common_files",
+    ":enums_ts",
+    "//sources/libs/flatbuffers.js:build",
+  ],
+  tools = {
+    "flatc": "//tools/flatbuffers:build|flatc",
+    "node": "node",
+  },
+)
+
+genrule(
+  name = "enums_zig",
+  labels = ["codegen"],
+  outs = [
+    "enum_zig",
+  ],
+  srcs = [
+    ":enums_c|outs",
+    ":enums_js|outs",
+  ],
+  deps = [
+    ":enums_c",
+    ":enums_js",
+  ],
+  cmd = [
+    "ls -lar .",
+    "mkdir -p $OUTS",
+    "exit 1",
+  ],
+)
