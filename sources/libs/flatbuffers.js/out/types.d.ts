@@ -1,1 +1,13 @@
-/Users/dmitrymedvedev/projects/deneb-kaitos/tiny-bee/plz-out/gen/libs/flatbuffers.js/out/types.d.ts
+import { ByteBuffer } from './byte-buffer.js';
+import { Builder } from './builder.js';
+export type Offset = number;
+export type Table = {
+    bb: ByteBuffer;
+    bb_pos: number;
+};
+export interface IGeneratedObject {
+    pack(builder: Builder): Offset;
+}
+export interface IUnpackableObject<T> {
+    unpack(): T;
+}

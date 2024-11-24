@@ -1,1 +1,6 @@
-/Users/dmitrymedvedev/projects/deneb-kaitos/tiny-bee/plz-out/gen/libs/flatbuffers.js/out/flexbuffers/bit-width.d.ts
+export declare enum BitWidth {
+    WIDTH8 = 0,
+    WIDTH16 = 1,
+    WIDTH32 = 2,
+    WIDTH64 = 3
+}

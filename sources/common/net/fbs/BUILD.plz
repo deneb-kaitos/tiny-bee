@@ -10,7 +10,7 @@ filegroup(
   },
 )
 
-for language in ["ts", "js"]:
+for language in ["ts", "js", "c"]:
   if language == "ts":
     genrule(
       name = f"generate_{language}",
@@ -65,6 +65,30 @@ for language in ["ts", "js"]:
         "NODE": "node",
       },
     )
+  
+  elif language == "c":
+    genrule(
+      name = f"generate_{language}",
+      labels = ["codegen"],
+      srcs = [
+        "schema/Message.fbs",
+        "schema/authz/AccountRegistrationRequest.fbs",
+      ],
+      deps = [
+        "//tools/flatcc:build",
+      ],
+      outs = [
+        f"generated/{language}",
+      ],
+      cmd = [
+        "mkdir -p $OUT",
+        f"$TOOLS_FLATCC -w -c -r -o$OUTS sources/common/net/fbs/schema/Message.fbs",
+      ],
+      tools = {
+        "FLATCC": ["//tools/flatcc:build|flatcc"],
+      },
+    )
+
     
   else:
     genrule(

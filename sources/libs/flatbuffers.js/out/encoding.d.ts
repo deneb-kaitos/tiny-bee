@@ -1,1 +1,4 @@
-/Users/dmitrymedvedev/projects/deneb-kaitos/tiny-bee/plz-out/gen/libs/flatbuffers.js/out/encoding.d.ts
+export declare enum Encoding {
+    UTF8_BYTES = 1,
+    UTF16_STRING = 2
+}
