@@ -18,23 +18,9 @@ filegroup(
   ),
 )
 
-# filegroup(
-#   name = "common_net_fbs",
-#   srcs = glob(
-#     [
-#       "sources/common/net/fbs/package.json",
-#       "sources/common/net/fbs/schema/**/*.fbs",
-#       "sources/common/net/fbs/.swcrc",
-#     ],
-#     exclude = excluded_files,
-#     hidden = True,
-#   ),
-# )
-
 filegroup(
   name = "all_js_sources",
   deps = [
     ":pnpm_common_files",
-    # ":common_net_fbs",
   ],
 )

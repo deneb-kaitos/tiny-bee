@@ -9,7 +9,7 @@ github_repo(
 )
 
 genrule(
-  name = "flatcompiler",
+  name = "build",
   exit_on_error = True,
   binary = True,
   outs = {
@@ -25,35 +25,3 @@ genrule(
     ":flatbuffers_src",
   ],
 )
-
-# genrule(
-#   name = "flatbuffers.js",
-#   exit_on_error = True,
-#   labels = ["codegen"],
-#   srcs = [
-#     ":flatbuffers_src|tools/flatbuffers/flatbuffers_src/ts",
-#     ".files/js/.swcrc",
-#     ".files/js/build.package.json",
-#     ".files/js/package.json",
-#   ],
-#   outs = [
-#     "out",
-#   ],
-#   cmd = [
-#     "mkdir -p out.ts",
-#     "mkdir -p out",
-#     "cp tools/flatbuffers/.files/js/build.package.json out.ts/package.json",
-#     "cp tools/flatbuffers/.files/js/.swcrc out.ts/.swcrc",
-#     "cp tools/flatbuffers/.files/js/package.json $OUT",
-#     "cp -r tools/flatbuffers/flatbuffers_src/ts/ out.ts/",
-#     """echo "export * from './flatbuffers.js';" > $OUT/index.js""",
-#     "pnpm install",
-#     "cd out.ts",
-#     "node node_modules/@swc/cli/bin/swc.js . --out-dir $OUT --sync --config-file .swcrc",
-#   ],
-#   deps = [
-#     ":flatcompiler",
-#     ":flatbuffers_src",
-#     "//:pnpm_common_files",
-#   ],
-# )
