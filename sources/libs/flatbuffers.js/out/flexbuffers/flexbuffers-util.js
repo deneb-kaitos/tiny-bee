@@ -1,1 +1,8 @@
-/Users/dmitrymedvedev/projects/deneb-kaitos/tiny-bee/plz-out/gen/libs/flatbuffers.js/out/flexbuffers/flexbuffers-util.js
+export function fromUTF8Array(data) {
+    const decoder = new TextDecoder();
+    return decoder.decode(data);
+}
+export function toUTF8Array(str) {
+    const encoder = new TextEncoder();
+    return encoder.encode(str);
+}

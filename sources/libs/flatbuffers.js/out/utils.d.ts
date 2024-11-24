@@ -1,1 +1,4 @@
-/Users/dmitrymedvedev/projects/deneb-kaitos/tiny-bee/plz-out/gen/libs/flatbuffers.js/out/utils.d.ts
+export declare const int32: Int32Array;
+export declare const float32: Float32Array;
+export declare const float64: Float64Array;
+export declare const isLittleEndian: boolean;

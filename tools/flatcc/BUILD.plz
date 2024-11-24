@@ -1,0 +1,37 @@
+package(
+  default_visibility = ["PUBLIC"],
+)
+
+genrule(
+  name = "repo",
+  outs = [
+    "repo"
+  ],
+  cmd = [
+    "git clone https://github.com/dvidelabs/flatcc.git ./repo"
+  ],
+  exit_on_error = True,
+)
+
+genrule(
+  name = "build",
+  exit_on_error = True,
+  binary = True,
+  outs = {
+    "flatcc": ["flatcc"],
+  },
+  cmd = [
+    "cd tools/flatcc/repo",
+    "./scripts/initbuild.sh ninja",
+    "./scripts/build.sh",
+    "./scripts/test.sh",
+    "cp bin/flatcc $OUT",
+  ],
+  deps = [
+    ":repo",
+  ],
+  tools = {
+    "cmake": "cmake",
+    "ninja": "ninja",
+  },
+)

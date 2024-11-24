@@ -1,1 +1,2 @@
-/Users/dmitrymedvedev/projects/deneb-kaitos/tiny-bee/plz-out/gen/libs/flatbuffers.js/out/flexbuffers/flexbuffers-util.d.ts
+export declare function fromUTF8Array(data: BufferSource): string;
+export declare function toUTF8Array(str: string): Uint8Array;

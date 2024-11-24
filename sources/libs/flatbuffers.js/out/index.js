@@ -1,1 +1,2 @@
-/Users/dmitrymedvedev/projects/deneb-kaitos/tiny-bee/plz-out/gen/libs/flatbuffers.js/out/index.js
+export * from './flatbuffers.js';
+export default './flatbuffers.js';
