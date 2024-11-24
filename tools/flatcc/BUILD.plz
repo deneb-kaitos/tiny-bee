@@ -8,7 +8,7 @@ genrule(
     "repo"
   ],
   cmd = [
-    "git clone https://github.com/dvidelabs/flatcc.git ./repo"
+    "git clone --depth=1 https://github.com/dvidelabs/flatcc.git ./repo"
   ],
   exit_on_error = True,
 )
@@ -35,3 +35,20 @@ genrule(
     "ninja": "ninja",
   },
 )
+
+# genrule(
+#   # for test only
+#   name = "enums",
+#   outs = [
+#     "c",
+#   ],
+#   cmd = [
+#     f"$TOOLS_FLATCC -w -c -r -o$OUTS sources/common/net/fbs/schema/Message.fbs",
+#   ],
+#   deps = [
+#     ":build",
+#   ],
+#   tools = {
+#     "flatcc": ":build|flatcc",
+#   },
+# )

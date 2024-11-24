@@ -10,7 +10,9 @@ filegroup(
   },
 )
 
-for language in ["ts", "js", "c"]:
+for language in CONFIG.FLATBUFFERS_LANGS.split(","):
+  language = language.strip(" ")
+
   if language == "ts":
     genrule(
       name = f"generate_{language}",
