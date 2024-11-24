@@ -28,7 +28,7 @@ for language in ["ts", "js", "c"]:
         f"cp sources/common/net/fbs/ci/{language}.package.json $OUT/package.json",
       ],
       tools = {
-        "FLATC": ["//tools/flatbuffers:flatcompiler|flatc"],
+        "FLATC": ["//tools/flatbuffers:build|flatc"],
       },
     )
 
@@ -99,7 +99,7 @@ for language in ["ts", "js", "c"]:
         "schema/authz/AccountRegistrationRequest.fbs",
       ],
       deps = [
-        "//tools/flatbuffers:flatcompiler",
+        "//tools/flatbuffers:build",
       ],
       outs = [
         f"generated/{language}",
@@ -108,6 +108,6 @@ for language in ["ts", "js", "c"]:
         f"$TOOLS_FLATC --{language} --natural-utf8 --gen-all --warnings-as-errors -o $OUTS sources/common/net/fbs/schema/Message.fbs",
       ],
       tools = {
-        "FLATC": ["//tools/flatbuffers:flatcompiler|flatc"],
+        "FLATC": ["//tools/flatbuffers:build|flatc"],
       },
     )
