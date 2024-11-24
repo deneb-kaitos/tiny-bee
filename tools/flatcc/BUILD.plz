@@ -35,20 +35,3 @@ genrule(
     "ninja": "ninja",
   },
 )
-
-# genrule(
-#   # for test only
-#   name = "enums",
-#   outs = [
-#     "c",
-#   ],
-#   cmd = [
-#     f"$TOOLS_FLATCC -w -c -r -o$OUTS sources/common/net/fbs/schema/Message.fbs",
-#   ],
-#   deps = [
-#     ":build",
-#   ],
-#   tools = {
-#     "flatcc": ":build|flatcc",
-#   },
-# )
