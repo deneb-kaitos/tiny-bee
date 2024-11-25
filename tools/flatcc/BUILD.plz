@@ -17,15 +17,22 @@ genrule(
   name = "build",
   exit_on_error = True,
   binary = True,
+  # output_dirs = [
+  #   "bin",
+  #   "lib",
+  # ],
   outs = {
-    "flatcc": ["flatcc"],
+    "bin": ["out/bin"],
+    "lib": ["out/lib"],
   },
   cmd = [
-    "cd tools/flatcc/repo",
-    "./scripts/initbuild.sh ninja",
-    "./scripts/build.sh",
-    "./scripts/test.sh",
-    "cp bin/flatcc $OUT",
+    "mkdir -p $OUTS_BIN",
+    "mkdir -p $OUTS_LIB",
+    "./tools/flatcc/repo/scripts/initbuild.sh ninja",
+    "./tools/flatcc/repo/scripts/build.sh",
+    "./tools/flatcc/repo/scripts/test.sh",
+    "cp -r tools/flatcc/repo/bin/ $OUTS_BIN",
+    "cp -r tools/flatcc/repo/lib/ $OUTS_LIB",
   ],
   deps = [
     ":repo",
