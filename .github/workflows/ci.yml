@@ -50,6 +50,10 @@ jobs:
             ${{ env.PNPM_STORE_PATH }}
           key: restore-all-caches-key
 
+      - name: Install Ninja
+        id: ninja
+        uses: turtlesec-no/get-ninja@main
+
       - name: setup Please
         uses: sagikazarmark/setup-please-action@v0
         with:
