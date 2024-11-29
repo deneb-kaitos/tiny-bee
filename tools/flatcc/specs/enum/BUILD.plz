@@ -75,11 +75,11 @@ filegroup(
   srcs = [
     "lib/build.zig.zon",
     "lib/build.zig",
-    "lib/src/root.zig",
+    "lib/src/lib.zig",
   ],
 )
 
-gentest(
+genrule(
   name = "enums_zig",
   srcs = [
     ":enums_c|outs",
@@ -95,16 +95,38 @@ gentest(
     ":enums_js",
     "//tools/flatcc:build",
   ],
-  outs = [
-    "out",
+  outs = {
+    "libs": ["out_libs"],
+  },
+  cmd = [
+    "mkdir -p $OUTS_LIBS",
+    "export LIB_NAME=enums",
+    "cd $OUTS_LIBS",
+    "$TOOLS_ZIG build-lib -dynamic ../tools/flatcc/specs/enum/lib/src/lib.zig --name $LIB_NAME -O ReleaseSafe",
+  ],
+  tools = {
+    "zig": "zig",
+  },
+)
+
+gentest(
+  name = "test_zig_side",
+  no_test_output = True,
+  data = [
+    ":enums_c|outs",
+    ":enums_js|outs",
+    "//tools/flatcc:build|libflatcc_d_a",
+    "//tools/flatcc:build|libflatcc_a",
+    "//tools/flatcc:build|libflatccrt_d_a",
+    "//tools/flatcc:build|libflatccrt_a",
+    ":zig_files",
+  ],
+  deps = [
+    ":enums_c",
+    ":enums_js",
+    "//tools/flatcc:build",
   ],
   test_cmd = [
-    "export LIB_NAME=enums",
-    "cd tools/flatcc/specs/lib",
-    "echo $(pwd)",
-    # "mkdir -p $OUT",
-    # "zig build-lib -dynamic src/lib.zig --name $LIB_NAME -O ReleaseSafe",
-    # "mv lib$LIB_NAME.* $OUT",
-    "exit 1",
+    "zig test tools/flatcc/specs/enum/lib/src/lib.zig",
   ],
 )
