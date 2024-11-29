@@ -2,10 +2,10 @@
   "name": "@deneb-kaitos/tiny-bee-libwebsocketserver",
   "private": true,
   "type": "module",
-  "packageManager": "pnpm@9.14.2",
+  "packageManager": "pnpm@9.14.3",
   "engines": {
     "node": "23.3.0",
-    "pnpm": "9.14.2"
+    "pnpm": "9.14.3"
   },
   "version": "0.0.0",
   "description": "[lib] WebsocketServer",

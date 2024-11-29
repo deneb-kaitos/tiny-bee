@@ -15,24 +15,25 @@ genrule(
 
 genrule(
   name = "build",
+  # labels = ["codegen"],
   exit_on_error = True,
   binary = True,
-  # output_dirs = [
-  #   "bin",
-  #   "lib",
-  # ],
   outs = {
-    "bin": ["out/bin"],
-    "lib": ["out/lib"],
+    "flatcc": ["bin/flatcc"],
+    "libflatcc_d_a": ["lib/libflatcc_d.a"],
+    "libflatcc_a": ["lib/libflatcc.a"],
+    "libflatccrt_d_a": ["lib/libflatccrt_d.a"],
+    "libflatccrt_a": ["lib/libflatccrt.a"],
   },
   cmd = [
-    "mkdir -p $OUTS_BIN",
-    "mkdir -p $OUTS_LIB",
     "./tools/flatcc/repo/scripts/initbuild.sh ninja",
     "./tools/flatcc/repo/scripts/build.sh",
     "./tools/flatcc/repo/scripts/test.sh",
-    "cp -r tools/flatcc/repo/bin/ $OUTS_BIN",
-    "cp -r tools/flatcc/repo/lib/ $OUTS_LIB",
+    "cp tools/flatcc/repo/bin/flatcc $OUTS_FLATCC",
+    "cp tools/flatcc/repo/lib/libflatcc_d.a $OUTS_LIBFLATCC_D_A",
+    "cp tools/flatcc/repo/lib/libflatcc.a $OUTS_LIBFLATCC_A",
+    "cp tools/flatcc/repo/lib/libflatccrt_d.a $OUTS_LIBFLATCCRT_D_A",
+    "cp tools/flatcc/repo/lib/libflatccrt.a $OUTS_LIBFLATCCRT_A",
   ],
   deps = [
     ":repo",

@@ -70,23 +70,41 @@ genrule(
   },
 )
 
-genrule(
-  name = "enums_zig",
-  labels = ["codegen"],
-  outs = [
-    "enum_zig",
+filegroup(
+  name = "zig_files",
+  srcs = [
+    "lib/build.zig.zon",
+    "lib/build.zig",
+    "lib/src/root.zig",
   ],
+)
+
+gentest(
+  name = "enums_zig",
   srcs = [
     ":enums_c|outs",
     ":enums_js|outs",
+    "//tools/flatcc:build|libflatcc_d_a",
+    "//tools/flatcc:build|libflatcc_a",
+    "//tools/flatcc:build|libflatccrt_d_a",
+    "//tools/flatcc:build|libflatccrt_a",
+    ":zig_files",
   ],
   deps = [
     ":enums_c",
     ":enums_js",
+    "//tools/flatcc:build",
   ],
-  cmd = [
-    "ls -lar .",
-    "mkdir -p $OUTS",
+  outs = [
+    "out",
+  ],
+  test_cmd = [
+    "export LIB_NAME=enums",
+    "cd tools/flatcc/specs/lib",
+    "echo $(pwd)",
+    # "mkdir -p $OUT",
+    # "zig build-lib -dynamic src/lib.zig --name $LIB_NAME -O ReleaseSafe",
+    # "mv lib$LIB_NAME.* $OUT",
     "exit 1",
   ],
 )
