@@ -88,12 +88,14 @@ genrule(
     "//tools/flatcc:build|libflatcc_a",
     "//tools/flatcc:build|libflatccrt_d_a",
     "//tools/flatcc:build|libflatccrt_a",
+    "//tools/flatcc:build|include",
     ":zig_files",
   ],
   deps = [
     ":enums_c",
     ":enums_js",
-    "//tools/flatcc:build",
+    # "//tools/flatcc:build",
+    "//tools/flatcc:deps",
   ],
   outs = {
     "libs": ["out_libs"],
@@ -120,11 +122,13 @@ gentest(
     "//tools/flatcc:build|libflatccrt_d_a",
     "//tools/flatcc:build|libflatccrt_a",
     ":zig_files",
+    # "//tools/flatcc:build|include",
+    "//tools/flatcc:deps",
   ],
   deps = [
     ":enums_c",
     ":enums_js",
-    "//tools/flatcc:build",
+    "//tools/flatcc:deps",
   ],
   test_cmd = [
     "zig test tools/flatcc/specs/enum/lib/src/lib.zig",

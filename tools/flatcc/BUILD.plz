@@ -43,3 +43,28 @@ genrule(
     "ninja": "ninja",
   },
 )
+
+genrule(
+  name = "deps",
+  labels = ["codegen"],
+  exit_on_error = True,
+  binary = False,
+  srcs = [
+    ":repo",
+  ],
+  outs = {
+    "libs": ["libs"],
+    "include": ["include"],
+  },
+  deps = [
+    ":repo",
+    ":build",
+  ],
+  cmd = [
+    "mkdir -p $OUTS_LIBS",
+    "mkdir -p $OUTS_INCLUDE",
+    "ls -lar tools/flatcc/repo/include",
+    "cp -r tools/flatcc/lib/* $OUTS_LIBS",
+    "cp -r tools/flatcc/repo/include/* $OUTS_INCLUDE",
+  ],
+)

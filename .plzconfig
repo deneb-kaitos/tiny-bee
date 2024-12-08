@@ -7,7 +7,7 @@
 ; when you change it all users will automatically get updated.
 [Please]
 SelfUpdate = true
-version = 17.12.6-beta.1 
+version = 17.12.6-beta.2
 
 [Parse]
 BlacklistDirs = node_modules
@@ -20,7 +20,7 @@ Lang = en_US.UTF-8
 [Buildconfig]
 NODE-VERSION = 23.3.0
 NODE-ABI-VERSION = 131
-PNPM-VERSION = 9.14.3
+PNPM-VERSION = 9.14.4
 FLATBUFFERS-VERSION = 24.3.25
 FLATBUFFERS-LANGS = "ts,js,c"
 UWEBSOCKETS-JS-VERSION = 20.49.0
